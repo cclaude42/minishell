@@ -2,7 +2,7 @@ NAME = minishell
 
 CC = clang
 
-CFLAGS = -Wall -Wextra -Werror -I includes/
+CFLAGS = -Wall -Wextra -Werror -I includes/ -I libft/includes/
 
 LIBFT = -L libft -lft
 
@@ -16,7 +16,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C libft/
-	$(CC) -o $(NAME) $(LIBFT) $(OBJ)
+	$(CC) $(CFLAGS) -o $(NAME) $(LIBFT) $(OBJ)
 
 clean:
 	rm -f $(OBJ)
@@ -26,5 +26,10 @@ fclean: clean
 
 re: fclean all
 
+test: re
+	./minishell
+
 norm:
-	norminette $(SRC) $(HEADER)
+	norminette $(SRC) includes/$(HEADER)
+
+.PHONY: clean fclean re norm test
