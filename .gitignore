@@ -1,0 +1,4 @@
+.DS_Store
+srcs/*.o
+libft/*/*.o
+minishell
