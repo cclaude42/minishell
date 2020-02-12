@@ -6,32 +6,28 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 14:31:31 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/12 11:14:42 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/02/12 13:56:12 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void		magic_box(char *command, int start_pos, char **env)
+static void		magic_box(char *path, char **args, char **env)
 {
-	char *arg[] = {"ls", "-l", NULL};
 	pid_t pid;
 
-	if (ft_strncmp(command + start_pos, "ls", 4) == 0)
-	{
-		pid = fork();
-		if (pid == 0)
-			execve("/bin/ls", arg, env);
-		else
-			wait(&pid);
-	}
+	pid = fork();
+	if (pid == 0)
+		execve(path, arg, env);
+	else
+		wait(&pid);
 }
 
 int	main(int argc, char **argv, char **env)
 {
 	int		running;
 	char	*command;
-	int		i;
+	char	**args;
 
 	(void)argc;
 	(void)argv;
@@ -41,12 +37,19 @@ int	main(int argc, char **argv, char **env)
 		i = 0;
 		write(1, "minishell > ", 13);
 		get_next_line(0, &command);
-		ft_skip_space(command, &i);
-		magic_box(command, i, env);
-		if ((!ft_strncmp(command + i, "exit", 4)) &&
-			(ft_isspacenl(command[i + 4]) || command[i + 4] == '\0'))
-			running = 0;
+		// args = parsing(command);
+		args = {"ls", "-l", NULL}
+		//
 		ft_memdel(command);
+		if (magic_box(args, env))
+			;
+		else if (magic_box2(args, env))
+			;
+		else if (is_exit(args))
+			running = 0;
+		else
+			write(2, "Error", 5);
+		// ft_memdel_loop(argv);
 	}
 	return (0);
 }
