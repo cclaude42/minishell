@@ -8,7 +8,9 @@ LIBFT = -L libft -lft
 
 HEADER = minishell.h
 
-SRC = $(addsuffix .c, $(addprefix srcs/, minishell))
+FILES = minishell builtin bin parse echo cd pwd export unset env
+
+SRC = $(addsuffix .c, $(addprefix srcs/, $(FILES)))
 
 OBJ = $(SRC:.c=.o)
 

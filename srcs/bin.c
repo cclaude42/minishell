@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 15:07:01 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/12 15:07:45 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/02/12 16:51:52 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	magic_box(char *path, char **args, char **env)
 
 	pid = fork();
 	if (pid == 0)
-		execve(path, arg, env);
+		execve(path, args, env);
 	else
 		wait(&pid);
 }
@@ -32,14 +32,17 @@ static char	*check_dir(char *bin, char *command)
 
 	path = NULL;
 	folder = opendir(bin);
-	while ((item = readdir(rep)) != NULL)
-		if (strncmp(item->d_name, command, strlen(command) + 1) == 0)
+	if (!folder)
+		return (NULL);
+	while ((item = readdir(folder)))
+	{
+		if (ft_strcmp(item->d_name, command) == 0)
 		{
-			tmp = ft_strjoin(item->d_name, "/");
-			path = ft_strjoin(tmp, command);
-			free(tmp);
+			tmp = ft_strjoin(bin, "/");
+			path = ft_strjoin(tmp, item->d_name);
+			ft_memdel(tmp);
 		}
-		free(item);
+	}
 	closedir(folder);
 	return (path);
 }
@@ -55,12 +58,16 @@ int			is_bin(char **args, char **env)
 		i++;
 	if (env[i] == NULL)
 		return (-1);
-	i = 0
-	bin = ft_split(env[i], ":");
-	while (bin[i] && (path = check_dir(bin[i], args[0])) == NULL)
-		i++;
+	bin = ft_split(env[i], ':');
+	if (!args[0] && !bin[0])
+		return (-1);
+	i = 1;
+	path = check_dir(bin[0] + 5, args[0]);
+	while (args[0] && bin[i] && path == NULL)
+		path = check_dir(bin[i++], args[0]);
 	if (bin[i] == NULL)
 		return (0);
 	magic_box(path, args, env);
+	ft_memdel(path);
 	return (1);
 }
