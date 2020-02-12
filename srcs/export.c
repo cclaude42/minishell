@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:44:41 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/12 16:52:11 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/02/12 21:01:55 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,15 @@
 
 int			mini_export(char **args, char **env)
 {
-	(void)args;
-	(void)env;
+	int		i;
+
+	i = 0;
+	while (env[i])
+		i++;
+	if (args[1] && ft_isin('=', args[1]))
+	{
+		env[i] = ft_strdup(args[1]);
+		env[i + 1] = NULL;
+	}
 	return (1);
 }
