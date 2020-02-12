@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 14:31:31 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/12 13:56:12 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/02/12 13:58:52 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	main(int argc, char **argv, char **env)
 			running = 0;
 		else
 			write(2, "Error", 5);
+		printf("ECHO BRANCH\n");
 		// ft_memdel_loop(argv);
 	}
 	return (0);
