@@ -6,31 +6,20 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 14:31:31 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/12 13:56:12 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/02/12 15:07:53 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void		magic_box(char *path, char **args, char **env)
-{
-	pid_t pid;
-
-	pid = fork();
-	if (pid == 0)
-		execve(path, arg, env);
-	else
-		wait(&pid);
-}
-
-int	main(int argc, char **argv, char **env)
+int		main(int ac, char **av, char **env)
 {
 	int		running;
 	char	*command;
 	char	**args;
 
-	(void)argc;
-	(void)argv;
+	(void)ac;
+	(void)av;
 	running = 1;
 	while (running)
 	{
@@ -41,9 +30,9 @@ int	main(int argc, char **argv, char **env)
 		args = {"ls", "-l", NULL}
 		//
 		ft_memdel(command);
-		if (magic_box(args, env))
+		if (is_builtin(args, env))
 			;
-		else if (magic_box2(args, env))
+		else if (is_bin(args, env))
 			;
 		else if (is_exit(args))
 			running = 0;
