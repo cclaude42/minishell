@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 15:07:01 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/12 16:51:52 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/02/12 17:27:19 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static char	*check_dir(char *bin, char *command)
 {
 	DIR				*folder;
 	struct dirent	*item;
-	char			*tmp;
 	char			*path;
 
 	path = NULL;
@@ -37,11 +36,7 @@ static char	*check_dir(char *bin, char *command)
 	while ((item = readdir(folder)))
 	{
 		if (ft_strcmp(item->d_name, command) == 0)
-		{
-			tmp = ft_strjoin(bin, "/");
-			path = ft_strjoin(tmp, item->d_name);
-			ft_memdel(tmp);
-		}
+			path = path_join(bin, item->d_name);
 	}
 	closedir(folder);
 	return (path);

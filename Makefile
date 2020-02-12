@@ -8,7 +8,7 @@ LIBFT = -L libft -lft
 
 HEADER = minishell.h
 
-FILES = minishell builtin bin parse echo cd pwd export unset env
+FILES = minishell builtin bin parse echo cd pwd export unset env minitools
 
 SRC = $(addsuffix .c, $(addprefix srcs/, $(FILES)))
 
