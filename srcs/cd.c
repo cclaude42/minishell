@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/11 14:31:31 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/13 09:21:14 by macrespo         ###   ########.fr       */
+/*   Created: 2020/02/12 16:44:08 by cclaude           #+#    #+#             */
+/*   Updated: 2020/02/12 18:43:09 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			main(int ac, char **av, char **env)
+int			mini_cd(char **args, char **env)
 {
-	int		running;
-	char	*command;
-	char	**args;
+	char	*path;
+	char	cwd[PATH_MAX];
 
-	(void)ac;
-	(void)av;
-	running = 1;
-	while (running)
+	(void)env;
+	getcwd(cwd, sizeof(cwd));
+	if (!args[1])
 	{
-		write(1, "minishell > ", 13);
-		get_next_line(0, &command);
-		args = command_parse(command);
-		ft_memdel(command);
-		if (!args[0] || is_builtin(args, env) || is_bin(args, env))
-			;
-		else if (ft_strcmp(args[0], "exit") == 0)
-			running = 0;
-		else
-			;
-		del_args(args);
+		path = get_env(env, "HOME=");
+		if ((chdir(path)) != 0)
+			write(2, "cd: no such file or directory\n", 30);
 	}
-	return (0);
+	else if (args[1] && !args[2])
+	{
+		if ((chdir(args[1])) != 0)
+			write(2, "cd: no such file or directory\n", 30);
+	}
+	else
+		write(2, "cd: too many arguments\n", 23);
+	return (1);
 }

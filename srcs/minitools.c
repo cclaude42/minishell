@@ -1,40 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   minitools.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/08 12:58:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/12 20:16:32 by cclaude          ###   ########.fr       */
+/*   Created: 2020/02/12 17:24:48 by cclaude           #+#    #+#             */
+/*   Updated: 2020/02/12 18:25:30 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libutils.h"
+#include "minishell.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char		*path_join(const char *s1, const char *s2)
 {
-	char	*new;
+	char	*tmp;
+	char	*path;
+
+	tmp = ft_strjoin(s1, "/");
+	path = ft_strjoin(tmp, s2);
+	ft_memdel(tmp);
+	return (path);
+}
+
+void		del_args(char **args)
+{
 	int		i;
 
-	if (s == NULL)
-		return (NULL);
-	if (!(new = malloc(sizeof(char) * (len + 1))))
-		return (NULL);
 	i = 0;
-	while (s[i] != '\0')
-		i++;
-	if (start + 1 > (unsigned int)i)
-	{
-		new[0] = '\0';
-		return (new);
-	}
-	i = 0;
-	while (i < (int)len && s[start + i] != '\0')
-	{
-		new[i] = s[start + i];
-		i++;
-	}
-	new[i] = '\0';
-	return (new);
+	while (args[i])
+		ft_memdel(args[i++]);
+	ft_memdel(args);
 }

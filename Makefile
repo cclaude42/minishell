@@ -8,7 +8,9 @@ LIBFT = -L libft -lft
 
 HEADER = minishell.h
 
-SRC = $(addsuffix .c, $(addprefix srcs/, minishell))
+FILES = minishell builtin bin parse echo cd pwd export unset env minitools
+
+SRC = $(addsuffix .c, $(addprefix srcs/, $(FILES)))
 
 OBJ = $(SRC:.c=.o)
 
@@ -16,7 +18,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C libft/
-	$(CC) $(CFLAGS) -o $(NAME) $(LIBFT) $(OBJ)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT)
 
 clean:
 	rm -f $(OBJ)

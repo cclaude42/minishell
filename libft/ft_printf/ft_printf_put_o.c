@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 19:56:57 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/06 18:13:13 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/02/12 20:21:57 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,13 @@ int		ft_putoct_prewid(unsigned int n, struct s_flgs *flags)
 	int		padding;
 
 	printed = 0;
-	count = flags->precision - ft_octlen(n);
-	count += (n < 0) ? 1 : 0;
+	count = flags->precision - ft_octlen(n) + 1;
 	count = (count > 0) ? count : 0;
 	padding = flags->width - ft_octlen(n) - count;
 	padding = (padding > 0) ? padding : 0;
 	printed += padding + count + ft_octlen(n);
 	while (flags->minus == 0 && padding-- > 0)
 		buf_write(flags->buffer, ' ', &flags->index);
-	if (n < 0)
-	{
-		buf_write(flags->buffer, '-', &flags->index);
-		n = -n;
-	}
 	while (count-- > 0)
 		buf_write(flags->buffer, '0', &flags->index);
 	ft_putoct(flags, n);
@@ -62,13 +56,7 @@ int		ft_putoct_pre(unsigned int n, struct s_flgs *flags)
 
 	printed = 0;
 	count = (flags->dot == 1) ? flags->precision : flags->width;
-	count -= (n >= 0) ? ft_octlen(n) : ft_octlen(n) - 1;
-	if (n < 0)
-	{
-		buf_write(flags->buffer, '-', &flags->index);
-		n = -n;
-		printed++;
-	}
+	count -= ft_octlen(n);
 	while (count-- > 0)
 	{
 		buf_write(flags->buffer, '0', &flags->index);

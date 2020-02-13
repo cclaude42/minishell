@@ -18,7 +18,7 @@ FTMEM = bzero calloc memccpy memchr memcmp memcpy memdel memmove memset
 
 FTPUT = char endl nbr str char_fd endl_fd nbr_fd str_fd
 
-FTSTR = chr dup join lcat lcpy len mapi ncmp nstr rchr trim
+FTSTR = chr cmp dup join lcat lcpy len mapi ncmp nstr rchr trim
 
 FTSUB = ft_str/ft_substr ft_str/ft_split
 

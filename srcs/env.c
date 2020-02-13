@@ -1,40 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/08 12:58:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/12 20:16:32 by cclaude          ###   ########.fr       */
+/*   Created: 2020/02/12 16:45:33 by cclaude           #+#    #+#             */
+/*   Updated: 2020/02/12 20:32:16 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libutils.h"
+#include "minishell.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char		*get_env(char **env, const char *var)
 {
-	char	*new;
 	int		i;
+	char	*path;
 
-	if (s == NULL)
-		return (NULL);
-	if (!(new = malloc(sizeof(char) * (len + 1))))
-		return (NULL);
 	i = 0;
-	while (s[i] != '\0')
+	while (env[i] && ft_strncmp(env[i], var, ft_strlen(var)) != 0)
 		i++;
-	if (start + 1 > (unsigned int)i)
-	{
-		new[0] = '\0';
-		return (new);
-	}
+	if (env[i] == NULL)
+		return (NULL);
+	path = env[i];
+	return (path + 5);
+}
+
+int			mini_env(char **args, char **env)
+{
+	int	i;
+
+	(void)args;
 	i = 0;
-	while (i < (int)len && s[start + i] != '\0')
+
+	while (env[i])
 	{
-		new[i] = s[start + i];
+		write(1, env[i], ft_strlen(env[i]));
+		write(1, "\n", 1);
 		i++;
 	}
-	new[i] = '\0';
-	return (new);
+	return (1);
 }

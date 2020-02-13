@@ -1,40 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/08 12:58:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/12 20:16:32 by cclaude          ###   ########.fr       */
+/*   Created: 2019/10/07 14:35:51 by cclaude           #+#    #+#             */
+/*   Updated: 2020/02/12 16:33:57 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libutils.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	char	*new;
-	int		i;
+	size_t	i;
 
-	if (s == NULL)
-		return (NULL);
-	if (!(new = malloc(sizeof(char) * (len + 1))))
-		return (NULL);
 	i = 0;
-	while (s[i] != '\0')
-		i++;
-	if (start + 1 > (unsigned int)i)
+	while (s1[i] == s2[i])
 	{
-		new[0] = '\0';
-		return (new);
-	}
-	i = 0;
-	while (i < (int)len && s[start + i] != '\0')
-	{
-		new[i] = s[start + i];
+		if ((s1[i] == '\0' && s2[i] == '\0'))
+			return (0);
 		i++;
 	}
-	new[i] = '\0';
-	return (new);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

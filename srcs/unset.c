@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/08 12:58:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/12 20:16:32 by cclaude          ###   ########.fr       */
+/*   Created: 2020/02/12 16:45:09 by cclaude           #+#    #+#             */
+/*   Updated: 2020/02/12 21:15:28 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libutils.h"
+#include "minishell.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+int			mini_unset(char **args, char **env)
 {
-	char	*new;
 	int		i;
+	int		len;
+	int		found;
 
-	if (s == NULL)
-		return (NULL);
-	if (!(new = malloc(sizeof(char) * (len + 1))))
-		return (NULL);
 	i = 0;
-	while (s[i] != '\0')
-		i++;
-	if (start + 1 > (unsigned int)i)
+	found = 0;
+	len = ft_strlen(args[1]);
+	while (env[i] && args[1])
 	{
-		new[0] = '\0';
-		return (new);
-	}
-	i = 0;
-	while (i < (int)len && s[start + i] != '\0')
-	{
-		new[i] = s[start + i];
+		if (ft_strncmp(env[i], args[1], len) == 0 && env[i][len] == '=')
+			found = 1;
+		if (found)
+			env[i] = env[i + 1];
 		i++;
 	}
-	new[i] = '\0';
-	return (new);
+	return (1);
 }
