@@ -34,4 +34,7 @@ test: re
 norm:
 	norminette $(SRC) includes/$(HEADER)
 
+lftre:
+	make re -C libft/
+
 .PHONY: clean fclean re norm test
