@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libutils.h"
+#include "libft.h"
 
 int	ft_iscount(int c, char *base)
 {

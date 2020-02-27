@@ -1,20 +1,22 @@
-# Lib Utils
+# Libft
 
 A library of utilities, including a rewritten and expanded libft, an optimized ft_printf, and get_next_line. The library is usable in a 42 project, meaning it's hand-written, doesn't call any forbidden functions, and respects the 42 coding norm.
 
+(For the libft project, refers to https://github.com/cclaude42/old_libft)
+
 ## How to use it
 
-Using ``make`` will create the ``libutils.a`` binary.
+Using ``make`` will create the ``libft.a`` binary.
 
 To include the library in your project, clone the repository in your working tree and compile with the following flags :
 
 ```
-gcc -L. -lutils file.c
+gcc -L. -lft file.c
 ```
 
 ## Available functions
 
-This section lists the functions callable from the library. For the prototypes, refer the libutils.h header.
+This section lists the functions callable from the library. For the prototypes, refer to the headers.
 
 #### GET_NEXT_LINE
 
@@ -78,6 +80,7 @@ This section lists the functions callable from the library. For the prototypes, 
 
 * ``ft_split``
 * ``ft_strchr``
+* ``ft_strcmp``
 * ``ft_strdup``
 * ``ft_strjoin``
 * ``ft_strlcat``

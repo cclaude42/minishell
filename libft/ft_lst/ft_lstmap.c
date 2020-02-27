@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libutils.h"
+#include "libft.h"
 
 static t_list	*map_free(t_list *start, void (*del)(void *))
 {

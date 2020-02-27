@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libutils.h"
+#include "libft.h"
 
 void	ft_skip_spacenl(const char *str, int *i)
 {

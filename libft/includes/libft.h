@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libutils.h                                         :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 14:32:51 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/12 16:34:54 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/02/27 12:48:50 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBUTILS_H
-# define LIBUTILS_H
+#ifndef LIBFT_H
+# define LIBFT_H
 # include <stdlib.h>
 # include <fcntl.h>
 # include <string.h>

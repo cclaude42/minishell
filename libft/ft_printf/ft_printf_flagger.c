@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:18:32 by cclaude           #+#    #+#             */
-/*   Updated: 2019/10/31 12:55:13 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/02/27 12:32:29 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		is_valid_flag(const char c)
 	return (0);
 }
 
-int		ft_atoi_star(const char *s, int *i, va_list args)
+int		pf_atoi_star(const char *s, int *i, va_list args)
 {
 	int	num;
 
@@ -55,7 +55,7 @@ int		ft_atoi_star(const char *s, int *i, va_list args)
 	return (num);
 }
 
-void	ft_neg_star(struct s_flgs *flags)
+void	pf_neg_star(struct s_flgs *flags)
 {
 	if (flags->precision < 0)
 	{
@@ -86,12 +86,12 @@ void	flagger(const char *s, int *i, struct s_flgs *flags, va_list args)
 		else if (s[*i] == '.')
 		{
 			flags->dot = 1;
-			flags->precision = ft_atoi_star(s, i, args);
+			flags->precision = pf_atoi_star(s, i, args);
 		}
 		else if (s[*i] == '*' || (s[*i] >= '1' && s[*i] <= '9'))
-			flags->width = ft_atoi_star(s, i, args);
+			flags->width = pf_atoi_star(s, i, args);
 		if (flags->precision < 0 || flags->width < 0)
-			ft_neg_star(flags);
+			pf_neg_star(flags);
 		(*i)++;
 	}
 }

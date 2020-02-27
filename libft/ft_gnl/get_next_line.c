@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libutils.h"
+#include "libft.h"
 
 int		newline_check(char *stock, int read_size)
 {

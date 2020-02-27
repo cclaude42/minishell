@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 22:07:57 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/06 18:41:39 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/02/27 12:31:29 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,52 +27,52 @@ struct	s_flgs
 	int		width;
 };
 
-int		ft_putchar_minwid(struct s_flgs *flags, char c, int width);
-int		ft_putchar_zerowid(struct s_flgs *flags, char c, int width);
-int		ft_putchar_wid(struct s_flgs *flags, char c, int width);
-int		ft_putchar(struct s_flgs *flags, char c);
+int		pf_putchar_minwid(struct s_flgs *flags, char c, int width);
+int		pf_putchar_zerowid(struct s_flgs *flags, char c, int width);
+int		pf_putchar_wid(struct s_flgs *flags, char c, int width);
+int		pf_putchar(struct s_flgs *flags, char c);
 
-int		ft_strlen(char *s);
-int		ft_putstr_prewid(char *s, struct s_flgs *flags);
-int		ft_putstr_wid(char *s, struct s_flgs *flags);
-int		ft_putstr_pre(struct s_flgs *flags, char *s, int prec);
-int		ft_putstr(struct s_flgs *flags, char *s);
+int		pf_strlen(char *s);
+int		pf_putstr_prewid(char *s, struct s_flgs *flags);
+int		pf_putstr_wid(char *s, struct s_flgs *flags);
+int		pf_putstr_pre(struct s_flgs *flags, char *s, int prec);
+int		pf_putstr(struct s_flgs *flags, char *s);
 
-int		ft_memlen(unsigned long n);
-int		ft_putmem_prewid(unsigned long n, struct s_flgs *flags);
-int		ft_putmem_wid(unsigned long n, struct s_flgs *flags);
-int		ft_putmem_pre(unsigned long n, struct s_flgs *flags);
-int		ft_putmem(struct s_flgs *flags, unsigned long n, int start);
+int		pf_memlen(unsigned long n);
+int		pf_putmem_prewid(unsigned long n, struct s_flgs *flags);
+int		pf_putmem_wid(unsigned long n, struct s_flgs *flags);
+int		pf_putmem_pre(unsigned long n, struct s_flgs *flags);
+int		pf_putmem(struct s_flgs *flags, unsigned long n, int start);
 
-int		ft_nbrlen(long n);
-int		ft_putnbr_prewid(long n, struct s_flgs *flags);
-int		ft_putnbr_pre(long n, struct s_flgs *flags);
-int		ft_putnbr_wid(long n, struct s_flgs *flags);
-int		ft_putnbr(struct s_flgs *flags, long n);
+int		pf_nbrlen(long n);
+int		pf_putnbr_prewid(long n, struct s_flgs *flags);
+int		pf_putnbr_pre(long n, struct s_flgs *flags);
+int		pf_putnbr_wid(long n, struct s_flgs *flags);
+int		pf_putnbr(struct s_flgs *flags, long n);
 
-int		ft_hexlen(unsigned int n);
-int		ft_puthex_prewid(unsigned int n, struct s_flgs *flags, int cap);
-int		ft_puthex_pre(unsigned int n, struct s_flgs *flags, int cap);
-int		ft_puthex_wid(unsigned int n, struct s_flgs *flags, int cap);
-int		ft_puthex(struct s_flgs *flags, unsigned int n, int cap);
+int		pf_hexlen(unsigned int n);
+int		pf_puthex_prewid(unsigned int n, struct s_flgs *flags, int cap);
+int		pf_puthex_pre(unsigned int n, struct s_flgs *flags, int cap);
+int		pf_puthex_wid(unsigned int n, struct s_flgs *flags, int cap);
+int		pf_puthex(struct s_flgs *flags, unsigned int n, int cap);
 
-int		ft_octlen(unsigned int n);
-int		ft_putoct_prewid(unsigned int n, struct s_flgs *flags);
-int		ft_putoct_pre(unsigned int n, struct s_flgs *flags);
-int		ft_putoct_wid(unsigned int n, struct s_flgs *flags);
-int		ft_putoct(struct s_flgs *flags, unsigned int n);
+int		pf_octlen(unsigned int n);
+int		pf_putoct_prewid(unsigned int n, struct s_flgs *flags);
+int		pf_putoct_pre(unsigned int n, struct s_flgs *flags);
+int		pf_putoct_wid(unsigned int n, struct s_flgs *flags);
+int		pf_putoct(struct s_flgs *flags, unsigned int n);
 
-int		ft_print_char(char c, struct s_flgs *flags);
-int		ft_print_str(char *s, struct s_flgs *flags);
-int		ft_print_mem(unsigned long n, struct s_flgs *flags);
-int		ft_print_nbr(long n, struct s_flgs *flags);
-int		ft_print_hex(unsigned int n, struct s_flgs *flags, char c);
-int		ft_print_oct(unsigned int n, struct s_flgs *flags);
-int		ft_print_other(char c, struct s_flgs *flags);
+int		pf_print_char(char c, struct s_flgs *flags);
+int		pf_print_str(char *s, struct s_flgs *flags);
+int		pf_print_mem(unsigned long n, struct s_flgs *flags);
+int		pf_print_nbr(long n, struct s_flgs *flags);
+int		pf_print_hex(unsigned int n, struct s_flgs *flags, char c);
+int		pf_print_oct(unsigned int n, struct s_flgs *flags);
+int		pf_print_other(char c, struct s_flgs *flags);
 
 int		is_end_flag(const char c);
 int		is_valid_flag(const char c);
-int		ft_atoi_star(const char *s, int *i, va_list args);
+int		pf_atoi_star(const char *s, int *i, va_list args);
 void	flagger(const char *s, int *i, struct s_flgs *flags, va_list args);
 
 void	buf_write(char *buffer, char c, int *printed);

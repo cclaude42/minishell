@@ -6,13 +6,13 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 20:02:00 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/06 18:13:13 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/02/27 12:32:26 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_print_nbr(long n, struct s_flgs *flags)
+int		pf_print_nbr(long n, struct s_flgs *flags)
 {
 	int	i;
 
@@ -24,18 +24,18 @@ int		ft_print_nbr(long n, struct s_flgs *flags)
 		return (flags->width);
 	}
 	else if (flags->width > 0 && flags->dot == 1)
-		return (ft_putnbr_prewid(n, flags));
+		return (pf_putnbr_prewid(n, flags));
 	else if (flags->width > 0 && flags->zero == 0)
-		return (ft_putnbr_wid(n, flags));
+		return (pf_putnbr_wid(n, flags));
 	else if (flags->width > 0 && flags->zero == 1 && flags->minus == 1)
-		return (ft_putnbr_wid(n, flags));
+		return (pf_putnbr_wid(n, flags));
 	else if (flags->dot == 1 || (flags->width > 0 && flags->zero == 1))
-		return (ft_putnbr_pre(n, flags));
+		return (pf_putnbr_pre(n, flags));
 	else
-		return (ft_putnbr(flags, n));
+		return (pf_putnbr(flags, n));
 }
 
-int		ft_print_hex(unsigned int n, struct s_flgs *flags, char c)
+int		pf_print_hex(unsigned int n, struct s_flgs *flags, char c)
 {
 	int	i;
 	int	cap;
@@ -49,18 +49,18 @@ int		ft_print_hex(unsigned int n, struct s_flgs *flags, char c)
 		return (flags->width);
 	}
 	else if (flags->width > 0 && flags->dot == 1)
-		return (ft_puthex_prewid(n, flags, cap));
+		return (pf_puthex_prewid(n, flags, cap));
 	else if (flags->width > 0 && flags->zero == 0)
-		return (ft_puthex_wid(n, flags, cap));
+		return (pf_puthex_wid(n, flags, cap));
 	else if (flags->width > 0 && flags->zero == 1 && flags->minus == 1)
-		return (ft_puthex_wid(n, flags, cap));
+		return (pf_puthex_wid(n, flags, cap));
 	else if (flags->dot == 1 || (flags->width > 0 && flags->zero == 1))
-		return (ft_puthex_pre(n, flags, cap));
+		return (pf_puthex_pre(n, flags, cap));
 	else
-		return (ft_puthex(flags, n, cap));
+		return (pf_puthex(flags, n, cap));
 }
 
-int		ft_print_oct(unsigned int n, struct s_flgs *flags)
+int		pf_print_oct(unsigned int n, struct s_flgs *flags)
 {
 	int	i;
 
@@ -72,18 +72,18 @@ int		ft_print_oct(unsigned int n, struct s_flgs *flags)
 		return (flags->width);
 	}
 	else if (flags->width > 0 && flags->dot == 1)
-		return (ft_putoct_prewid(n, flags));
+		return (pf_putoct_prewid(n, flags));
 	else if (flags->width > 0 && flags->zero == 0)
-		return (ft_putoct_wid(n, flags));
+		return (pf_putoct_wid(n, flags));
 	else if (flags->width > 0 && flags->zero == 1 && flags->minus == 1)
-		return (ft_putoct_wid(n, flags));
+		return (pf_putoct_wid(n, flags));
 	else if (flags->dot == 1 || (flags->width > 0 && flags->zero == 1))
-		return (ft_putoct_pre(n, flags));
+		return (pf_putoct_pre(n, flags));
 	else
-		return (ft_putoct(flags, n));
+		return (pf_putoct(flags, n));
 }
 
-int		ft_print_other(char c, struct s_flgs *flags)
+int		pf_print_other(char c, struct s_flgs *flags)
 {
 	int	padding;
 

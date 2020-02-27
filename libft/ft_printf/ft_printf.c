@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:18:32 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/06 18:17:59 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/02/27 12:32:58 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,21 @@ int		func_branch(const char *s, int *i, va_list args, struct s_flgs *flags)
 	(*i)++;
 	flagger(s, i, flags, args);
 	if (s[*i] == 'c')
-		ft_print_char(va_arg(args, int), flags);
+		pf_print_char(va_arg(args, int), flags);
 	else if (s[*i] == 's')
-		ft_print_str(va_arg(args, char *), flags);
+		pf_print_str(va_arg(args, char *), flags);
 	else if (s[*i] == 'p')
-		ft_print_mem(va_arg(args, unsigned long), flags);
+		pf_print_mem(va_arg(args, unsigned long), flags);
 	else if (s[*i] == 'd' || s[*i] == 'i')
-		ft_print_nbr(va_arg(args, int), flags);
+		pf_print_nbr(va_arg(args, int), flags);
 	else if (s[*i] == 'u')
-		ft_print_nbr(va_arg(args, unsigned int), flags);
+		pf_print_nbr(va_arg(args, unsigned int), flags);
 	else if (s[*i] == 'x' || s[*i] == 'X')
-		ft_print_hex(va_arg(args, unsigned int), flags, s[*i]);
+		pf_print_hex(va_arg(args, unsigned int), flags, s[*i]);
 	else if (s[*i] == 'o')
-		ft_print_oct(va_arg(args, unsigned int), flags);
+		pf_print_oct(va_arg(args, unsigned int), flags);
 	else
-		ft_print_other(s[*i], flags);
+		pf_print_other(s[*i], flags);
 	if (s[*i] != '\0')
 		(*i)++;
 	return (1);

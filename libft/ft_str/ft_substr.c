@@ -6,18 +6,18 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 12:58:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/12 20:16:32 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/02/06 15:38:11 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libutils.h"
+#include "libft.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*new;
 	int		i;
 
-	if (s == NULL)
+	if (s == NULL || start < 0 || len < 0)
 		return (NULL);
 	if (!(new = malloc(sizeof(char) * (len + 1))))
 		return (NULL);

@@ -6,13 +6,13 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 19:56:57 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/12 20:21:57 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/02/27 12:32:41 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_octlen(unsigned int n)
+int		pf_octlen(unsigned int n)
 {
 	int	len;
 
@@ -27,58 +27,70 @@ int		ft_octlen(unsigned int n)
 	return (len);
 }
 
-int		ft_putoct_prewid(unsigned int n, struct s_flgs *flags)
+int		pf_putoct_prewid(unsigned int n, struct s_flgs *flags)
 {
 	int		printed;
 	int		count;
 	int		padding;
 
 	printed = 0;
-	count = flags->precision - ft_octlen(n) + 1;
+	count = flags->precision - pf_octlen(n);
+	count += (n < 0) ? 1 : 0;
 	count = (count > 0) ? count : 0;
-	padding = flags->width - ft_octlen(n) - count;
+	padding = flags->width - pf_octlen(n) - count;
 	padding = (padding > 0) ? padding : 0;
-	printed += padding + count + ft_octlen(n);
+	printed += padding + count + pf_octlen(n);
 	while (flags->minus == 0 && padding-- > 0)
 		buf_write(flags->buffer, ' ', &flags->index);
+	if (n < 0)
+	{
+		buf_write(flags->buffer, '-', &flags->index);
+		n = -n;
+	}
 	while (count-- > 0)
 		buf_write(flags->buffer, '0', &flags->index);
-	ft_putoct(flags, n);
+	pf_putoct(flags, n);
 	while (flags->minus == 1 && padding-- > 0)
 		buf_write(flags->buffer, ' ', &flags->index);
 	return (printed);
 }
 
-int		ft_putoct_pre(unsigned int n, struct s_flgs *flags)
+int		pf_putoct_pre(unsigned int n, struct s_flgs *flags)
 {
 	int		printed;
 	int		count;
 
 	printed = 0;
 	count = (flags->dot == 1) ? flags->precision : flags->width;
-	count -= ft_octlen(n);
+	count -= (n >= 0) ? pf_octlen(n) : pf_octlen(n) - 1;
+	if (n < 0)
+	{
+		buf_write(flags->buffer, '-', &flags->index);
+		n = -n;
+		printed++;
+	}
 	while (count-- > 0)
 	{
 		buf_write(flags->buffer, '0', &flags->index);
 		printed++;
 	}
-	printed += ft_putoct(flags, n);
+	printed += pf_putoct(flags, n);
 	return (printed);
 }
 
-int		ft_putoct_wid(unsigned int n, struct s_flgs *flags)
+int		pf_putoct_wid(unsigned int n, struct s_flgs *flags)
 {
 	int		printed;
 	int		padding;
 
 	printed = 0;
-	padding = flags->width - ft_octlen(n);
+	padding = flags->width - pf_octlen(n);
 	while (flags->minus == 0 && padding-- > 0)
 	{
 		buf_write(flags->buffer, ' ', &flags->index);
 		printed++;
 	}
-	printed += ft_putoct(flags, n);
+	printed += pf_putoct(flags, n);
 	while (flags->minus == 1 && padding-- > 0)
 	{
 		buf_write(flags->buffer, ' ', &flags->index);
@@ -87,7 +99,7 @@ int		ft_putoct_wid(unsigned int n, struct s_flgs *flags)
 	return (printed);
 }
 
-int		ft_putoct(struct s_flgs *flags, unsigned int n)
+int		pf_putoct(struct s_flgs *flags, unsigned int n)
 {
 	char	*set;
 	int		printed;
@@ -96,7 +108,7 @@ int		ft_putoct(struct s_flgs *flags, unsigned int n)
 	set = "01234567";
 	printed = 0;
 	if (n / 8 > 0)
-		printed += ft_putoct(flags, n / 8);
+		printed += pf_putoct(flags, n / 8);
 	i = n % 8;
 	buf_write(flags->buffer, set[i], &flags->index);
 	printed++;
