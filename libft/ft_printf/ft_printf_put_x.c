@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:21:24 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/27 12:32:52 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/20 19:39:03 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,12 @@ int		pf_puthex_prewid(unsigned int n, struct s_flgs *flags, int cap)
 
 	printed = 0;
 	count = flags->precision - pf_hexlen(n);
-	count += (n < 0) ? 1 : 0;
 	count = (count > 0) ? count : 0;
 	padding = flags->width - pf_hexlen(n) - count;
 	padding = (padding > 0) ? padding : 0;
 	printed += padding + count + pf_hexlen(n);
 	while (flags->minus == 0 && padding-- > 0)
 		buf_write(flags->buffer, ' ', &flags->index);
-	if (n < 0)
-	{
-		buf_write(flags->buffer, '-', &flags->index);
-		n = -n;
-	}
 	while (count-- > 0)
 		buf_write(flags->buffer, '0', &flags->index);
 	pf_puthex(flags, n, cap);
@@ -62,13 +56,7 @@ int		pf_puthex_pre(unsigned int n, struct s_flgs *flags, int cap)
 
 	printed = 0;
 	count = (flags->dot == 1) ? flags->precision : flags->width;
-	count -= (n >= 0) ? pf_hexlen(n) : pf_hexlen(n) - 1;
-	if (n < 0)
-	{
-		buf_write(flags->buffer, '-', &flags->index);
-		n = -n;
-		printed++;
-	}
+	count -= pf_hexlen(n);
 	while (count-- > 0)
 	{
 		buf_write(flags->buffer, '0', &flags->index);

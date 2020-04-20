@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 19:56:57 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/27 12:32:41 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/20 19:38:23 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,12 @@ int		pf_putoct_prewid(unsigned int n, struct s_flgs *flags)
 
 	printed = 0;
 	count = flags->precision - pf_octlen(n);
-	count += (n < 0) ? 1 : 0;
 	count = (count > 0) ? count : 0;
 	padding = flags->width - pf_octlen(n) - count;
 	padding = (padding > 0) ? padding : 0;
 	printed += padding + count + pf_octlen(n);
 	while (flags->minus == 0 && padding-- > 0)
 		buf_write(flags->buffer, ' ', &flags->index);
-	if (n < 0)
-	{
-		buf_write(flags->buffer, '-', &flags->index);
-		n = -n;
-	}
 	while (count-- > 0)
 		buf_write(flags->buffer, '0', &flags->index);
 	pf_putoct(flags, n);
@@ -62,13 +56,7 @@ int		pf_putoct_pre(unsigned int n, struct s_flgs *flags)
 
 	printed = 0;
 	count = (flags->dot == 1) ? flags->precision : flags->width;
-	count -= (n >= 0) ? pf_octlen(n) : pf_octlen(n) - 1;
-	if (n < 0)
-	{
-		buf_write(flags->buffer, '-', &flags->index);
-		n = -n;
-		printed++;
-	}
+	count -= pf_octlen(n);
 	while (count-- > 0)
 	{
 		buf_write(flags->buffer, '0', &flags->index);
