@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/21 00:11:37 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/21 13:56:23 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,10 @@ typedef struct	s_mini
 	t_token			*start;
 }				t_mini;
 
+t_token			*get_args(char *line);
+
+
+// LIBFT !
+void	ft_skip_spacenl(const char *str, int *i);
+int		ft_strcmp(const char *s1, const char *s2);
 #endif
