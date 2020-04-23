@@ -42,9 +42,6 @@ typedef struct	s_mini
 }				t_mini;
 
 t_token			*get_args(char *line);
+void			del_args(t_token *start);
 
-
-// LIBFT !
-void	ft_skip_spacenl(const char *str, int *i);
-int		ft_strcmp(const char *s1, const char *s2);
 #endif

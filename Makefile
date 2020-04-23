@@ -8,7 +8,7 @@ LIBFT = -L libft -lft
 
 HEADER = minishell.h
 
-FILES = minishell builtin bin parse echo cd pwd export unset env minitools
+FILES = minishell parse
 
 SRC = $(addsuffix .c, $(addprefix srcs/, $(FILES)))
 
@@ -37,4 +37,4 @@ norm:
 lftre:
 	make re -C libft/
 
-.PHONY: clean fclean re norm test
+.PHONY: clean fclean re norm lftre test

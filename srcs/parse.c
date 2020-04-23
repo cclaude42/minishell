@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_args.c                                         :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -30,6 +30,18 @@ void	arg_type(t_token *token)
 		token->type = CMD;
 	else
 		token->type = ARG;
+}
+
+void	del_args(t_token *start)
+{
+	while (start->next)
+	{
+		free(start->tok);
+		start = start->next;
+		free(start->prev);
+	}
+	free(start->tok);
+	free(start);
 }
 
 t_token	*get_next(char *line, int *i)
