@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/21 13:55:27 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/23 16:27:35 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ t_token	*get_next(char *line, int *i)
 	j = 0;
 	while (line[*i] && line[*i] != c)
 		token->tok[j++] = line[(*i)++];
+	token->tok[j] = '\0';
 	if (line[*i])
 		(*i)++;
 	return (token);

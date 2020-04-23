@@ -6,18 +6,20 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/21 13:56:23 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/23 16:00:05 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "libft.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <string.h>
 # include <fcntl.h>
+# include <stdbool.h>
 
 # define EMPTY 0
 # define CMD 1
@@ -39,6 +41,7 @@ typedef struct	s_token
 typedef struct	s_mini
 {
 	t_token			*start;
+	bool			run;
 }				t_mini;
 
 t_token			*get_args(char *line);
