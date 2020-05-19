@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/23 16:00:05 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/05/19 15:34:28 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct	s_token
 typedef struct	s_mini
 {
 	t_token			*start;
-	bool			run;
+	int				run;
 }				t_mini;
 
 t_token			*get_args(char *line);
