@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/23 16:27:35 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/05/20 14:46:49 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 void	arg_type(t_token *token)
 {
-	if (ft_strcmp(token->tok, "") == 0)
+	if (ft_strcmp(token->str, "") == 0)
 		token->type = EMPTY;
-	else if (ft_strcmp(token->tok, ">") == 0)
+	else if (ft_strcmp(token->str, ">") == 0)
 		token->type = APPEND;
-	else if (ft_strcmp(token->tok, ">>") == 0)
+	else if (ft_strcmp(token->str, ">>") == 0)
 		token->type = TRUNC;
-	else if (ft_strcmp(token->tok, "<") == 0)
+	else if (ft_strcmp(token->str, "<") == 0)
 		token->type = REDIR;
-	else if (ft_strcmp(token->tok, "|") == 0)
+	else if (ft_strcmp(token->str, "|") == 0)
 		token->type = PIPE;
-	else if (ft_strcmp(token->tok, ";") == 0)
+	else if (ft_strcmp(token->str, ";") == 0)
 		token->type = END;
 	else if (token->prev == NULL || token->prev->type >= APPEND)
 		token->type = CMD;
@@ -36,11 +36,11 @@ void	del_args(t_token *start)
 {
 	while (start->next)
 	{
-		free(start->tok);
+		free(start->str);
 		start = start->next;
 		free(start->prev);
 	}
-	free(start->tok);
+	free(start->str);
 	free(start);
 }
 
@@ -57,11 +57,11 @@ t_token	*get_next(char *line, int *i)
 	j = 0;
 	while (line[*i + j] && line[*i + j] != c)
 		j++;
-	token->tok = malloc(sizeof(char) * (j + 1));
+	token->str = malloc(sizeof(char) * (j + 1));
 	j = 0;
 	while (line[*i] && line[*i] != c)
-		token->tok[j++] = line[(*i)++];
-	token->tok[j] = '\0';
+		token->str[j++] = line[(*i)++];
+	token->str[j] = '\0';
 	if (line[*i])
 		(*i)++;
 	return (token);

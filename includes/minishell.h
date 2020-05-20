@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/05/19 15:34:28 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/05/20 15:17:43 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@
 # include <stdio.h>
 # include <string.h>
 # include <fcntl.h>
-# include <stdbool.h>
+// # include <stdbool.h>
+// # include <stdarg.h>
+# include <sys/wait.h>
+// # include <sys/types.h>
+# include <dirent.h>
+// # include <limits.h>
 
 # define EMPTY 0
 # define CMD 1
@@ -32,7 +37,7 @@
 
 typedef struct	s_token
 {
-	char			*tok;
+	char			*str;
 	int				type;
 	struct s_token	*prev;
 	struct s_token	*next;
@@ -41,6 +46,7 @@ typedef struct	s_token
 typedef struct	s_mini
 {
 	t_token			*start;
+	char			**env;
 	int				run;
 }				t_mini;
 
