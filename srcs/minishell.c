@@ -6,25 +6,11 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/05/21 12:14:33 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/05/21 14:49:28 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_args(t_token *start)
-{
-	int		i = 0;
-	char	*s[8] = {"(EMPTY)", "(CMD)", "(ARG)", "(APPEND)",
-					"(TRUNC)", "(REDIR)", "(PIPE)", "(END)"};
-
-	while (start->next)
-	{
-		printf("#%d %-8s [%s]\n", i++, s[start->type], start->str);
-		start = start->next;
-	}
-	printf("#%d %-8s [%s]\n", i++, s[start->type], start->str);
-}
 
 int		has_exit(t_token *start)
 {
@@ -100,9 +86,13 @@ int		bin_exec(char **args, char **env)
 	while (args[0] && bin[i] && path == NULL)
 		path = check_dir(bin[i++], args[0]);
 	if (bin[i] == NULL)
+	{
+		del_tab(bin);
 		return (0);
+	}
 	magic_box(path, args, env);
 	ft_memdel(path);
+	del_tab(bin);
 	return (1);
 }
 
@@ -145,6 +135,7 @@ void	minishell(t_mini *mini)
 	{
 		cmd = get_cmd_tab(token);
 		bin_exec(cmd, mini->env);
+		ft_memdel(cmd);
 		token = token->next;
 		while (token && token->type != CMD)
 			token = token->next;

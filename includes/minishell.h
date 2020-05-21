@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/05/21 12:12:49 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/05/21 14:45:50 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ typedef struct	s_mini
 t_token			*get_args(char *line);
 void			del_args(t_token *start);
 void			parse(t_mini *mini);
+void			del_tab(char **tab);
 
 #endif
