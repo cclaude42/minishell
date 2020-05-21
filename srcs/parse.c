@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/05/20 14:46:49 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/05/21 12:15:02 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,17 @@ void	arg_type(t_token *token)
 
 void	del_args(t_token *start)
 {
-	while (start->next)
+	while (start && start->next)
 	{
 		free(start->str);
 		start = start->next;
 		free(start->prev);
 	}
-	free(start->str);
-	free(start);
+	if (start)
+	{
+		free(start->str);
+		free(start);
+	}
 }
 
 t_token	*get_next(char *line, int *i)
@@ -92,4 +95,15 @@ t_token	*get_args(char *line)
 	while (next && next->prev)
 		next = next->prev;
 	return (next);
+}
+
+void	parse(t_mini *mini)
+{
+	char	*line;
+
+	write(1, "minishell > ", 13);
+	get_next_line(0, &line);
+	mini->start = get_args(line);
+	ft_memdel(line);
+	// print_args(mini->start);
 }

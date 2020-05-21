@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/05/21 11:51:24 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/05/21 12:14:33 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,7 @@ void	minishell(t_mini *mini)
 
 int		main(int ac, char **av, char **env)
 {
-	t_mini  mini;
-	char    *line;
+	t_mini	mini;
 
 	(void)ac;
 	(void)av;
@@ -162,11 +161,7 @@ int		main(int ac, char **av, char **env)
 	mini.run = 1;
 	while (mini.run)
 	{
-		write(1, "minishell > ", 13);
-		get_next_line(0, &line);
-		mini.start = get_args(line);
-		ft_memdel(line);
-		// print_args(mini.start);
+		parse(&mini);
 		if (mini.start != NULL)
 			minishell(&mini);
 		if (has_exit(mini.start))
