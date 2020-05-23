@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/05/23 13:33:44 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/05/23 14:15:53 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,14 +117,11 @@ void	minishell(t_mini *mini)
 	token = mini->start;
 	while (token && token->type != CMD)
 		token = token->next;
-	while (token && token->type == CMD)
+	while (mini->run && token && token->type == CMD)
 	{
 		cmd = get_cmd_tab(token);
 		if (ft_strcmp(cmd[0], "exit") == 0)
-		{
 			mini->run = 0;
-			return ;
-		}
 		bin_exec(cmd, mini->env);
 		ft_memdel(cmd);
 		token = token->next;

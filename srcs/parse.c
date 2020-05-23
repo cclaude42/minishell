@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/05/21 14:45:40 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/05/23 14:30:58 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,26 +74,52 @@ void	del_tab(char **tab)
 	free(tab);
 }
 
+int		parse_alloc_size(char *line, int *i)
+{
+	int		count;
+	int		j;
+	char	c;
+
+	count = 0;
+	j = 0;
+	c = ' ';
+	while (line[*i + j] && (line[*i + j] != ' ' || c != ' '))
+	{
+		if (c == ' ' && (line[*i + j] == '\'' || line[*i + j] == '\"'))
+			c = line[*i + j++];
+		else if (c != ' ' && line[*i + j] == c)
+		{
+			count += 2;
+			c = ' ';
+			j++;
+		}
+		j++;
+	}
+	return (j - count + 1);
+}
+
 t_token	*get_next(char *line, int *i)
 {
 	t_token	*token;
-	char	c;
 	int		j;
+	char	c;
 
-	token = malloc(sizeof(t_token));
+	j = 0;
 	c = ' ';
-	if (line[*i] == '\'' || line[*i] == '\"')
-		c = line[(*i)++];
-	j = 0;
-	while (line[*i + j] && line[*i + j] != c)
-		j++;
-	token->str = malloc(sizeof(char) * (j + 1));
-	j = 0;
-	while (line[*i] && line[*i] != c)
+	token = malloc(sizeof(t_token));
+	token->str = malloc(sizeof(char) * parse_alloc_size(line, i));
+	while (line[*i] && (line[*i] != ' ' || c != ' '))
+	{
+		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))
+			c = line[(*i)++];
+		else if (c != ' ' && line[*i] == c)
+		{
+			c = ' ';
+			(*i)++;
+		}
 		token->str[j++] = line[(*i)++];
+	}
 	token->str[j] = '\0';
-	if (line[*i])
-		(*i)++;
 	return (token);
 }
 
