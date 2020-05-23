@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/05/21 14:45:50 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/05/21 15:00:47 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 # include <stdio.h>
 # include <string.h>
 # include <fcntl.h>
-// # include <stdbool.h>
-// # include <stdarg.h>
+# include <dirent.h>
 # include <sys/wait.h>
 // # include <sys/types.h>
-# include <dirent.h>
+// # include <stdbool.h>
+// # include <stdarg.h>
 // # include <limits.h>
 
 # define EMPTY 0

@@ -6,25 +6,11 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/05/21 14:49:28 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/05/23 13:33:44 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		has_exit(t_token *start)
-{
-	t_token	*token;
-
-	token = start;
-	while (token)
-	{
-		if (ft_strcmp(token->str, "exit") == 0 && token->type == CMD)
-			return (1);
-		token = token->next;
-	}
-	return (0);
-}
 
 void	magic_box(char *path, char **args, char **env)
 {
@@ -48,7 +34,7 @@ char		*path_join(const char *s1, const char *s2)
 	return (path);
 }
 
-static char	*check_dir(char *bin, char *command)
+char	*check_dir(char *bin, char *command)
 {
 	DIR				*folder;
 	struct dirent	*item;
@@ -134,6 +120,11 @@ void	minishell(t_mini *mini)
 	while (token && token->type == CMD)
 	{
 		cmd = get_cmd_tab(token);
+		if (ft_strcmp(cmd[0], "exit") == 0)
+		{
+			mini->run = 0;
+			return ;
+		}
 		bin_exec(cmd, mini->env);
 		ft_memdel(cmd);
 		token = token->next;
@@ -155,8 +146,6 @@ int		main(int ac, char **av, char **env)
 		parse(&mini);
 		if (mini.start != NULL)
 			minishell(&mini);
-		if (has_exit(mini.start))
-			mini.run = 0;
 		del_args(mini.start);
 	}
 	return (0);
