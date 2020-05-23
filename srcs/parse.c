@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/05/23 14:30:58 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/05/23 17:46:04 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,72 @@ void	del_tab(char **tab)
 	free(tab);
 }
 
-int		parse_alloc_size(char *line, int *i)
+int		open_quotes(char *line, int index)
+{
+	int	i;
+	int	open;
+
+	i = 0;
+	open = 0;
+	while (line[i] && i != index)
+	{
+		if (open == 0 && line[i] == '\"')
+			open = 1;
+		else if (open == 0 && line[i] == '\'')
+			open = 2;
+		else if (open == 1 && line[i] == '\"')
+			open = 0;
+		else if (open == 2 && line[i] == '\'')
+			open = 0;
+		i++;
+	}
+	return (open);
+}
+
+int		space_args_alloc(char *line)
+{
+	int	count;
+	int	i;
+
+	count = 0;
+	i = 0;
+	while (line[i])
+	{
+		if (open_quotes(line, i) == 0 && ft_strchr("<>|;", line[i]))
+			count++;
+		i++;
+	}
+	return (i + 2 * count + 1);
+}
+
+char	*space_args(char *line)
+{
+	char	*new;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	new = malloc(sizeof(char) * space_args_alloc(line));
+	while (line[i])
+	{
+		if (open_quotes(line, i) == 0 && ft_strchr("<>|;", line[i]))
+		{
+			new[j++] = ' ';
+			new[j++] = line[i++];
+			if (open_quotes(line, i) == 0 && line[i] == '>')
+				new[j++] = line[i++];
+			new[j++] = ' ';
+		}
+		else
+			new[j++] = line[i++];
+	}
+	new[j] = '\0';
+	ft_memdel(line);
+	return (new);
+}
+
+int		get_next_alloc(char *line, int *i)
 {
 	int		count;
 	int		j;
@@ -93,7 +158,8 @@ int		parse_alloc_size(char *line, int *i)
 			c = ' ';
 			j++;
 		}
-		j++;
+		else
+			j++;
 	}
 	return (j - count + 1);
 }
@@ -107,7 +173,7 @@ t_token	*get_next(char *line, int *i)
 	j = 0;
 	c = ' ';
 	token = malloc(sizeof(t_token));
-	token->str = malloc(sizeof(char) * parse_alloc_size(line, i));
+	token->str = malloc(sizeof(char) * get_next_alloc(line, i));
 	while (line[*i] && (line[*i] != ' ' || c != ' '))
 	{
 		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))
@@ -117,7 +183,8 @@ t_token	*get_next(char *line, int *i)
 			c = ' ';
 			(*i)++;
 		}
-		token->str[j++] = line[(*i)++];
+		else
+			token->str[j++] = line[(*i)++];
 	}
 	token->str[j] = '\0';
 	return (token);
@@ -150,28 +217,6 @@ t_token	*get_args(char *line)
 	return (next);
 }
 
-int		open_quotes(char *line)
-{
-	int	i;
-	int	open;
-
-	i = 0;
-	open = 0;
-	while (line[i])
-	{
-		if (open == 0 && line[i] == '\"')
-			open = 1;
-		else if (open == 0 && line[i] == '\'')
-			open = 2;
-		else if (open == 1 && line[i] == '\"')
-			open = 0;
-		else if (open == 2 && line[i] == '\'')
-			open = 0;
-		i++;
-	}
-	return (open);
-}
-
 void	parse(t_mini *mini)
 {
 	char	*line;
@@ -180,7 +225,7 @@ void	parse(t_mini *mini)
 
 	write(1, "minishell > ", 13);
 	get_next_line(0, &line);
-	while (open_quotes(line))
+	while (open_quotes(line, 214748364))
 	{
 		write(1, "> ", 2);
 		get_next_line(0, &more);
@@ -192,6 +237,7 @@ void	parse(t_mini *mini)
 		ft_memdel(more);
 		ft_memdel(tmp);
 	}
+	line = space_args(line);
 	mini->start = get_args(line);
 	ft_memdel(line);
 	// print_args(mini->start);
