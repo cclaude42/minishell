@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/05/23 14:15:53 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/05/23 17:50:30 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	**get_cmd_tab(t_token *start)
 
 	token = start->next;
 	i = 2;
-	while (token && token->type < APPEND)
+	while (token && token->type < TRUNC)
 	{
 		token = token->next;
 		i++;
@@ -99,7 +99,7 @@ char	**get_cmd_tab(t_token *start)
 	token = start->next;
 	tab[0] = start->str;
 	i = 1;
-	while (token && token->type < APPEND)
+	while (token && token->type < TRUNC)
 	{
 		tab[i] = token->str;
 		token = token->next;

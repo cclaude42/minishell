@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/05/21 15:00:47 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/05/23 17:49:58 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 # define EMPTY 0
 # define CMD 1
 # define ARG 2
-# define APPEND 3
-# define TRUNC 4
+# define TRUNC 3
+# define APPEND 4
 # define REDIR 5
 # define PIPE 6
 # define END 7

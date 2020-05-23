@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/05/23 17:46:04 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/05/23 17:51:25 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ void	arg_type(t_token *token)
 	if (ft_strcmp(token->str, "") == 0)
 		token->type = EMPTY;
 	else if (ft_strcmp(token->str, ">") == 0)
-		token->type = APPEND;
-	else if (ft_strcmp(token->str, ">>") == 0)
 		token->type = TRUNC;
+	else if (ft_strcmp(token->str, ">>") == 0)
+		token->type = APPEND;
 	else if (ft_strcmp(token->str, "<") == 0)
 		token->type = REDIR;
 	else if (ft_strcmp(token->str, "|") == 0)
 		token->type = PIPE;
 	else if (ft_strcmp(token->str, ";") == 0)
 		token->type = END;
-	else if (token->prev == NULL || token->prev->type >= APPEND)
+	else if (token->prev == NULL || token->prev->type >= TRUNC)
 		token->type = CMD;
 	else
 		token->type = ARG;
@@ -240,5 +240,7 @@ void	parse(t_mini *mini)
 	line = space_args(line);
 	mini->start = get_args(line);
 	ft_memdel(line);
-	// print_args(mini->start);
+
+	// FOR DEBUGGING
+	print_args(mini->start);
 }
