@@ -1,4 +1,5 @@
 .DS_Store
 srcs/*.o
 libft/*/*.o
+libft/libft.a
 minishell
