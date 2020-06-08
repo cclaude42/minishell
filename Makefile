@@ -30,7 +30,7 @@ fclean: clean
 
 re: fclean all
 
-test: re
+test: all
 	./minishell
 
 norm:

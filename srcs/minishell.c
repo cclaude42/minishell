@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/05/23 17:50:30 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/08 19:29:56 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,39 @@ char	**get_cmd_tab(t_token *start)
 	return (tab);
 }
 
+void	trunc_append(char **cmd, char **env, t_token *token, int trunc)
+{
+	int	out;
+	int	fd;
+
+	out = dup(1);
+	if (trunc)
+		fd = open(token->next->str, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
+	else
+		fd = open(token->next->str, O_CREAT | O_RDWR | O_APPEND, S_IRWXU);
+	dup2(fd, 1);
+	bin_exec(cmd, env);
+	dup2(out, 1);
+	close(out);
+	close(fd);
+}
+
+void	run_cmd(char **cmd, char **env, t_token *token)
+{
+	while (token && token->type < TRUNC)
+		token = token->next;
+	if (token && token->type == TRUNC)
+		trunc_append(cmd, env, token, 1);
+	else if (token && token->type == APPEND)
+		trunc_append(cmd, env, token, 0);
+	// else if (token && token->type == REDIR)
+	// 	redirect(cmd, env);
+	// else if (token && token->type == PIPE)
+	// 	pipe(cmd, env);
+	else
+		bin_exec(cmd, env);
+}
+
 void	minishell(t_mini *mini)
 {
 	char	**cmd;
@@ -122,7 +155,7 @@ void	minishell(t_mini *mini)
 		cmd = get_cmd_tab(token);
 		if (ft_strcmp(cmd[0], "exit") == 0)
 			mini->run = 0;
-		bin_exec(cmd, mini->env);
+		run_cmd(cmd, mini->env, token);
 		ft_memdel(cmd);
 		token = token->next;
 		while (token && token->type != CMD)

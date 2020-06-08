@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/05/23 17:51:25 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/08 19:15:57 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	print_args(t_token *start)
 {
 	int		i = 0;
-	char	*s[8] = {"(EMPTY)", "(CMD)", "(ARG)", "(APPEND)",
-					"(TRUNC)", "(REDIR)", "(PIPE)", "(END)"};
+	char	*s[8] = {"(EMPTY)", "(CMD)", "(ARG)", "(TRUNC)",
+					"(APPEND)", "(REDIR)", "(PIPE)", "(END)"};
 
 	while (start->next)
 	{
