@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/08 19:29:56 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/08 20:28:10 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,42 +109,59 @@ char	**get_cmd_tab(t_token *start)
 	return (tab);
 }
 
-void	trunc_append(char **cmd, char **env, t_token *token, int trunc)
+void	run_cmd(t_mini *mini, t_token *token)
 {
-	int	out;
-	int	fd;
+	char	**cmd;
 
-	out = dup(1);
+	cmd = get_cmd_tab(token);
+	if (ft_strcmp(cmd[0], "exit") == 0)
+		mini->run = 0;
+	bin_exec(cmd, mini->env);
+	ft_memdel(cmd);
+}
+
+void	redirect(t_mini *mini, t_token *token, int std, int trunc)
+{
+	t_token	*tmp;
+	int		save;
+	int		fd;
+
+	save = dup(std);
+	tmp = token;
+	while (tmp && tmp->type < TRUNC)
+		tmp = tmp->next;
 	if (trunc)
-		fd = open(token->next->str, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
+		fd = open(tmp->next->str, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
 	else
-		fd = open(token->next->str, O_CREAT | O_RDWR | O_APPEND, S_IRWXU);
-	dup2(fd, 1);
-	bin_exec(cmd, env);
-	dup2(out, 1);
-	close(out);
+		fd = open(tmp->next->str, O_CREAT | O_RDWR | O_APPEND, S_IRWXU);
+	dup2(fd, std);
+	run_cmd(mini, token);
+	dup2(save, std);
+	close(save);
 	close(fd);
 }
 
-void	run_cmd(char **cmd, char **env, t_token *token)
+void	check_redir(t_mini *mini, t_token *token)
 {
-	while (token && token->type < TRUNC)
-		token = token->next;
-	if (token && token->type == TRUNC)
-		trunc_append(cmd, env, token, 1);
-	else if (token && token->type == APPEND)
-		trunc_append(cmd, env, token, 0);
-	// else if (token && token->type == REDIR)
-	// 	redirect(cmd, env);
+	t_token	*tmp;
+
+	tmp = token;
+	while (tmp && tmp->type < TRUNC)
+		tmp = tmp->next;
+	if (tmp && tmp->type == TRUNC)
+		redirect(mini, token, STDOUT, 1);
+	else if (tmp && tmp->type == APPEND)
+		redirect(mini, token, STDOUT, 0);
+	else if (tmp && tmp->type == INPUT)
+		redirect(mini, token, STDIN, 0);
 	// else if (token && token->type == PIPE)
 	// 	pipe(cmd, env);
 	else
-		bin_exec(cmd, env);
+		run_cmd(mini, token);
 }
 
 void	minishell(t_mini *mini)
 {
-	char	**cmd;
 	t_token	*token;
 
 	token = mini->start;
@@ -152,11 +169,7 @@ void	minishell(t_mini *mini)
 		token = token->next;
 	while (mini->run && token && token->type == CMD)
 	{
-		cmd = get_cmd_tab(token);
-		if (ft_strcmp(cmd[0], "exit") == 0)
-			mini->run = 0;
-		run_cmd(cmd, mini->env, token);
-		ft_memdel(cmd);
+		check_redir(mini, token);
 		token = token->next;
 		while (token && token->type != CMD)
 			token = token->next;

@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/05/23 17:49:58 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/08 19:56:20 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,13 @@
 # define ARG 2
 # define TRUNC 3
 # define APPEND 4
-# define REDIR 5
+# define INPUT 5
 # define PIPE 6
 # define END 7
+
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
 
 typedef struct	s_token
 {

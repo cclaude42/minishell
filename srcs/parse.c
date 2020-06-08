@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/08 19:15:57 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/08 19:46:59 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_args(t_token *start)
 {
 	int		i = 0;
 	char	*s[8] = {"(EMPTY)", "(CMD)", "(ARG)", "(TRUNC)",
-					"(APPEND)", "(REDIR)", "(PIPE)", "(END)"};
+					"(APPEND)", "(INPUT)", "(PIPE)", "(END)"};
 
 	while (start->next)
 	{
@@ -35,7 +35,7 @@ void	arg_type(t_token *token)
 	else if (ft_strcmp(token->str, ">>") == 0)
 		token->type = APPEND;
 	else if (ft_strcmp(token->str, "<") == 0)
-		token->type = REDIR;
+		token->type = INPUT;
 	else if (ft_strcmp(token->str, "|") == 0)
 		token->type = PIPE;
 	else if (ft_strcmp(token->str, ";") == 0)
