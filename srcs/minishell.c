@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/08 20:28:10 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/08 21:19:25 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,29 @@ void	redirect(t_mini *mini, t_token *token, int std, int trunc)
 	close(fd);
 }
 
+void	minipipe(t_mini *mini, t_token *token)
+{
+	// pid_t	pid;
+	t_token	*tmp;
+	int		save;
+
+	tmp = token->next;
+	while (tmp && tmp->type != CMD)
+		tmp = tmp->next;
+	save = dup(STDOUT);
+	dup2(STDIN, STDOUT);
+	// pid = fork();
+	// if (pid == 0)
+	// {
+		// run_cmd(mini, tmp);
+	// 	exit(0);
+	// }
+	// else
+		run_cmd(mini, token);
+	dup2(save, STDOUT);
+	close(save);
+}
+
 void	check_redir(t_mini *mini, t_token *token)
 {
 	t_token	*tmp;
@@ -154,8 +177,8 @@ void	check_redir(t_mini *mini, t_token *token)
 		redirect(mini, token, STDOUT, 0);
 	else if (tmp && tmp->type == INPUT)
 		redirect(mini, token, STDIN, 0);
-	// else if (token && token->type == PIPE)
-	// 	pipe(cmd, env);
+	else if (token && token->type == PIPE)
+		minipipe(mini, token);
 	else
 		run_cmd(mini, token);
 }
