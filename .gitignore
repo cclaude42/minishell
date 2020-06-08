@@ -2,4 +2,5 @@
 srcs/*.o
 libft/*/*.o
 libft/libft.a
+libft.a
 minishell
