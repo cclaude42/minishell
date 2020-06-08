@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/08 18:00:32 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/08 18:45:36 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ void			del_args(t_token *start);
 void			parse(t_mini *mini);
 void			del_tab(char **tab);
 /* BUILTINS */
-int		ft_echo(char **args, int n_option);
+int		ft_echo(char **args);
 int		ft_pwd(void);
 #endif

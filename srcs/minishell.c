@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/08 18:28:04 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/08 18:45:45 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		exec_builtins(char **args, char **env)
 	(void)env;
 	result = 1;
 	if (ft_strcmp(args[0], "echo") == 0)
-		result = ft_echo(args, 1);
+		result = ft_echo(args);
 	else if (ft_strcmp(args[0], "pwd") == 0)
 		result = ft_pwd();
 	return result;	

@@ -1,5 +1,6 @@
 .DS_Store
 srcs/*.o
+srcs/builtins/*.o
 libft/*/*.o
 libft/libft.a
 libft.a
