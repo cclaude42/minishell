@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/08 14:55:46 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/08 18:30:24 by macrespo         ###   ########.fr       */
+/*   Created: 2020/06/08 17:15:26 by macrespo          #+#    #+#             */
+/*   Updated: 2020/06/08 18:04:45 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_pwd(void)
+int		ft_echo(char **args, int n_option)
 {
-	char	cwd[PATH_MAX];
+	int		i;
 
-	if (getcwd(cwd, PATH_MAX))
+	i = 1;
+	while (args[i])
 	{
-		ft_putstr_fd(cwd, 1);
-		return (0);
+		ft_putstr_fd(args[i], 1);
+		i++;
 	}
-	else
-		return (1);
+	if (n_option == 1)
+		write(1, "\n", 1);
+	return (0);
 }

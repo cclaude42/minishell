@@ -10,7 +10,10 @@ HEADER = minishell.h
 
 FILES = minishell parse
 
-SRC = $(addsuffix .c, $(addprefix srcs/, $(FILES)))
+BUILTINS = echo pwd
+
+SRC = $(addsuffix .c, $(addprefix srcs/, $(FILES))) \
+	  $(addsuffix .c, $(addprefix srcs/builtins/, $(BUILTINS)))
 
 OBJ = $(SRC:.c=.o)
 
@@ -36,4 +39,4 @@ test: re
 norm:
 	norminette $(SRC) includes/$(HEADER)
 
-.PHONY: clean fclean re norm lftre test
+.PHONY: clean fclean re norm test

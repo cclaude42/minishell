@@ -3,14 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/05/23 17:50:30 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/08 18:28:04 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		is_builtin(char	*command)
+{
+	if (ft_strcmp(command, "echo") == 0)
+		return (1);
+	else if (ft_strcmp(command, "pwd") == 0)
+		return (1);
+	else
+		return (0);
+}
+
+int		exec_builtins(char **args, char **env)
+{
+	int		result;
+
+	(void)env;
+	result = 1;
+	if (ft_strcmp(args[0], "echo") == 0)
+		result = ft_echo(args, 1);
+	else if (ft_strcmp(args[0], "pwd") == 0)
+		result = ft_pwd();
+	return result;	
+}
 
 void	magic_box(char *path, char **args, char **env)
 {
@@ -18,7 +41,12 @@ void	magic_box(char *path, char **args, char **env)
 
 	pid = fork();
 	if (pid == 0)
-		execve(path, args, env);
+	{
+		if (is_builtin(args[0]) == 1)
+			exec_builtins(args, env);
+		else
+			execve(path, args, env);
+	}
 	else
 		wait(&pid);
 }
