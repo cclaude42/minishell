@@ -21,20 +21,20 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT)
 
 clean:
+	make clean -C libft/
 	rm -f $(OBJ)
 
 fclean: clean
+	make fclean -C libft/
 	rm -f $(NAME)
 
 re: fclean all
+	make re -C libft/
 
 test: re
 	./minishell
 
 norm:
 	norminette $(SRC) includes/$(HEADER)
-
-lftre:
-	make re -C libft/
 
 .PHONY: clean fclean re norm lftre test
