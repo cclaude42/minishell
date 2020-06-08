@@ -6,34 +6,11 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/08 18:45:45 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/08 19:33:51 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		is_builtin(char	*command)
-{
-	if (ft_strcmp(command, "echo") == 0)
-		return (1);
-	else if (ft_strcmp(command, "pwd") == 0)
-		return (1);
-	else
-		return (0);
-}
-
-int		exec_builtins(char **args, char **env)
-{
-	int		result;
-
-	(void)env;
-	result = 1;
-	if (ft_strcmp(args[0], "echo") == 0)
-		result = ft_echo(args);
-	else if (ft_strcmp(args[0], "pwd") == 0)
-		result = ft_pwd();
-	return result;	
-}
 
 void	magic_box(char *path, char **args, char **env)
 {
