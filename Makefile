@@ -29,7 +29,6 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
-	make re -C libft/
 
 test: re
 	./minishell
