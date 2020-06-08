@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/08 18:45:36 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/08 19:59:02 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <dirent.h>
 # include <sys/wait.h>
 # include <limits.h>
+# include <errno.h>
 // # include <sys/types.h>
 // # include <stdbool.h>
 // # include <stdarg.h>
@@ -56,5 +57,9 @@ void			parse(t_mini *mini);
 void			del_tab(char **tab);
 /* BUILTINS */
 int		ft_echo(char **args);
+int		ft_cd(char **args, char **env);
 int		ft_pwd(void);
+/* BUILTINS UTILITIES */
+int		is_builtin(char	*command);
+int		exec_builtins(char **args, char **env);
 #endif

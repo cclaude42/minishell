@@ -8,9 +8,9 @@ LIBFT = -L libft -lft
 
 HEADER = minishell.h
 
-FILES = minishell parse
+FILES = minishell parse builtins
 
-BUILTINS = echo pwd
+BUILTINS = echo pwd cd
 
 SRC = $(addsuffix .c, $(addprefix srcs/, $(FILES))) \
 	  $(addsuffix .c, $(addprefix srcs/builtins/, $(BUILTINS)))
