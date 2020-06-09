@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/09 15:37:55 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/09 16:31:11 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,16 @@ typedef struct	s_token
 typedef struct	s_mini
 {
 	t_token			*start;
+	t_env			*first;
 	char			**env;
 	int				run;
 }				t_mini;
+
+typedef struct s_env
+{
+	char			*value;
+	struct s_env	*next;
+}				t_env;
 
 t_token			*get_args(char *line);
 void			del_args(t_token *start);
@@ -63,4 +70,4 @@ void	ft_env(char **env);
 /* BUILTINS UTILITIES */
 int		is_builtin(char	*command);
 int		exec_builtins(char **args, char **env);
-#endif
+#endif		
