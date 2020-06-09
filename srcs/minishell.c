@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/08 21:19:25 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/09 13:44:42 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,17 +141,17 @@ void	redirect(t_mini *mini, t_token *token, int std, int trunc)
 	close(fd);
 }
 
-void	minipipe(t_mini *mini, t_token *token)
-{
+// void	minipipe(t_mini *mini, t_token *token)
+// {
 	// pid_t	pid;
-	t_token	*tmp;
-	int		save;
-
-	tmp = token->next;
-	while (tmp && tmp->type != CMD)
-		tmp = tmp->next;
-	save = dup(STDOUT);
-	dup2(STDIN, STDOUT);
+	// t_token	*tmp;
+	// int		save;
+	//
+	// tmp = token->next;
+	// while (tmp && tmp->type != CMD)
+	// 	tmp = tmp->next;
+	// save = dup(STDOUT);
+	// dup2(STDIN, STDOUT);
 	// pid = fork();
 	// if (pid == 0)
 	// {
@@ -159,9 +159,44 @@ void	minipipe(t_mini *mini, t_token *token)
 	// 	exit(0);
 	// }
 	// else
+// 		run_cmd(mini, token);
+// 	dup2(save, STDOUT);
+// 	close(save);
+// }
+
+void	minipipe(t_mini *mini, t_token *token)
+{
+	t_token	*tmp;
+	pid_t	pid;
+	int		pipefd[2];
+	int		save;
+
+	tmp = token->next;
+	while (tmp && tmp->type != CMD)
+		tmp = tmp->next;
+	pipe(pipefd);
+	pid = fork();
+	if (pid == 0)
+	{
+		close(pipefd[1]);
+		save = dup(STDIN);
+		dup2(pipefd[0], STDIN);
+		run_cmd(mini, tmp);
+		dup2(save, STDIN);
+		close(save);
+		close(pipefd[0]);
+		exit(0);
+	}
+	else
+	{
+		close(pipefd[0]);
+		save = dup(STDOUT);
+		dup2(pipefd[1], STDOUT);
 		run_cmd(mini, token);
-	dup2(save, STDOUT);
-	close(save);
+		dup2(save, STDOUT);
+		close(save);
+		close(pipefd[1]);
+	}
 }
 
 void	check_redir(t_mini *mini, t_token *token)
