@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/08 19:33:51 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/09 15:37:43 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	magic_box(char *path, char **args, char **env)
 	if (pid == 0)
 	{
 		if (is_builtin(args[0]) == 1)
+		{
 			exec_builtins(args, env);
+			exit(0);
+		}
 		else
 			execve(path, args, env);
 	}

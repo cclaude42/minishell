@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/08 19:59:02 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/09 15:37:55 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void			del_tab(char **tab);
 int		ft_echo(char **args);
 int		ft_cd(char **args, char **env);
 int		ft_pwd(void);
+void	ft_env(char **env);
 /* BUILTINS UTILITIES */
 int		is_builtin(char	*command);
 int		exec_builtins(char **args, char **env);
