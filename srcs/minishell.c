@@ -6,11 +6,52 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/10 16:05:25 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/10 16:49:34 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		is_type(t_token *token, int type)
+{
+	if (token && token->type == type)
+		return (1);
+	else
+		return (0);
+}
+
+t_token	*next_type(t_token *token, int type, int skip)
+{
+	if (token && skip)
+		token = token->next;
+	while (token && token->type != type)
+		token = token->next;
+	return (token);
+}
+
+t_token	*next_sep(t_token *token, int skip)
+{
+	if (token && skip)
+		token = token->next;
+	while (token && token->type < TRUNC)
+		token = token->next;
+	return (token);
+}
+
+t_token	*next_run(t_token *token, int skip)
+{
+	if (token && skip)
+		token = token->next;
+	while (token && token->type != CMD)
+	{
+		token = token->next;
+		if (token && token->type == CMD && token->prev == NULL)
+			;
+		else if (token && token->type == CMD && token->prev->type < END)
+			token = token->next;
+	}
+	return (token);
+}
 
 void	magic_box(char *path, char **args, char **env)
 {
@@ -127,13 +168,11 @@ void	redirect(t_mini *mini, t_token *token, int std, int trunc)
 	int		fd;
 
 	save = dup(std);
-	tmp = token;
-	while (tmp && tmp->type < TRUNC)
-		tmp = tmp->next;
+	tmp = next_type(token, CMD, SKIP);
 	if (trunc)
-		fd = open(tmp->next->str, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
+		fd = open(tmp->str, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
 	else
-		fd = open(tmp->next->str, O_CREAT | O_RDWR | O_APPEND, S_IRWXU);
+		fd = open(tmp->str, O_CREAT | O_RDWR | O_APPEND, S_IRWXU);
 	dup2(fd, std);
 	run_cmd(mini, token);
 	dup2(save, std);
@@ -141,61 +180,40 @@ void	redirect(t_mini *mini, t_token *token, int std, int trunc)
 	close(fd);
 }
 
-// void	minipipe(t_mini *mini, t_token *token)
-// {
-	// pid_t	pid;
-	// t_token	*tmp;
-	// int		save;
-	//
-	// tmp = token->next;
-	// while (tmp && tmp->type != CMD)
-	// 	tmp = tmp->next;
-	// save = dup(STDOUT);
-	// dup2(STDIN, STDOUT);
-	// pid = fork();
-	// if (pid == 0)
-	// {
-		// run_cmd(mini, tmp);
-	// 	exit(0);
-	// }
-	// else
-// 		run_cmd(mini, token);
-// 	dup2(save, STDOUT);
-// 	close(save);
-// }
+void	pipe_end(t_mini *mini, t_token *token, int fd, int std)
+{
+	int	save;
+
+	save = dup(std);
+	dup2(fd, std);
+	run_cmd(mini, token);
+	dup2(save, std);
+	close(save);
+	close(fd);
+	if (std == STDIN)
+		exit(0);
+	else
+		wait(NULL);
+}
 
 void	minipipe(t_mini *mini, t_token *token)
 {
 	t_token	*tmp;
 	pid_t	pid;
 	int		pipefd[2];
-	int		save;
 
-	tmp = token->next;
-	while (tmp && tmp->type != CMD)
-		tmp = tmp->next;
+	tmp = next_type(token, CMD, SKIP);
 	pipe(pipefd);
 	pid = fork();
 	if (pid == 0)
 	{
 		close(pipefd[1]);
-		save = dup(0);
-		dup2(pipefd[0], 0);
-		run_cmd(mini, tmp);
-		dup2(save, 0);
-		close(save);
-		close(pipefd[0]);
-		exit(0);
+		pipe_end(mini, tmp, pipefd[0], STDIN);
 	}
 	else
 	{
 		close(pipefd[0]);
-		save = dup(1);
-		dup2(pipefd[1], 1);
-		run_cmd(mini, token);
-		dup2(save, 1);
-		close(save);
-		close(pipefd[1]);
+		pipe_end(mini, token, pipefd[1], STDOUT);
 	}
 }
 
@@ -203,16 +221,14 @@ void	check_redir(t_mini *mini, t_token *token)
 {
 	t_token	*tmp;
 
-	tmp = token;
-	while (tmp && tmp->type < TRUNC)
-		tmp = tmp->next;
-	if (tmp && tmp->type == TRUNC)
+	tmp = next_sep(token, NOSKIP);
+	if (is_type(tmp, TRUNC))
 		redirect(mini, token, STDOUT, 1);
-	else if (tmp && tmp->type == APPEND)
+	else if (is_type(tmp, APPEND))
 		redirect(mini, token, STDOUT, 0);
-	else if (tmp && tmp->type == INPUT)
+	else if (is_type(tmp, INPUT))
 		redirect(mini, token, STDIN, 0);
-	else if (tmp && tmp->type == PIPE)
+	else if (is_type(tmp, PIPE))
 		minipipe(mini, token);
 	else
 		run_cmd(mini, token);
@@ -222,15 +238,11 @@ void	minishell(t_mini *mini)
 {
 	t_token	*token;
 
-	token = mini->start;
-	while (token && token->type != CMD)
-		token = token->next;
-	while (mini->run && token && token->type == CMD)
+	token = next_run(mini->start, NOSKIP);
+	while (mini->run && is_type(token, CMD))
 	{
 		check_redir(mini, token);
-		token = token->next;
-		while (token && token->type != CMD)
-			token = token->next;
+		token = next_run(mini->start, SKIP);
 	}
 }
 

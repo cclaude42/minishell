@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/08 19:56:20 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/10 16:26:29 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
+
+# define SKIP 1
+# define NOSKIP 0
 
 typedef struct	s_token
 {

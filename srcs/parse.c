@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/09 15:52:08 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/10 16:53:08 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	print_args(t_token *start)
 	char	*s[8] = {"(EMPTY)", "(CMD)", "(ARG)", "(TRUNC)",
 					"(APPEND)", "(INPUT)", "(PIPE)", "(END)"};
 
+	if (!start)
+		return ;
 	while (start->next)
 	{
 		printf("#%d %-8s [%s]\n", i++, s[start->type], start->str);
@@ -225,7 +227,7 @@ void	parse(t_mini *mini)
 
 	write(1, "minishell > ", 13);
 	get_next_line(0, &line);
-	while (open_quotes(line, 214748364))
+	while (open_quotes(line, 2147483647))
 	{
 		write(1, "> ", 2);
 		get_next_line(0, &more);
