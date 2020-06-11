@@ -22,10 +22,10 @@ void	print_args(t_token *start)
 		return ;
 	while (start->next)
 	{
-		printf("#%d %-8s [%s]\n", i++, s[start->type], start->str);
+		printf("\033[0;33m#%d %-8s [%s]\033[0m\n", i++, s[start->type], start->str);
 		start = start->next;
 	}
-	printf("#%d %-8s [%s]\n", i++, s[start->type], start->str);
+	printf("\033[0;33m#%d %-8s [%s]\033[0m\n", i++, s[start->type], start->str);
 }
 
 void	arg_type(t_token *token)
@@ -225,11 +225,11 @@ void	parse(t_mini *mini)
 	char	*more;
 	char	*tmp;
 
-	write(1, "minishell > ", 13);
+	ft_printf("\033[0;36mminishell > \033[0m");
 	get_next_line(0, &line);
 	while (open_quotes(line, 2147483647))
 	{
-		write(1, "> ", 2);
+		ft_printf("\033[0;36m> \033[0m");
 		get_next_line(0, &more);
 		tmp = line;
 		line = ft_strjoin(line, "\n");

@@ -242,7 +242,7 @@ void	minishell(t_mini *mini)
 	while (mini->run && is_type(token, CMD))
 	{
 		check_redir(mini, token);
-		token = next_run(mini->start, SKIP);
+		token = next_run(token, SKIP);
 	}
 }
 
