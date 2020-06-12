@@ -8,7 +8,7 @@ LIBFT = -L libft -lft
 
 HEADER = minishell.h
 
-FILES = minishell parse builtins
+FILES = minishell parse builtins env
 
 BUILTINS = echo pwd cd env
 
