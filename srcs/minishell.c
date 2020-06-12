@@ -6,15 +6,16 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/09 16:18:49 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/12 20:18:49 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	magic_box(char *path, char **args, char **env)
+void	magic_box(char *path, char **args, t_env *env)
 {
 	pid_t pid;
+	char  **env_array;
 
 	pid = fork();
 	if (pid == 0)
@@ -25,7 +26,10 @@ void	magic_box(char *path, char **args, char **env)
 			exit(0);
 		}
 		else
-			execve(path, args, env);
+		{
+			env_array = ft_split(lst_to_str(env), '\n');
+			execve(path, args, env_array);
+		}
 	}
 	else
 		wait(&pid);
@@ -61,13 +65,17 @@ char	*check_dir(char *bin, char *command)
 	return (path);
 }
 
-int		bin_exec(char **args, char **env)
+int		bin_exec(char **args, t_env *lst_env)
 {
 	int		i;
 	char	**bin;
 	char	*path;
 
 	i = 0;
+	/* TO ADAPT */
+	char	**env;
+	env = ft_split(lst_to_str(lst_env), '\n');
+	/* TO ADAPT */
 	while (env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
 		i++;
 	if (env[i] == NULL)
@@ -84,7 +92,7 @@ int		bin_exec(char **args, char **env)
 		del_tab(bin);
 		return (0);
 	}
-	magic_box(path, args, env);
+	magic_box(path, args, lst_env);
 	ft_memdel(path);
 	del_tab(bin);
 	return (1);
@@ -144,8 +152,8 @@ int		main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	mini.env = env;
 	mini.run = 1;
+	lst_init(&mini, env);
 	while (mini.run)
 	{
 		parse(&mini);

@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/12 18:41:45 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/12 19:48:00 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ int				lst_init(t_mini *mini, char **env);
 char			*lst_to_str(t_env *lst);
 /* BUILTINS */
 int		ft_echo(char **args);
-int		ft_cd(char **args, char **env);
+int		ft_cd(char **args, t_env *env);
 int		ft_pwd(void);
 void	ft_env(t_env *env);
 /* BUILTINS UTILITIES */
 int		is_builtin(char	*command);
-int		exec_builtins(char **args, char **env);
+int		exec_builtins(char **args, t_env *env);
 #endif		

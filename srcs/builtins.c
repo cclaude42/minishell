@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 19:33:30 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/09 15:41:31 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/12 20:16:12 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		is_builtin(char	*command)
 		return (0);
 }
 
-int		exec_builtins(char **args, char **env)
+int		exec_builtins(char **args, t_env *env)
 {
 	int		result;
 
