@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/12 19:48:00 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/12 20:26:33 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ t_token			*get_args(char *line);
 void			del_args(t_token *start);
 void			parse(t_mini *mini);
 void			del_tab(char **tab);
+void			free_env_lst(t_env *env);
+void			free_env_array(char **env);
 int				lst_init(t_mini *mini, char **env);
 char			*lst_to_str(t_env *lst);
 /* BUILTINS */

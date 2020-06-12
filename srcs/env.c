@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 16:01:42 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/12 20:19:20 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/12 20:25:59 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,29 @@ char			*lst_to_str(t_env *lst)
 	}
 	env[i] = '\0';
 	return (env);
+}
+
+void	free_env_lst(t_env *env)
+{
+	while (env && env->next)
+	{
+		free(env->value);
+		free(env);
+		env = env->next;
+	}
+}
+
+void	free_env_array(char **env)
+{
+	int		i;
+
+	i = 0;
+	while(env[i])
+	{
+		free(env[i]);
+		i++;
+	}
+	free(env);
 }
 
 int				lst_init(t_mini *mini, char **env_array)
