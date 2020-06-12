@@ -6,20 +6,20 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 15:24:05 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/09 15:44:07 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/12 18:42:10 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_env(char **env)
+void	ft_env(t_env *env)
 {
 	int		i;
 
 	i = 0;
-	while (env[i])
+	while (env && env->next != NULL)
 	{
-		ft_putendl_fd(env[i], 1);
-		i++;
+		ft_putendl(env->value);
+		env = env->next;
 	}
 }
