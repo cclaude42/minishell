@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 19:33:30 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/12 20:16:12 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/15 20:17:30 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,31 @@ int		is_builtin(char	*command)
 {
 	if (ft_strcmp(command, "echo") == 0)
 		return (1);
-	else if (ft_strcmp(command, "cd") == 0)
+	if (ft_strcmp(command, "cd") == 0)
 		return (1);
-	else if (ft_strcmp(command, "pwd") == 0)
+	if (ft_strcmp(command, "pwd") == 0)
 		return (1);
-	else if (ft_strcmp(command, "env") == 0)
+	if (ft_strcmp(command, "env") == 0)
 		return (1);
-	else
-		return (0);
+	if (ft_strcmp(command, "export") == 0)
+		return (1);
+	return (0);
 }
 
-int		exec_builtins(char **args, t_env *env)
+int		exec_builtins(char **args, t_env **env)
 {
 	int		result;
 
-	(void)env;
 	result = 0;
 	if (ft_strcmp(args[0], "echo") == 0)
 		result = ft_echo(args);
-	else if (ft_strcmp(args[0], "cd") == 0)
+	if (ft_strcmp(args[0], "cd") == 0)
 		result = ft_cd(args, env);
-	else if (ft_strcmp(args[0], "pwd") == 0)
+	if (ft_strcmp(args[0], "pwd") == 0)
 		result = ft_pwd();
-	else if (ft_strcmp(args[0], "env") == 0)
-		ft_env(env);
+	if (ft_strcmp(args[0], "env") == 0)
+		ft_env(*env);
+	if (ft_strcmp(args[0], "export") == 0)
+		ft_export(args, env);
 	return result;	
 }

@@ -6,13 +6,13 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/15 17:15:39 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/15 19:59:18 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	magic_box(char *path, char **args, t_env *env)
+void	magic_box(char *path, char **args, t_env **env)
 {
 	pid_t pid;
 	char  **env_array;
@@ -24,7 +24,8 @@ void	magic_box(char *path, char **args, t_env *env)
 		pid = fork();
 		if (pid == 0)
 		{
-			env_array = ft_split(lst_to_str(env), '\n');
+			printf("TRUE BIN\n");
+			env_array = ft_split(lst_to_str(*env), '\n');
 			execve(path, args, env_array);
 			free_env_array(env_array);
 		}
@@ -63,7 +64,7 @@ char	*check_dir(char *bin, char *command)
 	return (path);
 }
 
-int		bin_exec(char **args, t_env *lst_env)
+int		bin_exec(char **args, t_env **lst_env)
 {
 	int		i;
 	char	**bin;
@@ -72,7 +73,7 @@ int		bin_exec(char **args, t_env *lst_env)
 	i = 0;
 	/* TO ADAPT */
 	char	**env;
-	env = ft_split(lst_to_str(lst_env), '\n');
+	env = ft_split(lst_to_str(*lst_env), '\n');
 	/* TO ADAPT */
 	while (env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
 		i++;
@@ -136,7 +137,7 @@ void	minishell(t_mini *mini)
 		cmd = get_cmd_tab(token);
 		if (ft_strcmp(cmd[0], "exit") == 0)
 			mini->run = 0;
-		bin_exec(cmd, mini->env);
+		bin_exec(cmd, &mini->env);
 		ft_memdel(cmd);
 		token = token->next;
 		while (token && token->type != CMD)
