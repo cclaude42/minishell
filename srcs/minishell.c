@@ -6,45 +6,31 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/12 20:35:42 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/15 17:15:39 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void debug_env(char **env)
-{
-	int i = 0;
-
-	while (env[i++])
-	{
-		printf("%d : \n", i);
-		ft_putendl_fd(env[i], 1);
-	}
-}
 
 void	magic_box(char *path, char **args, t_env *env)
 {
 	pid_t pid;
 	char  **env_array;
 
-	pid = fork();
-	if (pid == 0)
+	if (is_builtin(args[0]) == 1)
+		exec_builtins(args, env);
+	else
 	{
-		if (is_builtin(args[0]) == 1)
-		{
-			exec_builtins(args, env);
-			exit(0);
-		}
-		else
+		pid = fork();
+		if (pid == 0)
 		{
 			env_array = ft_split(lst_to_str(env), '\n');
 			execve(path, args, env_array);
 			free_env_array(env_array);
 		}
+		else
+			wait(&pid);
 	}
-	else
-		wait(&pid);
 }
 
 char		*path_join(const char *s1, const char *s2)
