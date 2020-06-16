@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/16 18:43:55 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/16 20:11:11 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	magic_box(char *path, char **args, t_env *env)
 			free_env_array(env_array);
 	}
 	else
-		wait(&pid);
+		waitpid(-1, NULL, 0);
 }
 
 char	*path_join(const char *s1, const char *s2)
@@ -176,21 +176,15 @@ void	run_cmd(t_mini *mini, t_token *token)
 	else
 		exec_bin(cmd, mini->env);
 	ft_memdel(cmd);
-	if (mini->pipin != -1)
-		close(mini->pipin);
-	if (mini->pipout != -1)
-		close(mini->pipout);
+	close(mini->pipin);
+	close(mini->pipout);
 	mini->pipin = -1;
 	mini->pipout = -1;
-	// if (mini->pid != -1)
-	// 	wait(&mini->pid);
-	// mini->pid = -1;
 }
 
 void	redir(t_mini *mini, t_token *token, int type)
 {
-	if (mini->fdout != -1)
-		close(mini->fdout);
+	close(mini->fdout);
 	if (type == TRUNC)
 		mini->fdout = open(token->str, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
 	else
@@ -200,8 +194,7 @@ void	redir(t_mini *mini, t_token *token, int type)
 
 void	input(t_mini *mini, t_token *token)
 {
-	if (mini->fdin != -1)
-		close(mini->fdin);
+	close(mini->fdin);
 	mini->fdin = open(token->str, O_RDONLY, S_IRWXU);
 	if (mini->fdin == -1)
 		return ;
@@ -257,6 +250,22 @@ void	check_redir(t_mini *mini, t_token *token)
 		exit(0);
 }
 
+void	reset_io(t_mini *mini)
+{
+	dup2(mini->in, STDIN);
+	dup2(mini->out, STDOUT);
+	close(mini->fdin);
+	close(mini->fdout);
+	close(mini->pipin);
+	close(mini->pipout);
+	waitpid(mini->pid, NULL, 0);
+	mini->fdin = -1;
+	mini->fdout = -1;
+	mini->pipin = -1;
+	mini->pipout = -1;
+	mini->pid = -1;
+}
+
 void	minishell(t_mini *mini)
 {
 	t_token	*token;
@@ -265,14 +274,7 @@ void	minishell(t_mini *mini)
 	while (mini->run && is_type(token, CMD))
 	{
 		check_redir(mini, token);
-		dup2(mini->in, STDIN);
-		dup2(mini->out, STDOUT);
-		if (mini->fdin != -1)
-			close(mini->fdin);
-		if (mini->fdout != -1)
-			close(mini->fdout);
-		mini->fdin = -1;
-		mini->fdout = -1;
+		reset_io(mini);
 		token = next_run(token, SKIP);
 	}
 }
