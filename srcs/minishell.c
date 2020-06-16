@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/16 17:30:13 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/16 17:34:02 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,18 @@ char	*check_dir(char *bin, char *command)
 	return (path);
 }
 
-int		bin_exec(char **args, t_env *lst_env)
+int		bin_exec(char **args, t_env *env)
 {
 	int		i;
 	char	**bin;
 	char	*path;
 
 	i = 0;
-	/* TO ADAPT */
-	char	**env;
-	env = ft_split(lst_to_str(lst_env), '\n');
-	/* TO ADAPT */
-	while (env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
-		i++;
-	if (env[i] == NULL)
+	while (env->value && ft_strncmp(env->value, "PATH=", 5) != 0)
+		env = env->next;
+	if (env->next == NULL)
 		return (-1);
-	bin = ft_split(env[i], ':');
+	bin = ft_split(env->value, ':');
 	if (!args[0] && !bin[0])
 		return (-1);
 	i = 1;
@@ -90,7 +86,7 @@ int		bin_exec(char **args, t_env *lst_env)
 		del_tab(bin);
 		return (0);
 	}
-	magic_box(path, args, lst_env);
+	magic_box(path, args, env);
 	ft_memdel(path);
 	del_tab(bin);
 	return (1);
