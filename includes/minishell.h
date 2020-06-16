@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/10 16:26:29 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/16 18:17:21 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ typedef struct	s_mini
 {
 	t_token			*start;
 	char			**env;
+	int				in;
+	int				out;
+	int				fdin;
+	int				fdout;
+	int				pipin;
+	int				pipout;
+	int				pid;
 	int				run;
 }				t_mini;
 

@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/10 16:49:34 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/16 18:20:54 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,15 @@ t_token	*next_sep(t_token *token, int skip)
 	return (token);
 }
 
+t_token	*prev_sep(t_token *token, int skip)
+{
+	if (token && skip)
+		token = token->prev;
+	while (token && token->type < TRUNC)
+		token = token->prev;
+	return (token);
+}
+
 t_token	*next_run(t_token *token, int skip)
 {
 	if (token && skip)
@@ -55,7 +64,7 @@ t_token	*next_run(t_token *token, int skip)
 
 void	magic_box(char *path, char **args, char **env)
 {
-	pid_t pid;
+	pid_t	pid;
 
 	pid = fork();
 	if (pid == 0)
@@ -64,7 +73,7 @@ void	magic_box(char *path, char **args, char **env)
 		wait(&pid);
 }
 
-char		*path_join(const char *s1, const char *s2)
+char	*path_join(const char *s1, const char *s2)
 {
 	char	*tmp;
 	char	*path;
@@ -159,79 +168,84 @@ void	run_cmd(t_mini *mini, t_token *token)
 		mini->run = 0;
 	bin_exec(cmd, mini->env);
 	ft_memdel(cmd);
+	if (mini->pipin != -1)
+		close(mini->pipin);
+	if (mini->pipout != -1)
+		close(mini->pipout);
+	mini->pipin = -1;
+	mini->pipout = -1;
+	// if (mini->pid != -1)
+	// 	wait(&mini->pid);
 }
 
-void	redirect(t_mini *mini, t_token *token, int std, int trunc)
+void	redir(t_mini *mini, t_token *token, int type)
 {
-	t_token	*tmp;
-	int		save;
-	int		fd;
-
-	save = dup(std);
-	tmp = next_type(token, CMD, SKIP);
-	if (trunc)
-		fd = open(tmp->str, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
+	if (mini->fdout != -1)
+		close(mini->fdout);
+	if (type == TRUNC)
+		mini->fdout = open(token->str, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
 	else
-		fd = open(tmp->str, O_CREAT | O_RDWR | O_APPEND, S_IRWXU);
-	dup2(fd, std);
-	run_cmd(mini, token);
-	dup2(save, std);
-	close(save);
-	close(fd);
+		mini->fdout = open(token->str, O_CREAT | O_WRONLY | O_APPEND, S_IRWXU);
+	dup2(mini->fdout, STDOUT);
 }
 
-void	pipe_end(t_mini *mini, t_token *token, int fd, int std)
+void	input(t_mini *mini, t_token *token)
 {
-	int	save;
-
-	save = dup(std);
-	dup2(fd, std);
-	run_cmd(mini, token);
-	dup2(save, std);
-	close(save);
-	close(fd);
-	if (std == STDIN)
-		exit(0);
-	else
-		wait(NULL);
+	if (mini->fdin != -1)
+		close(mini->fdin);
+	mini->fdin = open(token->str, O_RDONLY, S_IRWXU);
+	if (mini->fdin == -1)
+		return ;
+	dup2(mini->fdin, STDIN);
 }
 
-void	minipipe(t_mini *mini, t_token *token)
+int		minipipe(t_mini *mini)
 {
-	t_token	*tmp;
 	pid_t	pid;
 	int		pipefd[2];
 
-	tmp = next_type(token, CMD, SKIP);
 	pipe(pipefd);
 	pid = fork();
 	if (pid == 0)
 	{
 		close(pipefd[1]);
-		pipe_end(mini, tmp, pipefd[0], STDIN);
+		dup2(pipefd[0], STDIN);
+		mini->pipin = pipefd[0];
+		return (2);
 	}
 	else
 	{
 		close(pipefd[0]);
-		pipe_end(mini, token, pipefd[1], STDOUT);
+		dup2(pipefd[1], STDOUT);
+		mini->pipout = pipefd[1];
+		mini->pid = pid;
+		return (1);
 	}
 }
 
 void	check_redir(t_mini *mini, t_token *token)
 {
-	t_token	*tmp;
+	t_token	*prev;
+	t_token	*next;
+	int		pipe;
 
-	tmp = next_sep(token, NOSKIP);
-	if (is_type(tmp, TRUNC))
-		redirect(mini, token, STDOUT, 1);
-	else if (is_type(tmp, APPEND))
-		redirect(mini, token, STDOUT, 0);
-	else if (is_type(tmp, INPUT))
-		redirect(mini, token, STDIN, 0);
-	else if (is_type(tmp, PIPE))
-		minipipe(mini, token);
-	else
+	prev = prev_sep(token, NOSKIP);
+	next = next_sep(token, NOSKIP);
+	pipe = 0;
+	if (is_type(prev, TRUNC))
+		redir(mini, token, TRUNC);
+	else if (is_type(prev, APPEND))
+		redir(mini, token, APPEND);
+	else if (is_type(prev, INPUT))
+		input(mini, token);
+	else if (is_type(prev, PIPE))
+		pipe = minipipe(mini);
+	if (next && is_type(next, END) == 0 && pipe != 1)
+		check_redir(mini, next->next);
+	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev) && pipe != 1)
 		run_cmd(mini, token);
+	if (pipe == 2)
+		exit(0);
 }
 
 void	minishell(t_mini *mini)
@@ -242,6 +256,14 @@ void	minishell(t_mini *mini)
 	while (mini->run && is_type(token, CMD))
 	{
 		check_redir(mini, token);
+		dup2(mini->in, STDIN);
+		dup2(mini->out, STDOUT);
+		if (mini->fdin != -1)
+			close(mini->fdin);
+		if (mini->fdout != -1)
+			close(mini->fdout);
+		mini->fdin = -1;
+		mini->fdout = -1;
 		token = next_run(token, SKIP);
 	}
 }
@@ -253,6 +275,13 @@ int		main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	mini.env = env;
+	mini.in = dup(STDIN);
+	mini.out = dup(STDOUT);
+	mini.fdin = -1;
+	mini.fdout = -1;
+	mini.pipin = -1;
+	mini.pipout = -1;
+	mini.pid = -1;
 	mini.run = 1;
 	while (mini.run)
 	{
