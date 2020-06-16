@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 19:46:37 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/15 18:59:12 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/16 16:58:07 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void		print_error(char **args)
 	ft_putendl_fd(args[1], 2);
 }
 
-static char		*get_oldpwd(t_env *env)
+static char		*get_env_path(t_env *env, const char *var, size_t len)
 {
 	char	*oldpwd;
 	int		i;
@@ -34,16 +34,16 @@ static char		*get_oldpwd(t_env *env)
 
 	while (env && env->next != NULL)
 	{
-		if (ft_strncmp(env->value, "OLDPWD", 6) == 0)
+		if (ft_strncmp(env->value, var, len) == 0)
 		{
-			s_alloc = ft_strlen(env->value - 7) + 1;
+			s_alloc = ft_strlen(env->value) - len;
 			if (!(oldpwd = malloc(sizeof(char) * s_alloc)))
 				return (NULL);
 			i = 0;
 			j = 0;
 			while (env->value[i++])
 			{
-				if (i > 6)
+				if (i > (int)len)
 					oldpwd[j++] = env->value[i];
 			}
 			oldpwd[j] = '\0';
@@ -57,21 +57,27 @@ static char		*get_oldpwd(t_env *env)
 int				ft_cd(char **args, t_env **env)
 {
 	int		cd_ret;
-	char	*oldpwd;
+	char	*env_path;
 
-	if (ft_strcmp(args[1], "-") == 0)
+	env_path = NULL;
+	if (!args[1])
 	{
-		oldpwd = get_oldpwd(*env);
-		cd_ret = chdir(oldpwd);
-		free(oldpwd);
+		env_path = get_env_path(*env, "HOME", 4);
+		cd_ret = chdir(env_path);
 	}
 	else
-		cd_ret = chdir(args[1]);
+	{
+		if (ft_strcmp(args[1], "-") == 0)
+		{
+			env_path = get_env_path(*env, "OLDPWD", 6);
+			cd_ret = chdir(env_path);
+		}
+		else
+			cd_ret = chdir(args[1]);
+	}
 	if (cd_ret != 0)
-	{
 		print_error(args);
-		return (1);
-	}
-	else
-		return (0);
+	if (env_path)
+		free(env_path);
+	return (cd_ret);
 }
