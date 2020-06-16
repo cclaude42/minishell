@@ -10,7 +10,7 @@ HEADER = minishell.h
 
 FILES = minishell parse builtins env
 
-BUILTINS = echo pwd cd export env
+BUILTINS = echo pwd cd env export
 
 SRC = $(addsuffix .c, $(addprefix srcs/, $(FILES))) \
 	  $(addsuffix .c, $(addprefix srcs/builtins/, $(BUILTINS)))

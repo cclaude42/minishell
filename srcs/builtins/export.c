@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 18:15:54 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/15 19:54:52 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/16 17:02:43 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,8 @@
 
 int		ft_export(char **args, t_env **env)
 {
-	t_env	*new;
-	// t_env	*tmp;
-
-	if (!(new  = malloc(sizeof(t_env *))))
-		return (1);
-	new->value = args[1];
-	new->next = *env;
-	*env = new;
-	// ft_env(*env);
+	(void)args;
+	(void)env;
+	printf("YOURE ARE IN EXPORT BITCH !!\n");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 19:46:37 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/16 16:58:07 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/16 17:28:48 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char		*get_env_path(t_env *env, const char *var, size_t len)
 	return (NULL);
 }
 
-int				ft_cd(char **args, t_env **env)
+int				ft_cd(char **args, t_env *env)
 {
 	int		cd_ret;
 	char	*env_path;
@@ -62,14 +62,14 @@ int				ft_cd(char **args, t_env **env)
 	env_path = NULL;
 	if (!args[1])
 	{
-		env_path = get_env_path(*env, "HOME", 4);
+		env_path = get_env_path(env, "HOME", 4);
 		cd_ret = chdir(env_path);
 	}
 	else
 	{
 		if (ft_strcmp(args[1], "-") == 0)
 		{
-			env_path = get_env_path(*env, "OLDPWD", 6);
+			env_path = get_env_path(env, "OLDPWD", 6);
 			cd_ret = chdir(env_path);
 		}
 		else
