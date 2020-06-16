@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/16 18:20:54 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/16 18:43:55 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,18 @@ t_token	*next_run(t_token *token, int skip)
 	return (token);
 }
 
-void	magic_box(char *path, char **args, char **env)
+void	magic_box(char *path, char **args, t_env *env)
 {
 	pid_t	pid;
+	char	**env_array;
 
 	pid = fork();
 	if (pid == 0)
-		execve(path, args, env);
+	{
+			env_array = ft_split(lst_to_str(env), '\n');
+			execve(path, args, env_array);
+			free_env_array(env_array);
+	}
 	else
 		wait(&pid);
 }
@@ -103,18 +108,18 @@ char	*check_dir(char *bin, char *command)
 	return (path);
 }
 
-int		bin_exec(char **args, char **env)
+int		exec_bin(char **args, t_env *env)
 {
 	int		i;
 	char	**bin;
 	char	*path;
 
 	i = 0;
-	while (env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
-		i++;
-	if (env[i] == NULL)
+	while (env->value && ft_strncmp(env->value, "PATH=", 5) != 0)
+		env = env->next;
+	if (env->next == NULL)
 		return (-1);
-	bin = ft_split(env[i], ':');
+	bin = ft_split(env->value, ':');
 	if (!args[0] && !bin[0])
 		return (-1);
 	i = 1;
@@ -166,7 +171,10 @@ void	run_cmd(t_mini *mini, t_token *token)
 	cmd = get_cmd_tab(token);
 	if (ft_strcmp(cmd[0], "exit") == 0)
 		mini->run = 0;
-	bin_exec(cmd, mini->env);
+	if (is_builtin(cmd[0]))
+		exec_builtin(cmd, mini->env);
+	else
+		exec_bin(cmd, mini->env);
 	ft_memdel(cmd);
 	if (mini->pipin != -1)
 		close(mini->pipin);
@@ -176,6 +184,7 @@ void	run_cmd(t_mini *mini, t_token *token)
 	mini->pipout = -1;
 	// if (mini->pid != -1)
 	// 	wait(&mini->pid);
+	// mini->pid = -1;
 }
 
 void	redir(t_mini *mini, t_token *token, int type)
@@ -274,7 +283,6 @@ int		main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	mini.env = env;
 	mini.in = dup(STDIN);
 	mini.out = dup(STDOUT);
 	mini.fdin = -1;
@@ -283,6 +291,7 @@ int		main(int ac, char **av, char **env)
 	mini.pipout = -1;
 	mini.pid = -1;
 	mini.run = 1;
+	lst_init(&mini, env);
 	while (mini.run)
 	{
 		parse(&mini);
