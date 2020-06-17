@@ -27,7 +27,7 @@ SRC = $(addsuffix .c, $(addprefix srcs/builtins/, $(BUILTINS))) \
 	  $(addsuffix .c, $(addprefix srcs/parsing/, $(PARSING))) \
 	  $(addsuffix .c, $(addprefix srcs/tools/, $(TOOLS))) \
 
-OBJ = $(SRC:.c=.o)
+OBJ = $(SRC:c=o)
 
 all: $(NAME)
 
@@ -36,13 +36,22 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT)
 
 clean:
+	@echo "\033[0;31mCleaning libft..."
 	make clean -C libft/
+	@echo
+	@echo "Removing binaries..."
 	rm -f $(OBJ)
 
 fclean:
+	@echo "\033[0;31mCleaning libft..."
 	make fclean -C libft/
+	@echo
+	@echo "Cleaning binaries..."
 	rm -f $(OBJ)
+	@echo
+	@echo "Cleaning executable..."
 	rm -f $(NAME)
+	@echo "\033[0m"
 
 re: fclean all
 
@@ -52,4 +61,4 @@ test: all
 norm:
 	norminette $(SRC) includes/$(HEADER)
 
-.PHONY: clean fclean re norm test
+.PHONY: clean fclean re test norm
