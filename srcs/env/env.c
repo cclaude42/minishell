@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 16:01:42 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/15 17:15:23 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/17 16:00:40 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static	size_t	size_env(t_env *lst)
 	return (lst_len);
 }
 
-char			*lst_to_str(t_env *lst)
+char			*env_to_str(t_env *lst)
 {
 	char	*env;
 	int		i;
@@ -58,30 +58,7 @@ char			*lst_to_str(t_env *lst)
 	return (env);
 }
 
-void	free_env_lst(t_env *env)
-{
-	while (env && env->next)
-	{
-		free(env->value);
-		free(env);
-		env = env->next;
-	}
-}
-
-void	free_env_array(char **env)
-{
-	int		i;
-
-	i = 0;
-	while(env[i])
-	{
-		free(env[i]);
-		i++;
-	}
-	free(env);
-}
-
-int				lst_init(t_mini *mini, char **env_array)
+int				env_init(t_mini *mini, char **env_array)
 {
 	t_env	*env;
 	t_env	*new;

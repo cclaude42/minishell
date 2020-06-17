@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 19:33:30 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/16 18:31:34 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/17 15:39:15 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,5 @@ int		exec_builtin(char **args, t_env *env)
 		ft_env(env);
 	if (ft_strcmp(args[0], "export") == 0)
 		ft_export(args, env);
-	return result;	
+	return result;
 }

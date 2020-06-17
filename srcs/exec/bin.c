@@ -5,25 +5,41 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/12 15:07:01 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/12 17:27:19 by cclaude          ###   ########.fr       */
+/*   Created: 2020/06/17 15:37:17 by cclaude           #+#    #+#             */
+/*   Updated: 2020/06/17 16:00:53 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	magic_box(char *path, char **args, char **env)
+void	magic_box(char *path, char **args, t_env *env)
 {
-	pid_t pid;
+	pid_t	pid;
+	char	**env_array;
 
 	pid = fork();
 	if (pid == 0)
-		execve(path, args, env);
+	{
+			env_array = ft_split(env_to_str(env), '\n');
+			execve(path, args, env_array);
+			free_tab(env_array);
+	}
 	else
-		wait(&pid);
+		waitpid(pid, NULL, 0);
 }
 
-static char	*check_dir(char *bin, char *command)
+char	*path_join(const char *s1, const char *s2)
+{
+	char	*tmp;
+	char	*path;
+
+	tmp = ft_strjoin(s1, "/");
+	path = ft_strjoin(tmp, s2);
+	ft_memdel(tmp);
+	return (path);
+}
+
+char	*check_dir(char *bin, char *command)
 {
 	DIR				*folder;
 	struct dirent	*item;
@@ -42,18 +58,18 @@ static char	*check_dir(char *bin, char *command)
 	return (path);
 }
 
-int			is_bin(char **args, char **env)
+int		exec_bin(char **args, t_env *env)
 {
 	int		i;
 	char	**bin;
 	char	*path;
 
 	i = 0;
-	while (env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
-		i++;
-	if (env[i] == NULL)
+	while (env->value && ft_strncmp(env->value, "PATH=", 5) != 0)
+		env = env->next;
+	if (env->next == NULL)
 		return (-1);
-	bin = ft_split(env[i], ':');
+	bin = ft_split(env->value, ':');
 	if (!args[0] && !bin[0])
 		return (-1);
 	i = 1;
@@ -61,8 +77,12 @@ int			is_bin(char **args, char **env)
 	while (args[0] && bin[i] && path == NULL)
 		path = check_dir(bin[i++], args[0]);
 	if (bin[i] == NULL)
+	{
+		free_tab(bin);
 		return (0);
+	}
 	magic_box(path, args, env);
 	ft_memdel(path);
+	free_tab(bin);
 	return (1);
 }

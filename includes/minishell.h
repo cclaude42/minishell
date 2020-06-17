@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/16 18:36:10 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/17 16:18:00 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,21 +71,49 @@ typedef struct	s_mini
 	int				run;
 }				t_mini;
 
-t_token			*get_args(char *line);
-void			del_args(t_token *start);
-void			parse(t_mini *mini);
-void			del_tab(char **tab);
-void			free_env_lst(t_env *env);
-void			free_env_array(char **env);
-int				lst_init(t_mini *mini, char **env);
-char			*lst_to_str(t_env *lst);
+/* MINISHELL */
+void	redir(t_mini *mini, t_token *token, int type);
+void	input(t_mini *mini, t_token *token);
+int		minipipe(t_mini *mini);
+
+/* EXEC */
+void	exec_cmd(t_mini *mini, t_token *token);
+int		exec_bin(char **args, t_env *env);
+int		is_builtin(char	*command);
+int		exec_builtin(char **args, t_env *env);
+
 /* BUILTINS */
 int		ft_echo(char **args);
 int		ft_cd(char **args, t_env *env);
 int		ft_pwd(void);
 int		ft_export(char **args, t_env *env);
 void	ft_env(t_env *env);
-/* BUILTINS UTILITIES */
-int		is_builtin(char	*command);
-int		exec_builtin(char **args, t_env *env);
-#endif		
+
+/* PARSING */
+void	parse(t_mini *mini);
+int		open_quotes(char *line, int index);
+int		next_alloc(char *line, int *i);
+int		space_alloc(char *line);
+
+/* ENV */
+int		env_init(t_mini *mini, char **env_array);
+char	*env_to_str(t_env *lst);
+
+/* FD TOOLS */
+void	reset_std(t_mini *mini);
+void	close_fds(t_mini *mini);
+void	reset_fds(t_mini *mini);
+
+/* FREE TOOLS */
+void	free_token(t_token *start);
+void	free_env(t_env *env);
+void	free_tab(char **tab);
+
+/* TOKEN TOOLS */
+int		is_type(t_token *token, int type);
+t_token	*next_type(t_token *token, int type, int skip);
+t_token	*next_sep(t_token *token, int skip);
+t_token	*prev_sep(t_token *token, int skip);
+t_token	*next_run(t_token *token, int skip);
+
+#endif

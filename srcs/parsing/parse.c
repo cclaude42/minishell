@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/16 18:01:02 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/17 15:33:40 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	print_args(t_token *start)
 	printf("\033[0;33m#%d %-8s [%s]\033[0m\n", i++, s[start->type], start->str);
 }
 
-void	arg_type(t_token *token)
+void	type_arg(t_token *token)
 {
 	if (ft_strcmp(token->str, "") == 0)
 		token->type = EMPTY;
@@ -48,72 +48,6 @@ void	arg_type(t_token *token)
 		token->type = ARG;
 }
 
-void	del_args(t_token *start)
-{
-	while (start && start->next)
-	{
-		free(start->str);
-		start = start->next;
-		free(start->prev);
-	}
-	if (start)
-	{
-		free(start->str);
-		free(start);
-	}
-}
-
-void	del_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
-
-int		open_quotes(char *line, int index)
-{
-	int	i;
-	int	open;
-
-	i = 0;
-	open = 0;
-	while (line[i] && i != index)
-	{
-		if (open == 0 && line[i] == '\"')
-			open = 1;
-		else if (open == 0 && line[i] == '\'')
-			open = 2;
-		else if (open == 1 && line[i] == '\"')
-			open = 0;
-		else if (open == 2 && line[i] == '\'')
-			open = 0;
-		i++;
-	}
-	return (open);
-}
-
-int		space_args_alloc(char *line)
-{
-	int	count;
-	int	i;
-
-	count = 0;
-	i = 0;
-	while (line[i])
-	{
-		if (open_quotes(line, i) == 0 && ft_strchr("<>|;", line[i]))
-			count++;
-		i++;
-	}
-	return (i + 2 * count + 1);
-}
-
 char	*space_args(char *line)
 {
 	char	*new;
@@ -122,7 +56,7 @@ char	*space_args(char *line)
 
 	i = 0;
 	j = 0;
-	new = malloc(sizeof(char) * space_args_alloc(line));
+	new = malloc(sizeof(char) * space_alloc(line));
 	while (line[i])
 	{
 		if (open_quotes(line, i) == 0 && ft_strchr("<>|;", line[i]))
@@ -141,32 +75,7 @@ char	*space_args(char *line)
 	return (new);
 }
 
-int		get_next_alloc(char *line, int *i)
-{
-	int		count;
-	int		j;
-	char	c;
-
-	count = 0;
-	j = 0;
-	c = ' ';
-	while (line[*i + j] && (line[*i + j] != ' ' || c != ' '))
-	{
-		if (c == ' ' && (line[*i + j] == '\'' || line[*i + j] == '\"'))
-			c = line[*i + j++];
-		else if (c != ' ' && line[*i + j] == c)
-		{
-			count += 2;
-			c = ' ';
-			j++;
-		}
-		else
-			j++;
-	}
-	return (j - count + 1);
-}
-
-t_token	*get_next(char *line, int *i)
+t_token	*next_arg(char *line, int *i)
 {
 	t_token	*token;
 	int		j;
@@ -175,7 +84,7 @@ t_token	*get_next(char *line, int *i)
 	j = 0;
 	c = ' ';
 	token = malloc(sizeof(t_token));
-	token->str = malloc(sizeof(char) * get_next_alloc(line, i));
+	token->str = malloc(sizeof(char) * next_alloc(line, i));
 	while (line[*i] && (line[*i] != ' ' || c != ' '))
 	{
 		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))
@@ -204,12 +113,12 @@ t_token	*get_args(char *line)
 	ft_skip_space(line, &i);
 	while (line[i])
 	{
-		next = get_next(line, &i);
+		next = next_arg(line, &i);
 		next->prev = prev;
 		if (prev)
 			prev->next = next;
 		prev = next;
-		arg_type(next);
+		type_arg(next);
 		ft_skip_space(line, &i);
 	}
 	if (next)
@@ -236,8 +145,8 @@ void	parse(t_mini *mini)
 		ft_memdel(tmp);
 		tmp = line;
 		line = ft_strjoin(line, more);
-		ft_memdel(more);
 		ft_memdel(tmp);
+		ft_memdel(more);
 	}
 	line = space_args(line);
 	mini->start = get_args(line);

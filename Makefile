@@ -8,12 +8,24 @@ LIBFT = -L libft -lft
 
 HEADER = minishell.h
 
-FILES = minishell parse builtins env
+BUILTINS = cd echo env export pwd
 
-BUILTINS = echo pwd cd env export
+ENV = env
 
-SRC = $(addsuffix .c, $(addprefix srcs/, $(FILES))) \
-	  $(addsuffix .c, $(addprefix srcs/builtins/, $(BUILTINS)))
+EXEC = bin builtin exec
+
+MINISHELL = minishell redir
+
+PARSING = parse tools
+
+TOOLS = fd free token
+
+SRC = $(addsuffix .c, $(addprefix srcs/builtins/, $(BUILTINS))) \
+	  $(addsuffix .c, $(addprefix srcs/env/, $(ENV))) \
+	  $(addsuffix .c, $(addprefix srcs/exec/, $(EXEC))) \
+	  $(addsuffix .c, $(addprefix srcs/minishell/, $(MINISHELL))) \
+	  $(addsuffix .c, $(addprefix srcs/parsing/, $(PARSING))) \
+	  $(addsuffix .c, $(addprefix srcs/tools/, $(TOOLS))) \
 
 OBJ = $(SRC:.c=.o)
 
@@ -27,8 +39,9 @@ clean:
 	make clean -C libft/
 	rm -f $(OBJ)
 
-fclean: clean
+fclean:
 	make fclean -C libft/
+	rm -f $(OBJ)
 	rm -f $(NAME)
 
 re: fclean all
