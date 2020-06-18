@@ -6,13 +6,13 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 18:15:54 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/18 18:49:32 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/18 18:59:58 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int		env_add(const char *value, t_env *env)
+int		env_add(const char *value, t_env *env)
 {
 	t_env	*new;
 	t_env	*tmp;
@@ -28,7 +28,7 @@ static int		env_add(const char *value, t_env *env)
 	return (0);
 }
 
-static char		*get_env_name(char *dest, const char *src)
+char		*get_env_name(char *dest, const char *src)
 {
 	int		i;
 
@@ -42,7 +42,7 @@ static char		*get_env_name(char *dest, const char *src)
 	return (dest);
 }
 
-static int		is_in_env(t_env *env, char *args)
+int				is_in_env(t_env *env, char *args)
 {
 	char	var_name[BUFF_SIZE];
 	char	env_name[BUFF_SIZE];
