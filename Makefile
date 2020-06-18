@@ -29,27 +29,38 @@ SRC = $(addsuffix .c, $(addprefix srcs/builtins/, $(BUILTINS))) \
 
 OBJ = $(SRC:c=o)
 
-all: $(NAME)
+all: yellow $(NAME)
+
+yellow:
+	@echo "\033[0;33mGenerating minishell binaries..."
 
 $(NAME): $(OBJ)
-	make -C libft/
+	@echo
+	@make -C libft/
+	@echo "\033[0;32mCompiling minishell..."
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT)
+	@echo "\033[0m"
+
+%.o: %.c
+	@printf "${CC} ${CFLAGS} -c $< -o $@        \r"
+	@${CC} ${CFLAGS} -c $< -o $@
 
 clean:
 	@echo "\033[0;31mCleaning libft..."
-	make clean -C libft/
+	@make clean -C libft/
 	@echo
 	@echo "Removing binaries..."
 	rm -f $(OBJ)
+	@echo "\033[0m"
 
 fclean:
 	@echo "\033[0;31mCleaning libft..."
-	make fclean -C libft/
+	@make fclean -C libft/
 	@echo
-	@echo "Cleaning binaries..."
+	@echo "Removing binaries..."
 	rm -f $(OBJ)
 	@echo
-	@echo "Cleaning executable..."
+	@echo "Removing executable..."
 	rm -f $(NAME)
 	@echo "\033[0m"
 
@@ -61,4 +72,4 @@ test: all
 norm:
 	norminette $(SRC) includes/$(HEADER)
 
-.PHONY: clean fclean re test norm
+.PHONY: clean fclean re test norm yellow

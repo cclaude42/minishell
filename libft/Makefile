@@ -41,11 +41,21 @@ SRC = $(addsuffix .c, $(addprefix ft_is/ft_is, $(FTIS))) \
 
 OBJ = $(SRC:.c=.o)
 
-all: $(NAME)
+all: yellow $(NAME)
+
+yellow:
+	@echo
+	@echo "\033[0;33mGenerating libft objects..."
 
 $(NAME): $(OBJ)
+	@echo "\n\n\033[0;32mCompiling libft..."
 	ar rc $(NAME) $^
 	ranlib $(NAME)
+	@echo "\033[0m"
+
+%.o: %.c
+	@printf "${CC} ${CFLAGS} -c $< -o $@            \r"
+	@${CC} ${CFLAGS} -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
@@ -58,4 +68,4 @@ re: fclean all
 norm:
 	norminette $(SRC) $(HEADER)
 
-.PHONY: all clean fclean re norm
+.PHONY: all clean fclean re norm yellow
