@@ -14,7 +14,7 @@ ENV = env
 
 EXEC = bin builtin exec
 
-MINISHELL = minishell redir
+MAIN = minishell redir
 
 PARSING = line tokens tools
 
@@ -23,7 +23,7 @@ TOOLS = fd free token
 SRC = $(addsuffix .c, $(addprefix srcs/builtins/, $(BUILTINS))) \
 	  $(addsuffix .c, $(addprefix srcs/env/, $(ENV))) \
 	  $(addsuffix .c, $(addprefix srcs/exec/, $(EXEC))) \
-	  $(addsuffix .c, $(addprefix srcs/minishell/, $(MINISHELL))) \
+	  $(addsuffix .c, $(addprefix srcs/main/, $(MAIN))) \
 	  $(addsuffix .c, $(addprefix srcs/parsing/, $(PARSING))) \
 	  $(addsuffix .c, $(addprefix srcs/tools/, $(TOOLS))) \
 
