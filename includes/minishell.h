@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/17 16:18:00 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/18 14:21:14 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,10 @@ void	ft_env(t_env *env);
 
 /* PARSING */
 void	parse(t_mini *mini);
+t_token	*get_tokens(char *line);
 int		open_quotes(char *line, int index);
-int		next_alloc(char *line, int *i);
-int		space_alloc(char *line);
+int		is_sep(char *line, int i);
+int		ignore_sep(char *line, int i);
 
 /* ENV */
 int		env_init(t_mini *mini, char **env_array);

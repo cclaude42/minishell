@@ -16,7 +16,7 @@ EXEC = bin builtin exec
 
 MINISHELL = minishell redir
 
-PARSING = parse tools
+PARSING = line tokens tools
 
 TOOLS = fd free token
 

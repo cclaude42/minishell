@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/17 15:33:40 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/18 14:20:43 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,23 @@ void	print_args(t_token *start)
 	printf("\033[0;33m#%d %-8s [%s]\033[0m\n", i++, s[start->type], start->str);
 }
 
-void	type_arg(t_token *token)
+int		space_alloc(char *line)
 {
-	if (ft_strcmp(token->str, "") == 0)
-		token->type = EMPTY;
-	else if (ft_strcmp(token->str, ">") == 0)
-		token->type = TRUNC;
-	else if (ft_strcmp(token->str, ">>") == 0)
-		token->type = APPEND;
-	else if (ft_strcmp(token->str, "<") == 0)
-		token->type = INPUT;
-	else if (ft_strcmp(token->str, "|") == 0)
-		token->type = PIPE;
-	else if (ft_strcmp(token->str, ";") == 0)
-		token->type = END;
-	else if (token->prev == NULL || token->prev->type >= TRUNC)
-		token->type = CMD;
-	else
-		token->type = ARG;
+	int	count;
+	int	i;
+
+	count = 0;
+	i = 0;
+	while (line[i])
+	{
+		if (is_sep(line, i))
+			count++;
+		i++;
+	}
+	return (i + 2 * count + 1);
 }
 
-char	*space_args(char *line)
+char	*space_line(char *line)
 {
 	char	*new;
 	int		i;
@@ -59,7 +55,7 @@ char	*space_args(char *line)
 	new = malloc(sizeof(char) * space_alloc(line));
 	while (line[i])
 	{
-		if (open_quotes(line, i) == 0 && ft_strchr("<>|;", line[i]))
+		if (open_quotes(line, i) == 0 && is_sep(line, i))
 		{
 			new[j++] = ' ';
 			new[j++] = line[i++];
@@ -73,59 +69,6 @@ char	*space_args(char *line)
 	new[j] = '\0';
 	ft_memdel(line);
 	return (new);
-}
-
-t_token	*next_arg(char *line, int *i)
-{
-	t_token	*token;
-	int		j;
-	char	c;
-
-	j = 0;
-	c = ' ';
-	token = malloc(sizeof(t_token));
-	token->str = malloc(sizeof(char) * next_alloc(line, i));
-	while (line[*i] && (line[*i] != ' ' || c != ' '))
-	{
-		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))
-			c = line[(*i)++];
-		else if (c != ' ' && line[*i] == c)
-		{
-			c = ' ';
-			(*i)++;
-		}
-		else
-			token->str[j++] = line[(*i)++];
-	}
-	token->str[j] = '\0';
-	return (token);
-}
-
-t_token	*get_args(char *line)
-{
-	t_token	*prev;
-	t_token	*next;
-	int		i;
-
-	prev = NULL;
-	next = NULL;
-	i = 0;
-	ft_skip_space(line, &i);
-	while (line[i])
-	{
-		next = next_arg(line, &i);
-		next->prev = prev;
-		if (prev)
-			prev->next = next;
-		prev = next;
-		type_arg(next);
-		ft_skip_space(line, &i);
-	}
-	if (next)
-		next->next = NULL;
-	while (next && next->prev)
-		next = next->prev;
-	return (next);
 }
 
 void	parse(t_mini *mini)
@@ -148,8 +91,8 @@ void	parse(t_mini *mini)
 		ft_memdel(tmp);
 		ft_memdel(more);
 	}
-	line = space_args(line);
-	mini->start = get_args(line);
+	line = space_line(line);
+	mini->start = get_tokens(line);
 	ft_memdel(line);
 
 	// FOR DEBUGGING
