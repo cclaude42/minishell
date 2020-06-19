@@ -8,7 +8,7 @@ LIBFT = -L libft -lft
 
 HEADER = minishell.h
 
-BUILTINS = cd echo env export pwd
+BUILTINS = cd echo env export pwd unset
 
 ENV = env
 

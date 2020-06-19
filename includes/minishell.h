@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/18 19:04:05 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/19 17:05:30 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		minipipe(t_mini *mini);
 void	exec_cmd(t_mini *mini, t_token *token);
 int		exec_bin(char **args, t_env *env);
 int		is_builtin(char	*command);
-int		exec_builtin(char **args, t_env *env);
+int		exec_builtin(char **args, t_mini *mini);
 
 /* BUILTINS */
 int		ft_echo(char **args);
@@ -94,6 +94,7 @@ char	*get_env_name(char *dest, const char *src);
 int		env_add(const char *value, t_env *env);
 int		is_in_env(t_env *env, char *args);
 int		ft_export(char **args, t_env *env);
+int		ft_unset(char **args, t_mini *mini);
 
 
 /* PARSING */
