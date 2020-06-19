@@ -43,15 +43,22 @@ OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
+
 $(NAME): $(OBJ)
-	ar rc $(NAME) $^
-	ranlib $(NAME)
+	@echo "\n\n\033[0;32mCompiling libft..."
+	@ar rc $(NAME) $^
+	@ranlib $(NAME)
+	@echo "\033[0m"
+
+%.o: %.c
+	@printf "\033[0;33mGenerating libft objects... %-33.33s\r" $@
+	@${CC} ${CFLAGS} -c $< -o $@
 
 clean:
-	rm -f $(OBJ)
+	@rm -f $(OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 
