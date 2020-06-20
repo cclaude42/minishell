@@ -59,3 +59,18 @@ int		open_quotes(char *line, int index)
 	}
 	return (open);
 }
+
+int		is_last_valid_arg(t_token *token)
+{
+	t_token	*prev;
+
+	if (!token || is_type(token, CMD) || is_type(token, ARG))
+	{
+		prev = prev_sep(token, NOSKIP);
+		if (!prev || is_type(prev, END) || is_type(prev, PIPE))
+			return (1);
+		return (0);
+	}
+	else
+		return (0);
+}
