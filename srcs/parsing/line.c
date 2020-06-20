@@ -63,7 +63,7 @@ char	*space_line(char *line)
 				new[j++] = line[i++];
 			new[j++] = ' ';
 		}
-		else if (open_quotes(line, i) == 2 && line[i] == '$')
+		else if (open_quotes(line, i) != 1 && line[i] == '$')
 			new[j++] = (char)(-line[i++]);
 		else
 			new[j++] = line[i++];
