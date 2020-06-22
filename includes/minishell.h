@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/19 17:05:30 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/22 17:50:26 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ int		ft_cd(char **args, t_env *env);
 int		ft_pwd(void);
 int		ft_export(char **args, t_env *env);
 void	ft_env(t_env *env);
-char	*get_env_name(char *dest, const char *src);
 int		env_add(const char *value, t_env *env);
+char	*get_env_name(char *dest, const char *src);
 int		is_in_env(t_env *env, char *args);
 int		ft_export(char **args, t_env *env);
 int		ft_unset(char **args, t_mini *mini);
@@ -107,8 +107,8 @@ int		is_sep(char *line, int i);
 int		ignore_sep(char *line, int i);
 
 /* ENV */
-int		env_init(t_mini *mini, char **env_array);
 char	*env_to_str(t_env *lst);
+int		env_init(t_mini *mini, char **env_array);
 
 /* FD TOOLS */
 void	reset_std(t_mini *mini);
