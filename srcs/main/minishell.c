@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/18 14:24:33 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/23 13:49:15 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,28 @@ void	redir_and_exec(t_mini *mini, t_token *token)
 void	minishell(t_mini *mini)
 {
 	t_token	*token;
+	pid_t	pid;
+	int		status;
 
-	token = next_run(mini->start, NOSKIP);
-	while (mini->run && is_type(token, CMD))
+	pid = fork();
+	if (pid != 0)
+		waitpid(pid, &status, 0);
+	else
 	{
-		redir_and_exec(mini, token);
-		reset_std(mini);
-		close_fds(mini);
-		waitpid(mini->pid, NULL, 0);
-		reset_fds(mini);
-		token = next_run(token, SKIP);
+		token = next_run(mini->start, NOSKIP);
+		while (mini->run && is_type(token, CMD))
+		{
+			redir_and_exec(mini, token);
+			reset_std(mini);
+			close_fds(mini);
+			waitpid(mini->pid, NULL, 0);
+			reset_fds(mini);
+			token = next_run(token, SKIP);
+		}
+		exit(mini->run);
 	}
+	if (WEXITSTATUS(status) == 0)
+		exit(0);
 }
 
 int		main(int ac, char **av, char **env)

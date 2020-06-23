@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:47:34 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/17 15:48:09 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/23 13:23:17 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ void	redir(t_mini *mini, t_token *token, int type)
 		mini->fdout = open(token->str, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
 	else
 		mini->fdout = open(token->str, O_CREAT | O_WRONLY | O_APPEND, S_IRWXU);
+	if (mini->fdout == -1)
+	{
+		ft_printf("minishell: %s: No such file or directory\n", token->str);
+		exit(0);
+	}
 	dup2(mini->fdout, STDOUT);
 }
 
@@ -27,7 +32,10 @@ void	input(t_mini *mini, t_token *token)
 	close(mini->fdin);
 	mini->fdin = open(token->str, O_RDONLY, S_IRWXU);
 	if (mini->fdin == -1)
-		return ;
+	{
+		ft_printf("minishell: %s: No such file or directory\n", token->str);
+		exit(0);
+	}
 	dup2(mini->fdin, STDIN);
 }
 
