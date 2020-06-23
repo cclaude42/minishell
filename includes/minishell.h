@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/22 17:50:26 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/23 17:53:51 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define NOSKIP 0
 
 # define BUFF_SIZE 4096
+# define EXPANSION -36
 
 typedef struct	s_token
 {
@@ -77,6 +78,7 @@ typedef struct	s_mini
 void	redir(t_mini *mini, t_token *token, int type);
 void	input(t_mini *mini, t_token *token);
 int		minipipe(t_mini *mini);
+char	*expansions(char *command, t_env *env);
 
 /* EXEC */
 void	exec_cmd(t_mini *mini, t_token *token);
