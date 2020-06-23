@@ -32,6 +32,35 @@ void	type_arg(t_token *token, int separator)
 		token->type = ARG;
 }
 
+void	squish_args(t_mini *mini)
+{
+	t_token	*token;
+	t_token	*prev;
+
+	token = mini->start;
+	while (token)
+	{
+		prev = prev_sep(token, NOSKIP);
+		if (is_type(token, ARG) &&
+		(is_type(prev, TRUNC) || is_type(prev, APPEND) || is_type(prev, INPUT)))
+		{
+			while (is_last_valid_arg(prev) == 0)
+				prev = prev->prev;
+			if (token->prev)
+				token->prev->next = token->next;
+			if (token->next)
+				token->next->prev = token->prev;
+			token->prev = prev;
+			token->next = (prev) ? prev->next : NULL;
+			if (prev && prev->next)
+				prev->next->prev = token;
+			if (prev)
+				prev->next = token;
+		}
+		token = token->next;
+	}
+}
+
 int		next_alloc(char *line, int *i)
 {
 	int		count;

@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:42:31 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/23 14:06:21 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/23 14:09:36 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	exec_cmd(t_mini *mini, t_token *token)
 	if (is_exit(token, cmd[0]))
 		mini->run = 0;
 	if (is_builtin(cmd[0]))
-		exec_builtin(cmd, mini->env);
+		exec_builtin(cmd, mini);
 	else
 		exec_bin(cmd, mini->env);
 	ft_memdel(cmd);

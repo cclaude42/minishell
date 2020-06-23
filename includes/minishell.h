@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/23 13:47:43 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/23 14:09:44 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@
 
 # define SKIP 1
 # define NOSKIP 0
+
+# define BUFF_SIZE 4096
 
 typedef struct	s_token
 {
@@ -80,7 +82,7 @@ int		minipipe(t_mini *mini);
 void	exec_cmd(t_mini *mini, t_token *token);
 int		exec_bin(char **args, t_env *env);
 int		is_builtin(char	*command);
-int		exec_builtin(char **args, t_env *env);
+int		exec_builtin(char **args, t_mini *mini);
 
 /* BUILTINS */
 int		ft_echo(char **args);
@@ -88,10 +90,18 @@ int		ft_cd(char **args, t_env *env);
 int		ft_pwd(void);
 int		ft_export(char **args, t_env *env);
 void	ft_env(t_env *env);
+char	*get_env_name(char *dest, const char *src);
+int		env_add(const char *value, t_env *env);
+int		is_in_env(t_env *env, char *args);
+int		ft_export(char **args, t_env *env);
+int		ft_unset(char **args, t_mini *mini);
+
 
 /* PARSING */
 void	parse(t_mini *mini);
 t_token	*get_tokens(char *line);
+void	squish_args(t_mini *mini);
+int		is_last_valid_arg(t_token *token);
 int		open_quotes(char *line, int index);
 int		is_sep(char *line, int i);
 int		ignore_sep(char *line, int i);
