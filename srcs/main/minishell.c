@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/23 13:49:15 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/23 16:40:45 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,11 @@ void	minishell(t_mini *mini)
 			reset_fds(mini);
 			token = next_run(token, SKIP);
 		}
-		exit(mini->run);
+		if (mini->run)
+			exit(0);
+		exit(1);
 	}
-	if (WEXITSTATUS(status) == 0)
+	if (WEXITSTATUS(status) != 0)
 		exit(0);
 }
 
