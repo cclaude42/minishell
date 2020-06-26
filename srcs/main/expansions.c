@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 16:06:28 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/23 18:09:35 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/26 14:46:04 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static char	*get_env_value(char *arg, t_env *env)
 	return (env_val);
 }
 
-static int		get_var_len(char *arg, int pos, t_env *env)
+static int		get_var_len(const char *arg, int pos, t_env *env)
 {
 	char	var_name[BUFF_SIZE];
 	char	*var_value;
@@ -91,11 +91,10 @@ static int		get_var_len(char *arg, int pos, t_env *env)
 	return (i);
 }
 
-char	*expansions(char *arg, t_env *env)
+static int		arg_alloc_len(const char *arg, t_env *env)
 {
 	int		i;
 	int		size;
-	char	*new_arg;
 
 	i = 0;
 	size = 0;
@@ -111,7 +110,61 @@ char	*expansions(char *arg, t_env *env)
 		i++;
 		size++;
 	}
-	if (!(new_arg) = malloc(sizeof(char) * size))
+	return (size);
+}
+
+static char		*get_var_value(const char *arg, int pos, t_env *env)
+{
+	char	var_name[BUFF_SIZE];
+	char	*var_value;
+	int		i;
+
+	i = 0;
+	while (arg[pos] && ft_isalnum(arg[pos]) == 1 && i < BUFF_SIZE)
+	{
+		var_name[i] = arg[pos];
+		pos++;
+		i++;
+	}
+	var_name[i] = '\0';
+	var_value = get_env_value(var_name, env);
+	return (var_value);
+}
+
+static int		varlcpy(char *new_arg, const char *env_value, int pos)
+{
+	int		i;
+
+	i = 0;
+	while (env_value[i])
+		new_arg[pos++] = env_value[i++];
+	return (i);
+}
+
+char			*expansions(const char *arg, t_env *env)
+{
+	int		size;
+	char	*new_arg;
+	int		i;
+	int		j;
+	char	*env_value;
+
+	size = arg_alloc_len(arg, env);
+	if (!(new_arg = malloc(sizeof(char) * size)))
 		return (NULL);
-	return (arg);
+	i = 0;
+	j = 0;
+	while (i < size && arg[j])
+	{
+		if (arg[j] == EXPANSION)
+		{
+			j++;
+			env_value = get_var_value(arg, j, env); 
+			i += varlcpy(new_arg, env_value, i);
+			while (ft_isalnum(arg[j]))
+				j++;
+		}
+		new_arg[i++] = arg[j++];
+	}
+	return (new_arg);
 }
