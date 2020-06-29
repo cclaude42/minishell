@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 18:15:54 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/18 18:59:58 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/06/23 16:28:14 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char		*get_env_name(char *dest, const char *src)
 	int		i;
 
 	i = 0;
-	while (src[i] && src[i] != '=')
+	while (src[i] && src[i] != '=' && ft_strlen(src) < BUFF_SIZE)
 	{
 		dest[i] = src[i];
 		i++;
@@ -54,14 +54,13 @@ int				is_in_env(t_env *env, char *args)
 		if (ft_strcmp(var_name, env_name) == 0)
 		{
 			free(env->value);
-			env->value = ft_strdup(args); 
+			env->value = ft_strdup(args);
 			return(1);
 		}
 		env = env->next;
 	}
 	return(0);
 }
-
 
 int				ft_export(char **args, t_env *env)
 {

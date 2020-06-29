@@ -60,8 +60,15 @@ char	**cmd_tab(t_token *start)
 void	exec_cmd(t_mini *mini, t_token *token)
 {
 	char	**cmd;
+	int		i;
 
 	cmd = cmd_tab(token);
+	i = 1;
+	while (cmd[i])
+	{
+		cmd[i] = expansions(cmd[i], mini->env);
+		i++;
+	}
 	if (is_exit(token, cmd[0]))
 		mini->run = 0;
 	if (is_builtin(cmd[0]))

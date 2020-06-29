@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/23 13:01:56 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/06/22 16:28:06 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*space_line(char *line)
 				new[j++] = line[i++];
 			new[j++] = ' ';
 		}
-		else if (open_quotes(line, i) != 1 && line[i] == '$')
+		else if (open_quotes(line, i) != 2 && line[i] == '$')
 			new[j++] = (char)(-line[i++]);
 		else
 			new[j++] = line[i++];

@@ -14,7 +14,7 @@ ENV = env
 
 EXEC = bin builtin exec
 
-MAIN = minishell redir
+MAIN = minishell redir expansions
 
 PARSING = line tokens tools
 
