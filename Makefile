@@ -10,7 +10,7 @@ HEADER = minishell.h
 
 BUILTINS = cd echo env export pwd unset
 
-ENV = env
+ENV = env get_env
 
 EXEC = bin builtin exec
 
