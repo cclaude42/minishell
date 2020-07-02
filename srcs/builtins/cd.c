@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 19:46:37 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/19 15:27:28 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/02 16:45:54 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,12 @@ static int		update_oldpwd(t_env *env)
 	return (0);
 }
 
-static int		go_to_path(const char *path, int option, t_env *env)
+static int		go_to_path(int option, t_env *env)
 {
 	int		ret;
 	char	*env_path;
 
+	env_path = NULL;
 	if (option == 0)
 	{
 		update_oldpwd(env);
@@ -83,14 +84,8 @@ static int		go_to_path(const char *path, int option, t_env *env)
 		env_path = get_env_path(env, "OLDPWD", 6);
 		update_oldpwd(env);
 	}
-	if (option != 2)
-	{
-		ret = chdir(env_path);
-		free(env_path);
-		return (ret);
-	}
-	update_oldpwd(env);
-	ret = chdir(path);
+	ret = chdir(env_path);
+	free(env_path);
 	return (ret);
 }
 
@@ -99,11 +94,14 @@ int				ft_cd(char **args, t_env *env)
 	int		cd_ret;
 
 	if (!args[1])
-		return (go_to_path(NULL, 0, env));
+		return (go_to_path(0, env));
 	if (ft_strcmp(args[1], "-") == 0)
-		cd_ret = go_to_path(args[1], 1, env);
+		cd_ret = go_to_path(1, env);
 	else
-		cd_ret = go_to_path(args[1], 2, env);
+	{
+		update_oldpwd(env);
+		cd_ret = chdir(args[1]);
+	}
 	if (cd_ret != 0)
 		print_error(args);
 	return (cd_ret);

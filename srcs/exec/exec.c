@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:42:31 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/02 16:06:11 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/02 16:48:25 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	exec_cmd(t_mini *mini, t_token *token)
 		cmd[i] = expansions(cmd[i], mini->env);
 		i++;
 	}
-	if (ft_strcmp(cmd[0], "exit") == 0)
 	if (is_exit(token, cmd[0]))
 		mini->run = 0;
 	if (is_builtin(cmd[0]))

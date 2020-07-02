@@ -54,14 +54,13 @@ int				is_in_env(t_env *env, char *args)
 		if (ft_strcmp(var_name, env_name) == 0)
 		{
 			free(env->value);
-			env->value = ft_strdup(args); 
+			env->value = ft_strdup(args);
 			return(1);
 		}
 		env = env->next;
 	}
 	return(0);
 }
-
 
 int				ft_export(char **args, t_env *env)
 {

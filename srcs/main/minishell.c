@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/02 16:04:36 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/02 16:48:52 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ void	redir_and_exec(t_mini *mini, t_token *token)
 void	minishell(t_mini *mini)
 {
 	t_token	*token;
-	pid_t	pid;
-	int		status;
-
-	pid = fork();
-	if (pid != 0)
-		waitpid(pid, &status, 0);
-	else
-	{
+	// pid_t	pid;
+	// int		status;
+	//
+	// pid = fork();
+	// if (pid != 0)
+	// 	waitpid(pid, &status, 0);
+	// else
+	// {
 		token = next_run(mini->start, NOSKIP);
 		while (mini->run && is_type(token, CMD))
 		{
@@ -58,12 +58,12 @@ void	minishell(t_mini *mini)
 			reset_fds(mini);
 			token = next_run(token, SKIP);
 		}
-		if (mini->run)
-			exit(0);
-		exit(1);
-	}
-	if (WEXITSTATUS(status) != 0)
-		exit(0);
+	// 	if (mini->run)
+	// 		exit(0);
+	// 	exit(1);
+	// }
+	// if (WEXITSTATUS(status) != 0)
+	// 	exit(0);
 }
 
 int		main(int ac, char **av, char **env)
