@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/23 14:09:44 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/07/02 16:05:01 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define NOSKIP 0
 
 # define BUFF_SIZE 4096
+# define EXPANSION -36
 
 typedef struct	s_token
 {
@@ -77,6 +78,7 @@ typedef struct	s_mini
 void	redir(t_mini *mini, t_token *token, int type);
 void	input(t_mini *mini, t_token *token);
 int		minipipe(t_mini *mini);
+char	*expansions(const char *arg, t_env *env);
 
 /* EXEC */
 void	exec_cmd(t_mini *mini, t_token *token);
@@ -90,8 +92,8 @@ int		ft_cd(char **args, t_env *env);
 int		ft_pwd(void);
 int		ft_export(char **args, t_env *env);
 void	ft_env(t_env *env);
-char	*get_env_name(char *dest, const char *src);
 int		env_add(const char *value, t_env *env);
+char	*get_env_name(char *dest, const char *src);
 int		is_in_env(t_env *env, char *args);
 int		ft_export(char **args, t_env *env);
 int		ft_unset(char **args, t_mini *mini);
@@ -107,8 +109,8 @@ int		is_sep(char *line, int i);
 int		ignore_sep(char *line, int i);
 
 /* ENV */
-int		env_init(t_mini *mini, char **env_array);
 char	*env_to_str(t_env *lst);
+int		env_init(t_mini *mini, char **env_array);
 
 /* FD TOOLS */
 void	reset_std(t_mini *mini);

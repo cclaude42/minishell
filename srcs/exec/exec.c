@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:42:31 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/23 14:09:36 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/07/02 16:04:51 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,19 @@ char	**cmd_tab(t_token *start)
 void	exec_cmd(t_mini *mini, t_token *token)
 {
 	char	**cmd;
+	int		i;
 
 	cmd = cmd_tab(token);
+<<<<<<< HEAD
+=======
+	i = 1;
+	while (cmd[i])
+	{
+		cmd[i] = expansions(cmd[i], mini->env);
+		i++;
+	}
+	if (ft_strcmp(cmd[0], "exit") == 0)
+>>>>>>> 0c78d0297ba32c114037c8752190b2fd7dcd3133
 	if (is_exit(token, cmd[0]))
 		mini->run = 0;
 	if (is_builtin(cmd[0]))
