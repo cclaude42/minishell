@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 16:06:28 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/02 17:14:43 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/02 17:25:00 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int		get_var_len(const char *arg, int pos, t_env *env)
 	int		i;
 
 	i = 0;
-	while (arg[pos] && ft_isalnum(arg[pos]) == 1 && i < BUFF_SIZE)
+	while (arg[pos] && (ft_isalnum(arg[pos]) == 1 || arg[pos] == '_') && i < BUFF_SIZE)
 	{
 		var_name[i] = arg[pos];
 		pos++;
@@ -104,7 +104,7 @@ static int		arg_alloc_len(const char *arg, t_env *env)
 		{
 			i++;
 			size += get_var_len(arg, i, env);
-			while (ft_isalnum(arg[i]) == 1)
+			while (ft_isalnum(arg[i]) == 1 || arg[i] == '_')
 				i++;
 		}
 		i++;
@@ -120,7 +120,7 @@ static char		*get_var_value(const char *arg, int pos, t_env *env)
 	int		i;
 
 	i = 0;
-	while (arg[pos] && ft_isalnum(arg[pos]) == 1 && i < BUFF_SIZE)
+	while (arg[pos] && (ft_isalnum(arg[pos]) || arg[pos] == '_') == 1 && i < BUFF_SIZE)
 	{
 		var_name[i] = arg[pos];
 		pos++;
@@ -161,7 +161,7 @@ char			*expansions(const char *arg, t_env *env)
 			j++;
 			env_value = get_var_value(arg, j, env); 
 			i += varlcpy(new_arg, env_value, i);
-			while (ft_isalnum(arg[j]))
+			while (ft_isalnum(arg[j]) || arg[j] == '_')
 				j++;
 		}
 		new_arg[i++] = arg[j++];
