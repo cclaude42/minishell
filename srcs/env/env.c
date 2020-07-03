@@ -6,13 +6,13 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 16:01:42 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/17 16:00:40 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/07/03 16:02:25 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	size_t	size_env(t_env *lst)
+size_t			size_env(t_env *lst)
 {
 	size_t	lst_len;
 

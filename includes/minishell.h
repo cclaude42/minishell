@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/03 15:12:24 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/03 16:27:21 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ char	*get_env_value(char *arg, t_env *env);
 char	*env_value(char *env);
 int		env_value_len(const char *env);
 int		is_env_char(int c);
-t_env   *env_cpy(t_env *env);
+void    print_sorted_env(t_env *env);
+size_t	size_env(t_env *lst);
 
 /* FD TOOLS */
 void	reset_std(t_mini *mini);

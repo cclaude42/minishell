@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 18:15:54 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/03 15:13:17 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/03 16:17:41 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int			ft_export(char **args, t_env *env)
 	new_env = 0;
 	if (!args[1])
 	{
-		env_cpy(env);
+		print_sorted_env(env);
 		return (0);
 	}
 	else

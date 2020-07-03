@@ -6,44 +6,61 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 15:03:17 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/03 15:18:06 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/03 16:32:30 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void     print_debug(t_env *env)
+int			str_env_len(char **env)
 {
-    printf("DEBUG ENV\n");
-    while (env)
-    {
-        printf("%s\n", env->value);
-        env = env->next;
-    }
+	int		i;
+
+	i = 0;
+	while (env[i])
+		i++;
+	return (i);
 }
 
-t_env   *env_cpy(t_env *env)
+void		sort_env(char **tab, int env_len)
 {
-    t_env   *sorted_env;
-    t_env   *new_elt;
-    t_env   *first_link;
+	int		ordered;
+	int		i;
+	char	*tmp;
 
-    if (!(sorted_env = malloc(sizeof(t_env*))))
-		return (NULL);
-	sorted_env->value = ft_strdup(env->value);
-	sorted_env->next = NULL;
-    first_link = sorted_env;
-    env = env->next;
-    while (env)
-    {
-        if (!(new_elt = malloc(sizeof(t_env*))))
-		    return (NULL);
-        new_elt->value = ft_strdup(env->value);
-        new_elt->next = NULL;
-        sorted_env->next = new_elt;
-        sorted_env = new_elt;
-        env = env->next;
-    }
-    print_debug(first_link);
-    return (first_link);
+	ordered = 0;
+	while (tab && ordered == 0)
+	{
+		ordered = 1;
+		i = 0;
+		while (i < env_len - 1)
+		{
+			if (ft_strcmp(tab[i], tab[i + 1]) > 0)
+			{
+				tmp = tab[i];
+				tab[i] = tab[i + 1];
+				tab[i + 1] = tmp;
+				ordered = 0;
+			}
+			i++;
+		}
+		env_len--;
+	}
+}
+
+void		print_sorted_env(t_env *env)
+{
+	int		i;
+	char	**tab;
+
+	tab = ft_split(env_to_str(env), '\n');
+	sort_env(tab, str_env_len(tab));
+	i = 0;
+	while (tab[i])
+	{
+		ft_putstr_fd("declare -x ", STDIN);
+		ft_putendl_fd(tab[i], STDIN);
+		i++;
+	}
+	free_tab(tab);
 }
