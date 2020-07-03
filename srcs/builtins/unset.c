@@ -28,23 +28,23 @@ static void		free_node(t_env *env)
 	free(env);
 }
 
-int				ft_unset(char **args, t_mini *mini)
+int				ft_unset(char **arg, t_mini *mini)
 {
 	t_env	*env;
 	t_env	*tmp;
 
 	env = mini->env;
-	if (!(args[1]))
+	if (!(arg[1]))
 		return (0);
-	if (ft_strncmp(args[1], env->value, env_size(env->value)) == 0)
+	if (ft_strncmp(arg[1], env->value, env_size(env->value)) == 0)
 	{
 		mini->env = env->next;
 		free_node(env);
-		return(0);
+		return (0);
 	}
 	while (env && env->next)
 	{
-		if (ft_strncmp(args[1], env->next->value, env_size(env->next->value)) == 0)
+		if (ft_strncmp(arg[1], env->next->value, env_size(env->next->value)))
 		{
 			tmp = env->next->next;
 			free_node(env->next);

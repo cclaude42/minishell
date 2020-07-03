@@ -32,10 +32,8 @@ int				ft_echo(char **args)
 	if (nb_args(args) > 1)
 	{
 		if (ft_strcmp(args[1], "-n") == 0)
-
 		{
 			n_option = 1;
-
 			i++;
 		}
 		while (args[i])
@@ -44,8 +42,8 @@ int				ft_echo(char **args)
 			if (args[i + 1])
 				write(1, " ", 1);
 			i++;
-		}		
-	}	
+		}
+	}
 	if (n_option == 0)
 		write(1, "\n", 1);
 	return (0);
