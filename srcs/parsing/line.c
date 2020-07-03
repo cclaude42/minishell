@@ -14,12 +14,13 @@
 
 void	print_args(t_token *start)
 {
-	int		i = 0;
+	int		i;
 	char	*s[8] = {"(EMPTY)", "(CMD)", "(ARG)", "(TRUNC)",
 					"(APPEND)", "(INPUT)", "(PIPE)", "(END)"};
 
 	if (!start)
 		return ;
+	i = 0;
 	while (start->next)
 	{
 		printf("\033[0;33m#%d %-8s [%s]\033[0m\n", i++, s[start->type], start->str);
@@ -97,7 +98,6 @@ void	parse(t_mini *mini)
 	mini->start = get_tokens(line);
 	ft_memdel(line);
 	squish_args(mini);
-
 	// FOR DEBUGGING
 	print_args(mini->start);
 }

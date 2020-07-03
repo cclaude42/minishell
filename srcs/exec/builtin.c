@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int		is_builtin(char	*command)
+int		is_builtin(char *command)
 {
 	if (ft_strcmp(command, "echo") == 0)
 		return (1);
@@ -46,5 +46,5 @@ int		exec_builtin(char **args, t_mini *mini)
 		ft_export(args, mini->env);
 	if (ft_strcmp(args[0], "unset") == 0)
 		ft_unset(args, mini);
-	return result;
+	return (result);
 }

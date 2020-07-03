@@ -45,7 +45,6 @@ void	free_env(t_env *env)
 	}
 }
 
-
 void	free_tab(char **tab)
 {
 	int	i;

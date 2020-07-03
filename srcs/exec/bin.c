@@ -20,9 +20,9 @@ void	magic_box(char *path, char **args, t_env *env)
 	pid = fork();
 	if (pid == 0)
 	{
-			env_array = ft_split(env_to_str(env), '\n');
-			execve(path, args, env_array);
-			free_tab(env_array);
+		env_array = ft_split(env_to_str(env), '\n');
+		execve(path, args, env_array);
+		free_tab(env_array);
 	}
 	else
 		waitpid(pid, NULL, 0);
