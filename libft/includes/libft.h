@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 14:32:51 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/27 12:48:50 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/07/05 18:21:55 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void*),
 t_list				*ft_lstnew(void *content);
 int					ft_lstsize(t_list *lst);
 
+int					ft_abs(long n);
 int					ft_nbrlen(long n);
 int					ft_hexlen(long n);
 int					ft_baselen(long n, int base);

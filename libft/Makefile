@@ -12,7 +12,7 @@ FTSKIP = space spacenl char chars
 
 FTLST = add_back add_front clear delone iter last map new size
 
-FTMATH = nbrlen hexlen baselen power
+FTMATH = abs nbrlen hexlen baselen power
 
 FTMEM = bzero calloc memccpy memchr memcmp memcpy memdel memmove memset
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/03 16:27:21 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/05 18:03:40 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,10 +129,14 @@ void	free_env(t_env *env);
 void	free_tab(char **tab);
 
 /* TOKEN TOOLS */
-int		is_type(t_token *token, int type);
-t_token	*next_type(t_token *token, int type, int skip);
 t_token	*next_sep(t_token *token, int skip);
 t_token	*prev_sep(t_token *token, int skip);
 t_token	*next_run(t_token *token, int skip);
+
+/* TYPE TOOLS */
+int		is_type(t_token *token, int type);
+int		has_type(t_token *token, int type);
+int		has_pipe(t_token *token);
+t_token	*next_type(t_token *token, int type, int skip);
 
 #endif

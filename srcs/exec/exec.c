@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:42:31 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/02 17:19:24 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/05 18:03:58 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		is_exit(t_token *token, char *cmd)
-{
-	t_token	*tmp;
-	int		pipe;
-
-	tmp = token;
-	pipe = 0;
-	while (tmp && is_type(tmp, END) == 0)
-	{
-		if (is_type(tmp, PIPE))
-			pipe = 1;
-		tmp = tmp->next;
-	}
-	if (ft_strcmp(cmd, "exit") == 0 && pipe == 0)
-		return (1);
-	return (0);
-}
 
 char	**cmd_tab(t_token *start)
 {
@@ -69,7 +51,7 @@ void	exec_cmd(t_mini *mini, t_token *token)
 		cmd[i] = expansions(cmd[i], mini->env);
 		i++;
 	}
-	if (is_exit(token, cmd[0]))
+	if (ft_strcmp(cmd[0], "exit") == 0 && has_pipe(token) == 0)
 		mini->run = 0;
 	if (is_builtin(cmd[0]))
 		exec_builtin(cmd, mini);

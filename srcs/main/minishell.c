@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/02 16:48:52 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/05 18:27:28 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,25 @@ void	redir_and_exec(t_mini *mini, t_token *token)
 void	minishell(t_mini *mini)
 {
 	t_token	*token;
-	// pid_t	pid;
-	// int		status;
-	//
-	// pid = fork();
-	// if (pid != 0)
-	// 	waitpid(pid, &status, 0);
-	// else
-	// {
-		token = next_run(mini->start, NOSKIP);
-		while (mini->run && is_type(token, CMD))
-		{
+	pid_t	pid;
+	int		status;
+
+	token = next_run(mini->start, NOSKIP);
+	while (mini->run && is_type(token, CMD))
+	{
+		pid = (has_pipe(token)) ? fork() : 1;
+		if (pid == 0 || pid == 1)
 			redir_and_exec(mini, token);
-			reset_std(mini);
-			close_fds(mini);
-			waitpid(mini->pid, NULL, 0);
-			reset_fds(mini);
-			token = next_run(token, SKIP);
-		}
-	// 	if (mini->run)
-	// 		exit(0);
-	// 	exit(1);
-	// }
+		else
+			waitpid(pid, &status, 0);
+		if (pid == 0)
+			exit(ft_abs(mini->run - 1));
+		reset_std(mini);
+		close_fds(mini);
+		waitpid(mini->pid, NULL, 0);
+		reset_fds(mini);
+		token = next_run(token, SKIP);
+	}
 	// if (WEXITSTATUS(status) != 0)
 	// 	exit(0);
 }

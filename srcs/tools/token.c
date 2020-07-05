@@ -6,28 +6,11 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:35:12 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/17 15:35:31 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/07/05 17:56:14 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		is_type(t_token *token, int type)
-{
-	if (token && token->type == type)
-		return (1);
-	else
-		return (0);
-}
-
-t_token	*next_type(t_token *token, int type, int skip)
-{
-	if (token && skip)
-		token = token->next;
-	while (token && token->type != type)
-		token = token->next;
-	return (token);
-}
 
 t_token	*next_sep(t_token *token, int skip)
 {
