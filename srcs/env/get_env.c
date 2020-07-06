@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 17:40:30 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/06 16:59:39 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/06 17:49:08 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,17 @@ char	*get_env_value(char *arg, t_env *env)
 	char	env_name[BUFF_SIZE];
 	char	*env_val;
 
+	env_val = ft_strdup("");
 	while (env)
 	{
 		get_env_name(env_name, env->value);
 		if (ft_strcmp(arg, env_name) == 0)
 		{
+			free(env_val);
 			env_val = env_value(env->value);
 			return (env_val);
 		}
 		env = env->next;
 	}
-	env_val = ft_strdup("\n");
 	return (env_val);
 }

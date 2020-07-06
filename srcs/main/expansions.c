@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 16:06:28 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/02 18:38:06 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/06 18:09:21 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ char			*expansions(const char *arg, t_env *env)
 		{
 			j++;
 			env_value = get_var_value(arg, j, env);
-			i += varlcpy(new_arg, env_value, i);
+			if (env_value)
+				i += varlcpy(new_arg, env_value, i);
 			while (is_env_char(arg[j]) == 1)
 				j++;
 		}
