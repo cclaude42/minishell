@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/06 14:03:27 by anonymous        ###   ########.fr       */
+/*   Updated: 2020/07/06 14:10:44 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct	s_mini
 	int				pipin;
 	int				pipout;
 	int				pid;
+	int				ret;
 	int				exit;
 }				t_mini;
 
