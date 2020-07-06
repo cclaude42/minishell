@@ -6,11 +6,29 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 18:15:54 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/03 16:17:41 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/06 17:01:43 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	print_error(int error, const char *arg)
+{
+	int		i;
+
+	if (error == -1)
+		ft_putstr_fd("export: not valid in this context: ", STDERR);
+	else if (error == 0)
+		ft_putstr_fd("export: not an identifier: ", STDERR);
+	i = 0;
+	while (arg[i] && arg[i] != '=')
+	{
+		write(STDERR, &arg[i], 1);
+		i++;
+	}
+	write(STDERR, "\n", 1);
+	return (1);
+}
 
 int			env_add(const char *value, t_env *env)
 {
@@ -65,6 +83,7 @@ int			is_in_env(t_env *env, char *args)
 int			ft_export(char **args, t_env *env)
 {
 	int		new_env;
+	int		error_ret;
 
 	new_env = 0;
 	if (!args[1])
@@ -74,6 +93,9 @@ int			ft_export(char **args, t_env *env)
 	}
 	else
 	{
+		error_ret = is_valid_env(args[1]);
+		if (error_ret <= 0)
+			return (print_error(error_ret, args[1]));
 		new_env = is_in_env(env, args[1]);
 		if (new_env == 0)
 			env_add(args[1], env);

@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 17:40:30 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/02 17:51:25 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/06 16:59:39 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,24 @@ int		is_env_char(int c)
 	if (ft_isalnum(c) == 1 || c == '_')
 		return (1);
 	return (0);
+}
+
+int		is_valid_env(const char *env)
+{
+	int		i;
+
+	i = 0;
+	if (ft_isdigit(env[i]) == 1)
+		return (0);
+	while (env[i] && env[i] != '=')
+	{
+		if (ft_isalnum(env[i]) == 0)
+			return (-1);
+		i++;
+	}
+	if (env[i] != '=')
+		return (-2);
+	return (1);
 }
 
 int		env_value_len(const char *env)

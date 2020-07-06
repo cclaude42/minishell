@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/06 14:10:44 by anonymous        ###   ########.fr       */
+/*   Updated: 2020/07/06 15:33:15 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ char	*get_env_value(char *arg, t_env *env);
 char	*env_value(char *env);
 int		env_value_len(const char *env);
 int		is_env_char(int c);
+int		is_valid_env(const char *env);
 void    print_sorted_env(t_env *env);
 size_t	size_env(t_env *lst);
 
