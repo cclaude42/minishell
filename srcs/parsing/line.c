@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/02 16:49:01 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/06 14:03:45 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	parse(t_mini *mini)
 	mini->start = get_tokens(line);
 	ft_memdel(line);
 	squish_args(mini);
+
 	// FOR DEBUGGING
-	print_args(mini->start);
+	// print_args(mini->start);
 }

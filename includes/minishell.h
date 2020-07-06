@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/05 18:03:40 by anonymous        ###   ########.fr       */
+/*   Updated: 2020/07/06 14:03:27 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_env
 typedef struct	s_mini
 {
 	t_token			*start;
+	t_env			*env;
 	int				in;
 	int				out;
 	int				fdin;
@@ -70,8 +71,7 @@ typedef struct	s_mini
 	int				pipin;
 	int				pipout;
 	int				pid;
-	t_env			*env;
-	int				run;
+	int				exit;
 }				t_mini;
 
 /* MINISHELL */

@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:42:31 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/05 18:03:58 by anonymous        ###   ########.fr       */
+/*   Updated: 2020/07/06 13:38:29 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	exec_cmd(t_mini *mini, t_token *token)
 		i++;
 	}
 	if (ft_strcmp(cmd[0], "exit") == 0 && has_pipe(token) == 0)
-		mini->run = 0;
+		mini->exit = 1;
 	if (is_builtin(cmd[0]))
 		exec_builtin(cmd, mini);
 	else
