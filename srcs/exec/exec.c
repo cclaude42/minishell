@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:42:31 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/06 13:38:29 by anonymous        ###   ########.fr       */
+/*   Updated: 2020/07/09 15:37:12 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ void	exec_cmd(t_mini *mini, t_token *token)
 	if (ft_strcmp(cmd[0], "exit") == 0 && has_pipe(token) == 0)
 		mini->exit = 1;
 	if (is_builtin(cmd[0]))
-		exec_builtin(cmd, mini);
+		mini->ret = exec_builtin(cmd, mini);
 	else
-		exec_bin(cmd, mini->env);
+		mini->ret = exec_bin(cmd, mini->env);
 	ft_memdel(cmd);
 	close(mini->pipin);
 	close(mini->pipout);

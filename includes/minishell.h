@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/06 15:33:15 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/09 15:36:43 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int		ft_echo(char **args);
 int		ft_cd(char **args, t_env *env);
 int		ft_pwd(void);
 int		ft_export(char **args, t_env *env);
-void	ft_env(t_env *env);
+int		ft_env(t_env *env);
 int		env_add(const char *value, t_env *env);
 char	*get_env_name(char *dest, const char *src);
 int		is_in_env(t_env *env, char *args);
