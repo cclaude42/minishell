@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 16:06:28 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/06 18:09:21 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/10 15:01:15 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int		get_var_len(const char *arg, int pos, t_env *env)
 	int		i;
 
 	i = 0;
+	if (arg[pos] == '?')
+		return (1);
 	while (arg[pos] && is_env_char(arg[pos]) == 1 && i < BUFF_SIZE)
 	{
 		var_name[i] = arg[pos];
@@ -54,13 +56,18 @@ static int		arg_alloc_len(const char *arg, t_env *env)
 	return (size);
 }
 
-static char		*get_var_value(const char *arg, int pos, t_env *env)
+static char		*get_var_value(const char *arg, int pos, t_env *env, int ret)
 {
 	char	var_name[BUFF_SIZE];
 	char	*var_value;
 	int		i;
 
 	i = 0;
+	if (arg[pos] == '?')
+	{
+		var_value = ft_itoa(ret);
+		return (var_value);
+	}
 	while (arg[pos] && is_env_char(arg[pos]) == 1 && i < BUFF_SIZE)
 	{
 		var_name[i] = arg[pos];
@@ -82,7 +89,7 @@ static int		varlcpy(char *new_arg, const char *env_value, int pos)
 	return (i);
 }
 
-char			*expansions(const char *arg, t_env *env)
+char			*expansions(const char *arg, t_env *env, int ret)
 {
 	int		size;
 	char	*new_arg;
@@ -100,9 +107,11 @@ char			*expansions(const char *arg, t_env *env)
 		while (arg[j] == EXPANSION)
 		{
 			j++;
-			env_value = get_var_value(arg, j, env);
+			env_value = get_var_value(arg, j, env, ret);
 			if (env_value)
 				i += varlcpy(new_arg, env_value, i);
+			if (arg[j] == '?')
+				j++;
 			while (is_env_char(arg[j]) == 1)
 				j++;
 		}

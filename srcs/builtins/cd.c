@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 19:46:37 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/02 16:45:54 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/10 15:09:02 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ int				ft_cd(char **args, t_env *env)
 		update_oldpwd(env);
 		cd_ret = chdir(args[1]);
 	}
+	if (cd_ret < 0)
+		cd_ret *= -1;
 	if (cd_ret != 0)
 		print_error(args);
 	return (cd_ret);

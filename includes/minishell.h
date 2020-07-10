@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/09 15:36:43 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/10 15:00:40 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct	s_mini
 void	redir(t_mini *mini, t_token *token, int type);
 void	input(t_mini *mini, t_token *token);
 int		minipipe(t_mini *mini);
-char	*expansions(const char *arg, t_env *env);
+char	*expansions(const char *arg, t_env *env, int ret);
 
 /* EXEC */
 void	exec_cmd(t_mini *mini, t_token *token);
