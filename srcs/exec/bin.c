@@ -6,13 +6,13 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:37:17 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/13 12:49:12 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/13 13:23:31 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		magic_box(char *path, char **args, t_env *env)
+int			magic_box(char *path, char **args, t_env *env)
 {
 	pid_t	pid;
 	char	**env_array;
@@ -32,7 +32,7 @@ int		magic_box(char *path, char **args, t_env *env)
 	return (ret);
 }
 
-char	*path_join(const char *s1, const char *s2)
+char		*path_join(const char *s1, const char *s2)
 {
 	char	*tmp;
 	char	*path;
@@ -43,7 +43,7 @@ char	*path_join(const char *s1, const char *s2)
 	return (path);
 }
 
-char	*check_dir(char *bin, char *command)
+char		*check_dir(char *bin, char *command)
 {
 	DIR				*folder;
 	struct dirent	*item;
@@ -62,7 +62,13 @@ char	*check_dir(char *bin, char *command)
 	return (path);
 }
 
-int		exec_bin(char **args, t_env *env)
+static int	free_bin(char **bin)
+{
+	free_tab(bin);
+	return (0);
+}
+
+int			exec_bin(char **args, t_env *env)
 {
 	int		i;
 	char	**bin;
@@ -70,7 +76,7 @@ int		exec_bin(char **args, t_env *env)
 	int		ret;
 
 	i = 0;
-	ret = 1;
+	ret = 0;
 	while (env->value && ft_strncmp(env->value, "PATH=", 5) != 0)
 		env = env->next;
 	if (env->next == NULL)
@@ -83,10 +89,7 @@ int		exec_bin(char **args, t_env *env)
 	while (args[0] && bin[i] && path == NULL)
 		path = check_dir(bin[i++], args[0]);
 	if (bin[i] == NULL)
-	{
-		free_tab(bin);
-		return (0);
-	}
+		return (free_bin(bin));
 	ret = magic_box(path, args, env);
 	ft_memdel(path);
 	free_tab(bin);
