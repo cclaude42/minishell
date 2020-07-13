@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 16:06:28 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/10 15:01:15 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/13 14:17:36 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,27 +91,23 @@ static int		varlcpy(char *new_arg, const char *env_value, int pos)
 
 char			*expansions(const char *arg, t_env *env, int ret)
 {
-	int		size;
 	char	*new_arg;
 	int		i;
 	int		j;
 	char	*env_value;
 
-	size = arg_alloc_len(arg, env);
-	if (!(new_arg = malloc(sizeof(char) * size)))
+	if (!(new_arg = malloc(sizeof(char) * arg_alloc_len(arg, env))))
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (i < size && arg[j])
+	while (i < arg_alloc_len(arg, env) && arg[j])
 	{
 		while (arg[j] == EXPANSION)
 		{
 			j++;
 			env_value = get_var_value(arg, j, env, ret);
-			if (env_value)
-				i += varlcpy(new_arg, env_value, i);
-			if (arg[j] == '?')
-				j++;
+			i += env_value ? varlcpy(new_arg, env_value, i) : 0;
+			arg[j] == '?' ? j++ : 0;
 			while (is_env_char(arg[j]) == 1)
 				j++;
 		}
