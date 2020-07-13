@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 19:46:37 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/13 14:41:22 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/13 15:36:58 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,11 @@ static int		go_to_path(int option, t_env *env)
 	{
 		update_oldpwd(env);
 		env_path = get_env_path(env, "HOME", 4);
+		if (!env_path)
+		{
+			ft_putendl_fd("minishell : cd: HOME not set", STDERR);
+			return (ERROR);
+		}
 	}
 	else if (option == 1)
 	{
