@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:37:17 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/13 13:23:31 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/13 14:18:34 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int			magic_box(char *path, char **args, t_env *env)
 	char	**env_array;
 	int		ret;
 
-	ret = 0;
+	ret = SUCCESS;
 	pid = fork();
 	if (pid == 0)
 	{
@@ -65,7 +65,7 @@ char		*check_dir(char *bin, char *command)
 static int	free_bin(char **bin)
 {
 	free_tab(bin);
-	return (0);
+	return (UNKNOW_COMMAND);
 }
 
 int			exec_bin(char **args, t_env *env)
@@ -80,10 +80,10 @@ int			exec_bin(char **args, t_env *env)
 	while (env->value && ft_strncmp(env->value, "PATH=", 5) != 0)
 		env = env->next;
 	if (env->next == NULL)
-		return (ret);
+		return (ERROR);
 	bin = ft_split(env->value, ':');
 	if (!args[0] && !bin[0])
-		return (ret);
+		return (ERROR);
 	i = 1;
 	path = check_dir(bin[0] + 5, args[0]);
 	while (args[0] && bin[i] && path == NULL)
