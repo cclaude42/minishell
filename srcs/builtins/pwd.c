@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 14:55:46 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/08 18:31:17 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/13 14:42:52 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int		ft_pwd(void)
 	if (getcwd(cwd, PATH_MAX))
 	{
 		ft_putendl_fd(cwd, 1);
-		return (0);
+		return (SUCCESS);
 	}
 	else
-		return (1);
+		return (ERROR);
 }

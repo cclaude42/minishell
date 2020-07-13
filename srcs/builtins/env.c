@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 15:24:05 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/09 15:37:56 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/13 14:42:05 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,5 @@ int		ft_env(t_env *env)
 	}
 	if (env)
 		ft_putendl(env->value);
-	return (0);
+	return (SUCCESS);
 }

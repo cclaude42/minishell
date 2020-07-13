@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 19:46:37 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/10 15:09:02 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/13 14:41:22 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ static int		update_oldpwd(t_env *env)
 	char	*oldpwd;
 
 	if (getcwd(cwd, PATH_MAX) == NULL)
-		return (1);
+		return (ERROR);
 	if (!(oldpwd = ft_strjoin("OLDPWD=", cwd)))
-		return (1);
+		return (ERROR);
 	if (is_in_env(env, oldpwd) == 0)
 		env_add(oldpwd, env);
-	return (0);
+	return (SUCCESS);
 }
 
 static int		go_to_path(int option, t_env *env)

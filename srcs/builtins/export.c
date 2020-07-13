@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 18:15:54 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/06 17:01:43 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/13 14:42:38 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	print_error(int error, const char *arg)
 		i++;
 	}
 	write(STDERR, "\n", 1);
-	return (1);
+	return (ERROR);
 }
 
 int			env_add(const char *value, t_env *env)
@@ -43,7 +43,7 @@ int			env_add(const char *value, t_env *env)
 	tmp = env->next;
 	env->next = new;
 	new->next = tmp;
-	return (0);
+	return (SUCCESS);
 }
 
 char		*get_env_name(char *dest, const char *src)
@@ -77,7 +77,7 @@ int			is_in_env(t_env *env, char *args)
 		}
 		env = env->next;
 	}
-	return (0);
+	return (SUCCESS);
 }
 
 int			ft_export(char **args, t_env *env)
@@ -89,7 +89,7 @@ int			ft_export(char **args, t_env *env)
 	if (!args[1])
 	{
 		print_sorted_env(env);
-		return (0);
+		return (SUCCESS);
 	}
 	else
 	{
@@ -100,5 +100,5 @@ int			ft_export(char **args, t_env *env)
 		if (new_env == 0)
 			env_add(args[1], env);
 	}
-	return (0);
+	return (SUCCESS);
 }

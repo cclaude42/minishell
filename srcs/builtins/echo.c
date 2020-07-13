@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 17:15:26 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/06 18:28:24 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/13 14:41:57 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,5 @@ int				ft_echo(char **args)
 	}
 	if (n_option == 0)
 		write(1, "\n", 1);
-	return (0);
+	return (SUCCESS);
 }

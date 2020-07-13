@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/19 15:39:20 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/19 17:20:34 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/13 14:43:06 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ int				ft_unset(char **a, t_mini *mini)
 
 	env = mini->env;
 	if (!(a[1]))
-		return (0);
+		return (SUCCESS);
 	if (ft_strncmp(a[1], env->value, env_size(env->value)) == 0)
 	{
 		mini->env = env->next;
 		free_node(env);
-		return (0);
+		return (SUCCESS);
 	}
 	while (env && env->next)
 	{
@@ -49,9 +49,9 @@ int				ft_unset(char **a, t_mini *mini)
 			tmp = env->next->next;
 			free_node(env->next);
 			env->next = tmp;
-			return (0);
+			return (SUCCESS);
 		}
 		env = env->next;
 	}
-	return (0);
+	return (SUCCESS);
 }
