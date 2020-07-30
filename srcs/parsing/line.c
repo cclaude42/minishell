@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/30 14:56:46 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/30 15:24:34 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,12 @@ void	sigInt(int code)
 		ft_printf("\b\b  ");
 		ft_printf("\n");
 		ft_printf("\033[0;36mminishell > \033[0m");
+		g_sig.exit_status = 1;
 	}
 	else
 	{
 		ft_printf("\n");
+		g_sig.exit_status = 130;
 	}
 	g_sig.pid = 0;
 }
