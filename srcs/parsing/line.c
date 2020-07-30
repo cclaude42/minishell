@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/30 15:24:34 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/30 16:58:11 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void	sigInt(int code)
 		g_sig.exit_status = 130;
 	}
 	g_sig.pid = 0;
+	g_sig.sigint = 1;
+	signal(SIGINT, &sigInt);
 }
 
 void	parse(t_mini *mini)
@@ -101,6 +103,8 @@ void	parse(t_mini *mini)
 	signal(SIGINT, &sigInt);
 	ft_printf("\033[0;36mminishell > \033[0m");
 	get_next_line(0, &line);
+	if (g_sig.sigint == 1)
+		mini->ret = g_sig.exit_status;
 	while (open_quotes(line, 2147483647))
 	{
 		ft_printf("\033[0;36m> \033[0m");
