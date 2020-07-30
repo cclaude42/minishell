@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/06 14:11:08 by anonymous        ###   ########.fr       */
+/*   Updated: 2020/07/30 14:46:33 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_sig	g_sig;
 
 void	redir_and_exec(t_mini *mini, t_token *token)
 {
@@ -63,6 +65,12 @@ void	minishell(t_mini *mini)
 	}
 }
 
+void	init_sig(void)
+{
+	g_sig.sigint = 0;	
+	g_sig.pid = 0;
+}
+
 int		main(int ac, char **av, char **env)
 {
 	t_mini	mini;
@@ -77,6 +85,7 @@ int		main(int ac, char **av, char **env)
 	env_init(&mini, env);
 	while (mini.exit == 0)
 	{
+		init_sig();
 		parse(&mini);
 		if (mini.start != NULL)
 			minishell(&mini);

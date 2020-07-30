@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/13 14:13:41 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/30 14:37:51 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/wait.h>
 # include <limits.h>
 # include <errno.h>
+# include <signal.h>
 // # include <sys/types.h>
 // # include <stdbool.h>
 // # include <stdarg.h>
@@ -77,6 +78,13 @@ typedef struct	s_mini
 	int				ret;
 	int				exit;
 }				t_mini;
+
+typedef struct	s_sig
+{
+	int				sigint;
+	int				exit_status;
+	pid_t			pid;
+}				t_sig;
 
 /* MINISHELL */
 void	redir(t_mini *mini, t_token *token, int type);
@@ -144,4 +152,5 @@ int		has_type(t_token *token, int type);
 int		has_pipe(t_token *token);
 t_token	*next_type(t_token *token, int type, int skip);
 
+extern t_sig g_sig;
 #endif

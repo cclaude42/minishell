@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/06 14:03:45 by anonymous        ###   ########.fr       */
+/*   Updated: 2020/07/30 14:56:46 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,29 @@ char	*space_line(char *line)
 	return (new);
 }
 
+void	sigInt(int code)
+{
+	(void)code;
+	if (g_sig.pid == 0)
+	{
+		ft_printf("\b\b  ");
+		ft_printf("\n");
+		ft_printf("\033[0;36mminishell > \033[0m");
+	}
+	else
+	{
+		ft_printf("\n");
+	}
+	g_sig.pid = 0;
+}
+
 void	parse(t_mini *mini)
 {
 	char	*line;
 	char	*more;
 	char	*tmp;
 
+	signal(SIGINT, &sigInt);
 	ft_printf("\033[0;36mminishell > \033[0m");
 	get_next_line(0, &line);
 	while (open_quotes(line, 2147483647))

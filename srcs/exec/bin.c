@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:37:17 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/13 14:18:34 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/30 14:31:47 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,19 @@
 
 int			magic_box(char *path, char **args, t_env *env)
 {
-	pid_t	pid;
 	char	**env_array;
 	int		ret;
 
 	ret = SUCCESS;
-	pid = fork();
-	if (pid == 0)
+	g_sig.pid = fork();
+	if (g_sig.pid == 0)
 	{
 		env_array = ft_split(env_to_str(env), '\n');
 		ret = execve(path, args, env_array);
 		free_tab(env_array);
 	}
 	else
-		waitpid(pid, &ret, 0);
+		waitpid(g_sig.pid, &ret, 0);
 	ret = !!ret;
 	return (ret);
 }
