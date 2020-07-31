@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/30 14:37:51 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/31 16:21:10 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct	s_mini
 typedef struct	s_sig
 {
 	int				sigint;
+	int				sigquit;
 	int				exit_status;
 	pid_t			pid;
 }				t_sig;
@@ -109,7 +110,6 @@ char	*get_env_name(char *dest, const char *src);
 int		is_in_env(t_env *env, char *args);
 int		ft_export(char **args, t_env *env);
 int		ft_unset(char **args, t_mini *mini);
-
 
 /* PARSING */
 void	parse(t_mini *mini);
@@ -151,6 +151,10 @@ int		is_type(t_token *token, int type);
 int		has_type(t_token *token, int type);
 int		has_pipe(t_token *token);
 t_token	*next_type(t_token *token, int type, int skip);
+
+/* SIGNAL */
+void	sigInt(int code);
+void    sigQuit(int code);
 
 extern t_sig g_sig;
 #endif

@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/30 16:58:11 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/31 16:14:47 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,26 +74,6 @@ char	*space_line(char *line)
 	return (new);
 }
 
-void	sigInt(int code)
-{
-	(void)code;
-	if (g_sig.pid == 0)
-	{
-		ft_printf("\b\b  ");
-		ft_printf("\n");
-		ft_printf("\033[0;36mminishell > \033[0m");
-		g_sig.exit_status = 1;
-	}
-	else
-	{
-		ft_printf("\n");
-		g_sig.exit_status = 130;
-	}
-	g_sig.pid = 0;
-	g_sig.sigint = 1;
-	signal(SIGINT, &sigInt);
-}
-
 void	parse(t_mini *mini)
 {
 	char	*line;
@@ -101,6 +81,7 @@ void	parse(t_mini *mini)
 	char	*tmp;
 
 	signal(SIGINT, &sigInt);
+	signal(SIGQUIT, &sigQuit);
 	ft_printf("\033[0;36mminishell > \033[0m");
 	get_next_line(0, &line);
 	if (g_sig.sigint == 1)

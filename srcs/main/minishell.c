@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/30 16:45:43 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/07/31 16:16:50 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ void	minishell(t_mini *mini)
 
 void	init_sig(void)
 {
-	g_sig.sigint = 0;	
+	g_sig.sigint = 0;
+	g_sig.sigquit = 0;
 	g_sig.pid = 0;
 	g_sig.exit_status = 0;
 }
