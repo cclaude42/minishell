@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/03 15:16:14 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/03 15:34:03 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ void	parse(t_mini *mini)
 	char	*more;
 	char	*tmp;
 
-	signal(SIGINT, &sigInt);
-	signal(SIGQUIT, &sigQuit);
+	signal(SIGINT, &sig_int);
+	signal(SIGQUIT, &sig_quit);
 	ft_printf("\033[0;36mminishell > \033[0m");
 	get_next_line(0, &line);
 	if (g_sig.sigint == 1)

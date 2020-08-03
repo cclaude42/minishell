@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/31 16:21:10 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/03 15:33:52 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,8 @@ int		has_pipe(t_token *token);
 t_token	*next_type(t_token *token, int type, int skip);
 
 /* SIGNAL */
-void	sigInt(int code);
-void    sigQuit(int code);
+void	sig_int(int code);
+void    sig_quit(int code);
 
 extern t_sig g_sig;
 #endif
