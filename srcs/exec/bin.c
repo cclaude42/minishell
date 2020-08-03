@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:37:17 by cclaude           #+#    #+#             */
-/*   Updated: 2020/07/30 16:47:32 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/03 15:19:00 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int			magic_box(char *path, char **args, t_env *env)
 	}
 	else
 		waitpid(g_sig.pid, &ret, 0);
-	if (g_sig.sigint == 1)
+	if (g_sig.sigint == 1 || g_sig.sigquit == 1)
 		return (g_sig.exit_status);
 	ret = !!ret;
 	return (ret);
