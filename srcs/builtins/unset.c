@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/19 15:39:20 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/13 14:43:06 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/05 16:27:56 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static size_t	env_size(char *env)
 
 static void		free_node(t_env *env)
 {
-	free(env->value);
-	free(env);
+	ft_memdel(env->value);
+	ft_memdel(env);
 }
 
 int				ft_unset(char **a, t_mini *mini)

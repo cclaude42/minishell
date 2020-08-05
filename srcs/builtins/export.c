@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 18:15:54 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/13 14:42:38 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/05 16:27:56 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int			is_in_env(t_env *env, char *args)
 		get_env_name(env_name, env->value);
 		if (ft_strcmp(var_name, env_name) == 0)
 		{
-			free(env->value);
+			ft_memdel(env->value);
 			env->value = ft_strdup(args);
 			return (1);
 		}

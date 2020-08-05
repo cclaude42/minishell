@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:55:31 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/22 18:53:09 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/05 16:27:56 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ void	free_token(t_token *start)
 {
 	while (start && start->next)
 	{
-		free(start->str);
+		ft_memdel(start->str);
 		start = start->next;
-		free(start->prev);
+		ft_memdel(start->prev);
 	}
 	if (start)
 	{
-		free(start->str);
-		free(start);
+		ft_memdel(start->str);
+		ft_memdel(start);
 	}
 }
 
@@ -35,13 +35,13 @@ void	free_env(t_env *env)
 	{
 		tmp = env;
 		env = env->next;
-		free(tmp->value);
-		free(tmp);
+		ft_memdel(tmp->value);
+		ft_memdel(tmp);
 	}
 	if (env)
 	{
-		free(env->value);
-		free(env);
+		ft_memdel(env->value);
+		ft_memdel(env);
 	}
 }
 
@@ -53,9 +53,9 @@ void	free_tab(char **tab)
 	while (tab[i])
 	{
 		if (tab[i])
-			free(tab[i]);
+			ft_memdel(tab[i]);
 		i++;
 	}
 	if (tab)
-		free(tab);
+		ft_memdel(tab);
 }

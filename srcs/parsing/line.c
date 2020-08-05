@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/03 15:34:03 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/05 16:24:54 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,30 +74,40 @@ char	*space_line(char *line)
 	return (new);
 }
 
+void	quote_loop(char **line)
+{
+	char	*more;
+	char	*tmp;
+
+	while (open_quotes(*line, 2147483647))
+	{
+		ft_printf("\033[0;36m> \033[0m");
+		get_next_line(0, &more);
+		tmp = *line;
+		*line = ft_strjoin(*line, "\n");
+		ft_memdel(tmp);
+		tmp = *line;
+		*line = ft_strjoin(*line, more);
+		ft_memdel(tmp);
+		ft_memdel(more);
+	}
+}
+
 void	parse(t_mini *mini)
 {
 	char	*line;
-	char	*more;
-	char	*tmp;
 
 	signal(SIGINT, &sig_int);
 	signal(SIGQUIT, &sig_quit);
 	ft_printf("\033[0;36mminishell > \033[0m");
-	get_next_line(0, &line);
+	if (get_next_line(0, &line) == -2)
+	{
+		mini->exit = 1;
+		ft_printf("exit\n");
+	}
 	if (g_sig.sigint == 1)
 		mini->ret = g_sig.exit_status;
-	while (open_quotes(line, 2147483647))
-	{
-		ft_printf("\033[0;36m> \033[0m");
-		get_next_line(0, &more);
-		tmp = line;
-		line = ft_strjoin(line, "\n");
-		ft_memdel(tmp);
-		tmp = line;
-		line = ft_strjoin(line, more);
-		ft_memdel(tmp);
-		ft_memdel(more);
-	}
+	quote_loop(&line);
 	line = space_line(line);
 	mini->start = get_tokens(line);
 	ft_memdel(line);

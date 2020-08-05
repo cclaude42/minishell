@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 16:06:28 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/30 16:41:37 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/05 16:27:56 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int		get_var_len(const char *arg, int pos, t_env *env)
 	var_name[i] = '\0';
 	var_value = get_env_value(var_name, env);
 	i = ft_strlen(var_value);
-	free(var_value);
+	ft_memdel(var_value);
 	return (i);
 }
 

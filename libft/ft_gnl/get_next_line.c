@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 16:53:10 by cclaude           #+#    #+#             */
-/*   Updated: 2020/02/06 15:37:46 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/05 16:48:18 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int		newline_check(char *stock, int read_size)
 	int	i;
 
 	i = 0;
-	if (stock == NULL)
+	if (read_size == 0 && stock[0] == '\0')
+		return (2);
+	if (read_size == 0 || stock == NULL)
 		return (0);
-	if (read_size == 0)
-		return (1);
 	while (stock[i] != '\0')
 	{
 		if (stock[i] == '\n')
@@ -53,7 +53,7 @@ char	*buf_join(char *stock, char *buf)
 		new[i++] = buf[j++];
 	new[i] = '\0';
 	if (stock != NULL)
-		free(stock);
+		ft_memdel(stock);
 	return (new);
 }
 
@@ -81,7 +81,7 @@ char	*stock_trim(char *stock)
 	while (stock[i] != '\0')
 		trimmed[j++] = stock[i++];
 	trimmed[j] = '\0';
-	free(stock);
+	ft_memdel(stock);
 	return (trimmed);
 }
 
@@ -119,16 +119,18 @@ int		get_next_line(int fd, char **line)
 		if ((read_size = read(fd, buf, BUFFER_SIZE)) == -1)
 			return (-1);
 		buf[read_size] = '\0';
+		(read_size == 0 || buf[read_size - 1] != '\n') ? ft_printf("  \b\b") : 0 ;
 		if ((stock = buf_join(stock, buf)) == NULL)
 			return (-1);
 	}
+	if (newline_check(stock, read_size) == 2 && (*line = stock))
+		return (-2);
 	if ((*line = get_line(stock)) == NULL)
 		return (-1);
 	if ((stock = stock_trim(stock)) == NULL)
 		return (-1);
 	if (read_size != 0)
 		return (1);
-	free(stock);
-	stock = NULL;
+	ft_memdel(stock);
 	return (0);
 }

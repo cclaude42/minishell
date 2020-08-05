@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 15:49:42 by cclaude           #+#    #+#             */
-/*   Updated: 2019/10/18 14:47:44 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/05 16:27:56 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static t_list	*map_free(t_list *start, void (*del)(void *))
+static t_list	*map_ft_memdel(t_list *start, void (*del)(void *))
 {
 	t_list	*temp;
 	t_list	*next;
@@ -22,7 +22,7 @@ static t_list	*map_free(t_list *start, void (*del)(void *))
 	{
 		next = temp->next;
 		del(temp->content);
-		free(temp);
+		ft_memdel(temp);
 		temp = next;
 	}
 	return (NULL);
@@ -41,7 +41,7 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void*), void (*del)(void *))
 	while (temp != NULL && f != NULL && del != NULL)
 	{
 		if (!(lstnew = malloc(sizeof(t_list))))
-			return (map_free(start, del));
+			return (map_ft_memdel(start, del));
 		lstnew->content = f(temp->content);
 		if (prev != NULL)
 			prev->next = lstnew;
