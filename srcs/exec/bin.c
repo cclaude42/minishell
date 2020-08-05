@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   bin.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:37:17 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/05 17:06:26 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/05 19:09:42 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void		error_message(char *path)
+{
+	DIR	*folder;
+	int	fd;
+
+	fd = open(path, O_WRONLY);
+	folder = opendir(path);
+	if (ft_strchr(path, '/') == NULL)
+		ft_printf("minishell: %s: command not found\n", path);
+	else if (fd == -1 && folder == NULL)
+		ft_printf("minishell: %s: No such file or directory\n", path);
+	else if (fd == -1 && folder != NULL)
+		ft_printf("minishell: %s: is a directory\n", path);
+	else if (fd != -1 && folder == NULL)
+		ft_printf("minishell: %s: Permission denied\n", path);
+	closedir(folder);
+	close(fd);
+}
 
 int			magic_box(char *path, char **args, t_env *env)
 {
@@ -22,8 +41,11 @@ int			magic_box(char *path, char **args, t_env *env)
 	if (g_sig.pid == 0)
 	{
 		env_array = ft_split(env_to_str(env), '\n');
-		ret = execve(path, args, env_array);
+		if (ft_strchr(path, '/') != NULL)
+			ret = execve(path, args, env_array);
+		error_message(path);
 		free_tab(env_array);
+		exit(ret);
 	}
 	else
 		waitpid(g_sig.pid, &ret, 0);
@@ -83,10 +105,10 @@ int			exec_bin(char **args, t_env *env)
 	path = check_dir(bin[0] + 5, args[0]);
 	while (args[0] && bin[i] && path == NULL)
 		path = check_dir(bin[i++], args[0]);
-	if (bin[i] != NULL)
+	if (path != NULL)
 		ret = magic_box(path, args, env);
 	else
-		ft_printf("minishell: %s: command not found\n", args[0]);
+		ret = magic_box(args[0], args, env);
 	free_tab(bin);
 	ft_memdel(path);
 	return (ret);
