@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/03 15:33:52 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/05 16:53:02 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 # define EXPANSION -36
 # define ERROR 1
 # define SUCCESS 0
-# define UNKNOW_COMMAND 127
+# define UNKNOWN_COMMAND 127
 
 typedef struct	s_token
 {

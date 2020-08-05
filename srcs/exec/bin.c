@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:37:17 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/03 15:19:00 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/05 17:06:26 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,6 @@ char		*check_dir(char *bin, char *command)
 	return (path);
 }
 
-static int	free_bin(char **bin)
-{
-	free_tab(bin);
-	return (UNKNOW_COMMAND);
-}
-
 int			exec_bin(char **args, t_env *env)
 {
 	int		i;
@@ -77,7 +71,7 @@ int			exec_bin(char **args, t_env *env)
 	int		ret;
 
 	i = 0;
-	ret = 0;
+	ret = UNKNOWN_COMMAND;
 	while (env->value && ft_strncmp(env->value, "PATH=", 5) != 0)
 		env = env->next;
 	if (env->next == NULL)
@@ -89,10 +83,11 @@ int			exec_bin(char **args, t_env *env)
 	path = check_dir(bin[0] + 5, args[0]);
 	while (args[0] && bin[i] && path == NULL)
 		path = check_dir(bin[i++], args[0]);
-	if (bin[i] == NULL)
-		return (free_bin(bin));
-	ret = magic_box(path, args, env);
-	ft_memdel(path);
+	if (bin[i] != NULL)
+		ret = magic_box(path, args, env);
+	else
+		ft_printf("minishell: %s: command not found\n", args[0]);
 	free_tab(bin);
+	ft_memdel(path);
 	return (ret);
 }
