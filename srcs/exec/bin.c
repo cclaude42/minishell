@@ -6,16 +6,17 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:37:17 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/05 19:09:42 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/06 15:38:09 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		error_message(char *path)
+int			error_message(char *path)
 {
 	DIR	*folder;
 	int	fd;
+	int	ret;
 
 	fd = open(path, O_WRONLY);
 	folder = opendir(path);
@@ -27,8 +28,14 @@ void		error_message(char *path)
 		ft_printf("minishell: %s: is a directory\n", path);
 	else if (fd != -1 && folder == NULL)
 		ft_printf("minishell: %s: Permission denied\n", path);
-	closedir(folder);
+	if (ft_strchr(path, '/') == NULL || (fd == -1 && folder == NULL))
+		ret = UNKNOWN_COMMAND;
+	else
+		ret = IS_DIRECTORY;
+	if (folder)
+		closedir(folder);
 	close(fd);
+	return (ret);
 }
 
 int			magic_box(char *path, char **args, t_env *env)
@@ -42,8 +49,8 @@ int			magic_box(char *path, char **args, t_env *env)
 	{
 		env_array = ft_split(env_to_str(env), '\n');
 		if (ft_strchr(path, '/') != NULL)
-			ret = execve(path, args, env_array);
-		error_message(path);
+			execve(path, args, env_array);
+		ret = error_message(path);
 		free_tab(env_array);
 		exit(ret);
 	}
@@ -51,7 +58,7 @@ int			magic_box(char *path, char **args, t_env *env)
 		waitpid(g_sig.pid, &ret, 0);
 	if (g_sig.sigint == 1 || g_sig.sigquit == 1)
 		return (g_sig.exit_status);
-	ret = !!ret;
+	ret = (ret == 32256 || ret == 32512) ? ret / 256 : !!ret;
 	return (ret);
 }
 
