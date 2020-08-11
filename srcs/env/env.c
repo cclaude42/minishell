@@ -6,11 +6,33 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 16:01:42 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/03 16:02:25 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/11 15:56:39 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void increment_shell_level(t_env *env)
+{
+	int		shell_level;
+	char	env_name[BUFF_SIZE];
+	char	*SHLVL;
+
+	shell_level = ft_atoi(get_env_value("SHLVL", env)) + 1;
+	while (env && env->next)
+	{
+		get_env_name(env_name, env->value);
+		if (ft_strcmp("SHLVL", env_name) == 0)
+		{
+			ft_memdel(env->value);
+			SHLVL = ft_itoa(shell_level);
+			env->value = ft_strjoin("SHLVL=", SHLVL);
+			ft_memdel(SHLVL);
+			return ;
+		}
+		env = env->next;
+	}
+}
 
 size_t			size_env(t_env *lst)
 {
