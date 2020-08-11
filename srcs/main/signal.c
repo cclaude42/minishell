@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 16:04:10 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/06 15:45:07 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/11 15:48:55 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,12 @@ void	sig_quit(int code)
 	}
 	else
 		ft_printf("\b\b  \b\b");
+}
+
+void	sig_init(void)
+{
+	g_sig.sigint = 0;
+	g_sig.sigquit = 0;
+	g_sig.pid = 0;
+	g_sig.exit_status = 0;
 }

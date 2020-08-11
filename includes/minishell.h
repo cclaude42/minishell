@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/06 15:13:01 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/11 15:49:17 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ t_token	*next_type(t_token *token, int type, int skip);
 /* SIGNAL */
 void	sig_int(int code);
 void    sig_quit(int code);
+void	sig_init(void);
 
 extern t_sig g_sig;
 #endif

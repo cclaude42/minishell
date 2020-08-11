@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/06 17:01:20 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/11 15:49:04 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,6 @@ void	minishell(t_mini *mini)
 	}
 }
 
-void	init_sig(void)
-{
-	g_sig.sigint = 0;
-	g_sig.sigquit = 0;
-	g_sig.pid = 0;
-	g_sig.exit_status = 0;
-}
-
 static void increment_shell_level(t_env *env)
 {
 	int		shell_level;
@@ -110,7 +102,7 @@ int		main(int ac, char **av, char **env)
 	increment_shell_level(mini.env);
 	while (mini.exit == 0)
 	{
-		init_sig();
+		sig_init();
 		parse(&mini);
 		if (mini.start != NULL)
 			minishell(&mini);
