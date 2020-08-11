@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:37:17 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/06 15:38:09 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/11 17:52:32 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,16 @@ int			error_message(char *path)
 
 	fd = open(path, O_WRONLY);
 	folder = opendir(path);
+	ft_putstr_fd("minishell: ", STDERR);
+	ft_putstr_fd(path, STDERR);
 	if (ft_strchr(path, '/') == NULL)
-		ft_printf("minishell: %s: command not found\n", path);
+		ft_putendl_fd(": command not found", STDERR);
 	else if (fd == -1 && folder == NULL)
-		ft_printf("minishell: %s: No such file or directory\n", path);
+		ft_putendl_fd(": No such file or directory", STDERR);
 	else if (fd == -1 && folder != NULL)
-		ft_printf("minishell: %s: is a directory\n", path);
+		ft_putendl_fd(": is a directory", STDERR);
 	else if (fd != -1 && folder == NULL)
-		ft_printf("minishell: %s: Permission denied\n", path);
+		ft_putendl_fd(": Permission denied", STDERR);
 	if (ft_strchr(path, '/') == NULL || (fd == -1 && folder == NULL))
 		ret = UNKNOWN_COMMAND;
 	else
