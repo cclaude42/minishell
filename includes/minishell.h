@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/11 17:37:27 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/11 18:39:36 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ char	*get_env_name(char *dest, const char *src);
 int		is_in_env(t_env *env, char *args);
 int		ft_export(char **args, t_env *env);
 int		ft_unset(char **args, t_mini *mini);
+void	mini_exit(t_mini *mini, char **cmd);
 
 /* PARSING */
 void	parse(t_mini *mini);

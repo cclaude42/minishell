@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/11 17:47:49 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/11 18:22:14 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,5 @@ int		main(int ac, char **av, char **env)
 			minishell(&mini);
 		free_token(mini.start);
 	}
-	return (0);
+	return (mini.ret);
 }
