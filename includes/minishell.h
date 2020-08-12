@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/11 18:39:36 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/12 16:57:31 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ char	*expansions(const char *arg, t_env *env, int ret);
 
 /* EXEC */
 void	exec_cmd(t_mini *mini, t_token *token);
-int		exec_bin(char **args, t_env *env);
-int		is_builtin(char	*command);
+int		exec_bin(char **args, t_env *env, t_mini *mini);
 int		exec_builtin(char **args, t_mini *mini);
+int		is_builtin(char	*command);
 
 /* BUILTINS */
 int		ft_echo(char **args);

@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:37:17 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/11 17:52:32 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/12 17:14:59 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int			error_message(char *path)
 	return (ret);
 }
 
-int			magic_box(char *path, char **args, t_env *env)
+int			magic_box(char *path, char **args, t_env *env, t_mini *mini)
 {
 	char	**env_array;
 	int		ret;
@@ -54,6 +54,7 @@ int			magic_box(char *path, char **args, t_env *env)
 			execve(path, args, env_array);
 		ret = error_message(path);
 		free_tab(env_array);
+		free_token(mini->start);
 		exit(ret);
 	}
 	else
@@ -94,7 +95,7 @@ char		*check_dir(char *bin, char *command)
 	return (path);
 }
 
-int			exec_bin(char **args, t_env *env)
+int			exec_bin(char **args, t_env *env, t_mini *mini)
 {
 	int		i;
 	char	**bin;
@@ -115,9 +116,9 @@ int			exec_bin(char **args, t_env *env)
 	while (args[0] && bin[i] && path == NULL)
 		path = check_dir(bin[i++], args[0]);
 	if (path != NULL)
-		ret = magic_box(path, args, env);
+		ret = magic_box(path, args, env, mini);
 	else
-		ret = magic_box(args[0], args, env);
+		ret = magic_box(args[0], args, env, mini);
 	free_tab(bin);
 	ft_memdel(path);
 	return (ret);
