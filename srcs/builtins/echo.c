@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 17:15:26 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/11 18:19:33 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/12 17:26:47 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int				ft_echo(char **args)
 	n_option = 0;
 	if (nb_args(args) > 1)
 	{
-		if (ft_strcmp(args[1], "-n") == 0)
+		while (args[i] && ft_strcmp(args[i], "-n") == 0)
 		{
 			n_option = 1;
 			i++;
