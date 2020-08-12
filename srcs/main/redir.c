@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:47:34 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/23 16:45:48 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/11 17:35:40 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int		minipipe(t_mini *mini)
 		close(pipefd[1]);
 		dup2(pipefd[0], STDIN);
 		mini->pipin = pipefd[0];
+		mini->pid = -1;
+		mini->parent = 0;
 		return (2);
 	}
 	else
@@ -63,6 +65,7 @@ int		minipipe(t_mini *mini)
 		dup2(pipefd[1], STDOUT);
 		mini->pipout = pipefd[1];
 		mini->pid = pid;
+		mini->last = 0;
 		return (1);
 	}
 }

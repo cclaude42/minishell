@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:42:31 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/05 18:19:30 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/11 18:27:03 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	exec_cmd(t_mini *mini, t_token *token)
 	char	**cmd;
 	int		i;
 
+	if (mini->charge == 0)
+		return ;
 	cmd = cmd_tab(token);
 	i = 1;
 	while (cmd[i])
@@ -52,7 +54,7 @@ void	exec_cmd(t_mini *mini, t_token *token)
 		i++;
 	}
 	if (ft_strcmp(cmd[0], "exit") == 0 && has_pipe(token) == 0)
-		mini->exit = 1;
+		mini_exit(mini, cmd);
 	else if (is_builtin(cmd[0]))
 		mini->ret = exec_builtin(cmd, mini);
 	else
@@ -62,4 +64,5 @@ void	exec_cmd(t_mini *mini, t_token *token)
 	close(mini->pipout);
 	mini->pipin = -1;
 	mini->pipout = -1;
+	mini->charge = 0;
 }

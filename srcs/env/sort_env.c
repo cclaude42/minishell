@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 15:03:17 by macrespo          #+#    #+#             */
-/*   Updated: 2020/07/03 16:32:30 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/11 18:17:28 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void		print_sorted_env(t_env *env)
 	i = 0;
 	while (tab[i])
 	{
-		ft_putstr_fd("declare -x ", STDIN);
-		ft_putendl_fd(tab[i], STDIN);
+		ft_putstr("declare -x ");
+		ft_putendl(tab[i]);
 		i++;
 	}
 	free_tab(tab);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/11 15:57:07 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/11 18:39:36 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ typedef struct	s_mini
 	int				pipin;
 	int				pipout;
 	int				pid;
+	int				charge;
+	int				parent;
+	int				last;
 	int				ret;
 	int				exit;
 }				t_mini;
@@ -111,6 +114,7 @@ char	*get_env_name(char *dest, const char *src);
 int		is_in_env(t_env *env, char *args);
 int		ft_export(char **args, t_env *env);
 int		ft_unset(char **args, t_mini *mini);
+void	mini_exit(t_mini *mini, char **cmd);
 
 /* PARSING */
 void	parse(t_mini *mini);

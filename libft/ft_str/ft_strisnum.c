@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strisnum.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/08 14:55:46 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/11 18:19:29 by cclaude          ###   ########.fr       */
+/*   Created: 2020/08/11 18:40:02 by cclaude           #+#    #+#             */
+/*   Updated: 2020/08/11 18:47:15 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int		ft_pwd(void)
+int	ft_strisnum(const char *str)
 {
-	char	cwd[PATH_MAX];
+	int	i;
 
-	if (getcwd(cwd, PATH_MAX))
+	i = 0;
+	if (str == NULL)
+		return (0);
+	while (str[i])
 	{
-		ft_putendl_fd(cwd, 1);
-		return (SUCCESS);
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
+		i++;
 	}
-	else
-		return (ERROR);
+	return (1);
 }
