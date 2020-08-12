@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 16:06:28 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/05 16:27:56 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/12 16:52:43 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static int		get_var_len(const char *arg, int pos, t_env *env)
 	i = 0;
 	if (arg[pos] == '?')
 		return (1);
+	if (ft_isdigit(arg[pos]))
+		return (0);
 	while (arg[pos] && is_env_char(arg[pos]) == 1 && i < BUFF_SIZE)
 	{
 		var_name[i] = arg[pos];
@@ -46,9 +48,17 @@ static int		arg_alloc_len(const char *arg, t_env *env)
 		if (arg[i] == EXPANSION)
 		{
 			i++;
-			size += get_var_len(arg, i, env);
-			while (is_env_char(arg[i]))
+			if (arg[i] == '\0' || ft_isalnum(arg[i]) == 0)
+				size++;
+			else
+				size += get_var_len(arg, i, env);
+			if (ft_isdigit(arg[i]) == 0)
+			{
+				while (is_env_char(arg[i]))
 				i++;
+			}
+			else
+				size--;
 		}
 		i++;
 		size++;
@@ -68,6 +78,8 @@ static char		*get_var_value(const char *arg, int pos, t_env *env, int ret)
 		var_value = ft_itoa(ret);
 		return (var_value);
 	}
+	if (ft_isdigit(arg[pos]))
+		return (NULL);
 	while (arg[pos] && is_env_char(arg[pos]) == 1 && i < BUFF_SIZE)
 	{
 		var_name[i] = arg[pos];
@@ -105,11 +117,21 @@ char			*expansions(const char *arg, t_env *env, int ret)
 		while (arg[j] == EXPANSION)
 		{
 			j++;
-			env_value = get_var_value(arg, j, env, ret);
-			i += env_value ? varlcpy(new_arg, env_value, i) : 0;
-			arg[j] == '?' ? j++ : 0;
-			while (is_env_char(arg[j]) == 1)
-				j++;
+			if (arg[j] == '\0' || ft_isalnum(arg[j]) == 0)
+				new_arg[i++] = '$';
+			else
+			{
+				env_value = get_var_value(arg, j, env, ret);
+				i += env_value ? varlcpy(new_arg, env_value, i) : 0;
+				arg[j] == '?' ? j++ : 0;
+				if (ft_isdigit(arg[j]) == 0)
+				{	
+					while (is_env_char(arg[j]) == 1)
+						j++;
+				}
+				else
+					j++;
+			}
 		}
 		new_arg[i++] = arg[j++];
 	}

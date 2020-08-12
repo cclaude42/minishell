@@ -6,13 +6,13 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 16:14:13 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/11 16:15:24 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/11 16:44:42 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	    not_valid(const char *str)
+static int			invalid_lvl(const char *str)
 {
 	int		i;
 
@@ -26,7 +26,7 @@ static int	    not_valid(const char *str)
 	return (0);
 }
 
-static int	    new_atoi(const char *str)
+static int			get_lvl(const char *str)
 {
 	int	i;
 	int	sign;
@@ -36,7 +36,7 @@ static int	    new_atoi(const char *str)
 	sign = 1;
 	num = 0;
 	ft_skip_spacenl(str, &i);
-	if (not_valid(str))
+	if (invalid_lvl(str))
 		return (0);
 	if (str[i] == '-')
 		sign = -1;
@@ -47,13 +47,16 @@ static int	    new_atoi(const char *str)
 	return (num * sign);
 }
 
-void			increment_shell_level(t_env *env)
+void				increment_shell_level(t_env *env)
 {
 	int		shell_level;
 	char	env_name[BUFF_SIZE];
 	char	*shlvl;
+	char	*shell_level_value;
 
-	shell_level = new_atoi(get_env_value("SHLVL", env)) + 1;
+	shell_level_value = get_env_value("SHLVL", env);
+	shell_level = get_lvl(shell_level_value) + 1;
+	ft_memdel(shell_level_value);
 	while (env && env->next)
 	{
 		get_env_name(env_name, env->value);
