@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 16:06:28 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/05 16:27:56 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/12 14:15:31 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ static int		arg_alloc_len(const char *arg, t_env *env)
 		if (arg[i] == EXPANSION)
 		{
 			i++;
-			size += get_var_len(arg, i, env);
+			if (arg[i] == '\0' || ft_isspace(arg[i]) == 1)
+				size++;
+			else
+				size += get_var_len(arg, i, env);
 			while (is_env_char(arg[i]))
 				i++;
 		}
@@ -105,11 +108,19 @@ char			*expansions(const char *arg, t_env *env, int ret)
 		while (arg[j] == EXPANSION)
 		{
 			j++;
-			env_value = get_var_value(arg, j, env, ret);
-			i += env_value ? varlcpy(new_arg, env_value, i) : 0;
-			arg[j] == '?' ? j++ : 0;
-			while (is_env_char(arg[j]) == 1)
-				j++;
+			if (arg[j] == '\0' || ft_isspace(arg[j]) == 1)
+			{
+				new_arg[i] = '$';
+				i++;
+			}
+			else
+			{
+				env_value = get_var_value(arg, j, env, ret);
+				i += env_value ? varlcpy(new_arg, env_value, i) : 0;
+				arg[j] == '?' ? j++ : 0;
+				while (is_env_char(arg[j]) == 1)
+					j++;
+			}
 		}
 		new_arg[i++] = arg[j++];
 	}
