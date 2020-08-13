@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/12 16:57:31 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/13 18:10:09 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	mini_exit(t_mini *mini, char **cmd);
 void	parse(t_mini *mini);
 t_token	*get_tokens(char *line);
 void	squish_args(t_mini *mini);
+int		check_line(t_mini *mini, t_token *token);
 int		is_last_valid_arg(t_token *token);
 int		open_quotes(char *line, int index);
 int		is_sep(char *line, int i);
@@ -154,6 +155,7 @@ t_token	*next_run(t_token *token, int skip);
 
 /* TYPE TOOLS */
 int		is_type(t_token *token, int type);
+int		is_types(t_token *token, char *types);
 int		has_type(t_token *token, int type);
 int		has_pipe(t_token *token);
 t_token	*next_type(t_token *token, int type, int skip);

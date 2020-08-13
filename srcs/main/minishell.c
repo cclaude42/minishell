@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/13 15:35:42 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/13 17:41:50 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		main(int ac, char **av, char **env)
 	{
 		sig_init();
 		parse(&mini);
-		if (mini.start != NULL)
+		if (mini.start != NULL && check_line(&mini, mini.start))
 			minishell(&mini);
 		free_token(mini.start);
 	}
