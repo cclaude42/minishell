@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 16:01:42 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/11 16:14:28 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/13 16:44:29 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int				env_init(t_mini *mini, char **env_array)
 	t_env	*new;
 	int		i;
 
-	if (!(env = malloc(sizeof(t_env*))))
+	if (!(env = malloc(sizeof(t_env))))
 		return (1);
 	env->value = ft_strdup(env_array[0]);
 	env->next = NULL;
@@ -72,7 +72,7 @@ int				env_init(t_mini *mini, char **env_array)
 	i = 1;
 	while (env_array[i])
 	{
-		if (!(new = malloc(sizeof(t_env*))))
+		if (!(new = malloc(sizeof(t_env))))
 			return (1);
 		new->value = ft_strdup(env_array[i]);
 		new->next = NULL;
