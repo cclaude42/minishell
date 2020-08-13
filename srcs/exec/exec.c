@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:42:31 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/12 17:14:54 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/13 15:31:32 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	exec_cmd(t_mini *mini, t_token *token)
 	if (mini->charge == 0)
 		return ;
 	cmd = cmd_tab(token);
-	i = 1;
+	i = 0;
 	while (cmd && cmd[i])
 	{
 		cmd[i] = expansions(cmd[i], mini->env, mini->ret);

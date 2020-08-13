@@ -6,28 +6,11 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/11 18:53:18 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/13 15:36:37 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_args(t_token *start)
-{
-	int		i;
-	char	*s[8] = {"(EMPTY)", "(CMD)", "(ARG)", "(TRUNC)",
-					"(APPEND)", "(INPUT)", "(PIPE)", "(END)"};
-
-	if (!start)
-		return ;
-	i = 0;
-	while (start->next)
-	{
-		printf("\033[0;33m#%d %-8s [%s]\033[0m\n", i++, s[start->type], start->str);
-		start = start->next;
-	}
-	printf("\033[0;33m#%d %-8s [%s]\033[0m\n", i++, s[start->type], start->str);
-}
 
 int		space_alloc(char *line)
 {
@@ -81,7 +64,7 @@ void	quote_loop(char **line)
 
 	while (open_quotes(*line, 2147483647))
 	{
-		ft_printf("\033[0;36m> \033[0m");
+		ft_putstr_fd("\033[0;36m> \033[0m", STDERR);
 		get_next_line(0, &more);
 		tmp = *line;
 		*line = ft_strjoin(*line, "\n");
@@ -99,11 +82,11 @@ void	parse(t_mini *mini)
 
 	signal(SIGINT, &sig_int);
 	signal(SIGQUIT, &sig_quit);
-	ft_printf("\033[0;36mminishell > \033[0m");
+	ft_putstr_fd("\033[0;36mminishell > \033[0m", STDERR);
 	if (get_next_line(0, &line) == -2)
 	{
 		mini->exit = 1;
-		ft_printf("exit\n");
+		ft_putendl_fd("exit", STDERR);
 	}
 	if (g_sig.sigint == 1)
 		mini->ret = g_sig.exit_status;
@@ -112,7 +95,4 @@ void	parse(t_mini *mini)
 	mini->start = get_tokens(line);
 	ft_memdel(line);
 	squish_args(mini);
-
-	// FOR DEBUGGING
-	// print_args(mini->start);
 }
