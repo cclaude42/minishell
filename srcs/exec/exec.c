@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:42:31 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/12 14:38:34 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/12 17:14:54 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	**cmd_tab(t_token *start)
 	char	**tab;
 	int		i;
 
+	if (!start)
+		return (NULL);
 	token = start->next;
 	i = 2;
 	while (token && token->type < TRUNC)
@@ -48,17 +50,17 @@ void	exec_cmd(t_mini *mini, t_token *token)
 		return ;
 	cmd = cmd_tab(token);
 	i = 1;
-	while (cmd[i])
+	while (cmd && cmd[i])
 	{
 		cmd[i] = expansions(cmd[i], mini->env, mini->ret);
 		i++;
 	}
-	if (ft_strcmp(cmd[0], "exit") == 0 && has_pipe(token) == 0)
+	if (cmd && ft_strcmp(cmd[0], "exit") == 0 && has_pipe(token) == 0)
 		mini_exit(mini, cmd);
-	else if (is_builtin(cmd[0]))
+	else if (cmd && is_builtin(cmd[0]))
 		mini->ret = exec_builtin(cmd, mini);
-	else
-		mini->ret = exec_bin(cmd, mini->env);
+	else if (cmd)
+		mini->ret = exec_bin(cmd, mini->env, mini);
 	ft_memdel(cmd);
 	close(mini->pipin);
 	close(mini->pipout);
