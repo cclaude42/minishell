@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 16:06:28 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/12 16:52:43 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/13 15:46:11 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ char			*expansions(const char *arg, t_env *env, int ret)
 		while (arg[j] == EXPANSION)
 		{
 			j++;
-			if (arg[j] == '\0' || ft_isalnum(arg[j]) == 0)
+			if ((arg[j] == '\0' || ft_isalnum(arg[j]) == 0) && arg[j] != '?')
 				new_arg[i++] = '$';
 			else
 			{
@@ -125,7 +125,7 @@ char			*expansions(const char *arg, t_env *env, int ret)
 				i += env_value ? varlcpy(new_arg, env_value, i) : 0;
 				arg[j] == '?' ? j++ : 0;
 				if (ft_isdigit(arg[j]) == 0)
-				{	
+				{
 					while (is_env_char(arg[j]) == 1)
 						j++;
 				}
