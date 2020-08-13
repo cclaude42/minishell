@@ -6,13 +6,24 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 16:06:28 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/12 16:52:43 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/13 16:03:28 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int		get_var_len(const char *arg, int pos, t_env *env)
+static int		ret_size(int ret)
+{
+	char	*tmp;
+	int		ret_len;
+
+	tmp = ft_itoa(ret);
+	ret_len = ft_strlen(tmp);
+	ft_memdel(tmp);
+	return (ret_len);
+}
+
+static int		get_var_len(const char *arg, int pos, t_env *env, int ret)
 {
 	char	var_name[BUFF_SIZE];
 	char	*var_value;
@@ -20,7 +31,7 @@ static int		get_var_len(const char *arg, int pos, t_env *env)
 
 	i = 0;
 	if (arg[pos] == '?')
-		return (1);
+		return (ret_size(ret));
 	if (ft_isdigit(arg[pos]))
 		return (0);
 	while (arg[pos] && is_env_char(arg[pos]) == 1 && i < BUFF_SIZE)
@@ -36,7 +47,7 @@ static int		get_var_len(const char *arg, int pos, t_env *env)
 	return (i);
 }
 
-static int		arg_alloc_len(const char *arg, t_env *env)
+static int		arg_alloc_len(const char *arg, t_env *env, int ret)
 {
 	int		i;
 	int		size;
@@ -48,10 +59,10 @@ static int		arg_alloc_len(const char *arg, t_env *env)
 		if (arg[i] == EXPANSION)
 		{
 			i++;
-			if (arg[i] == '\0' || ft_isalnum(arg[i]) == 0)
+			if ((arg[i] == '\0' || ft_isalnum(arg[i]) == 0) && arg[i] != '?')
 				size++;
 			else
-				size += get_var_len(arg, i, env);
+				size += get_var_len(arg, i, env, ret);
 			if (ft_isdigit(arg[i]) == 0)
 			{
 				while (is_env_char(arg[i]))
@@ -108,29 +119,32 @@ char			*expansions(const char *arg, t_env *env, int ret)
 	int		j;
 	char	*env_value;
 
-	if (!(new_arg = malloc(sizeof(char) * arg_alloc_len(arg, env))))
+	if (!(new_arg = malloc(sizeof(char) * arg_alloc_len(arg, env, ret))))
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (i < arg_alloc_len(arg, env) && arg[j])
+	while (i < arg_alloc_len(arg, env, ret) && arg[j])
 	{
 		while (arg[j] == EXPANSION)
 		{
 			j++;
-			if (arg[j] == '\0' || ft_isalnum(arg[j]) == 0)
+			if ((arg[j] == '\0' || ft_isalnum(arg[j]) == 0) && arg[j] != '?')
 				new_arg[i++] = '$';
 			else
 			{
 				env_value = get_var_value(arg, j, env, ret);
 				i += env_value ? varlcpy(new_arg, env_value, i) : 0;
 				arg[j] == '?' ? j++ : 0;
-				if (ft_isdigit(arg[j]) == 0)
+				if (ft_isdigit(arg[j]) == 0 && arg[j - 1] != '?')
 				{	
 					while (is_env_char(arg[j]) == 1)
 						j++;
 				}
 				else
-					j++;
+				{
+					if (arg[j - 1] != '?')
+						j++;
+				}
 			}
 		}
 		new_arg[i++] = arg[j++];
