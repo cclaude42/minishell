@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 16:06:28 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/17 13:29:17 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/17 16:43:28 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,5 @@ char			*expansions(char *arg, t_env *env, int ret)
 		new_arg[i++] = arg[j++];
 	}
 	new_arg[i] = 0;
-	ft_memdel(arg);
 	return (new_arg);
 }
