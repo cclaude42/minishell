@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/12 16:57:31 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/17 13:29:50 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ typedef struct	s_sig
 void	redir(t_mini *mini, t_token *token, int type);
 void	input(t_mini *mini, t_token *token);
 int		minipipe(t_mini *mini);
-char	*expansions(const char *arg, t_env *env, int ret);
+char	*expansions(char *arg, t_env *env, int ret);
 
 /* EXEC */
 void	exec_cmd(t_mini *mini, t_token *token);

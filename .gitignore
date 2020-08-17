@@ -5,3 +5,4 @@ srcs/*.o
 libft/libft.a
 libft.a
 minishell
+minishell.dSYM

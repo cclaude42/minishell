@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 16:06:28 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/13 16:53:34 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/17 13:29:17 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ static int		varlcpy(char *new_arg, const char *env_value, int pos)
 	return (i);
 }
 
-char			*expansions(const char *arg, t_env *env, int ret)
+char			*expansions(char *arg, t_env *env, int ret)
 {
 	char	*new_arg;
 	int		i;
@@ -137,7 +137,7 @@ char			*expansions(const char *arg, t_env *env, int ret)
 				ft_memdel(env_value);
 				arg[j] == '?' ? j++ : 0;
 				if (ft_isdigit(arg[j]) == 0 && arg[j - 1] != '?')
-				{	
+				{
 					while (is_env_char(arg[j]) == 1)
 						j++;
 				}
@@ -151,5 +151,6 @@ char			*expansions(const char *arg, t_env *env, int ret)
 		new_arg[i++] = arg[j++];
 	}
 	new_arg[i] = 0;
+	ft_memdel(arg);
 	return (new_arg);
 }
