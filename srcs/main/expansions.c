@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 16:06:28 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/18 20:13:14 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/18 21:25:58 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char			*expansions(char *arg, t_env *env, int ret)
 {
 	t_expansions	ex;
 
-	if (!(ex.new_arg = malloc(sizeof(char) * arg_alloc_len(arg, env, ret))))
+	if (!(ex.new_arg = malloc(sizeof(char) * arg_alloc_len(arg, env, ret) + 1)))
 		return (NULL);
 	ex.i = 0;
 	ex.j = 0;
