@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/18 19:35:50 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/18 20:17:40 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,13 @@ typedef struct	s_sig
 	int				exit_status;
 	pid_t			pid;
 }				t_sig;
+
+typedef struct	s_expansions
+{
+	char			*new_arg;
+	int				i;
+	int				j;
+}				t_expansions;
 
 /*
 ** MINISHELL
@@ -172,6 +179,14 @@ int				is_type(t_token *token, int type);
 int				has_type(t_token *token, int type);
 int				has_pipe(t_token *token);
 t_token			*next_type(t_token *token, int type, int skip);
+
+/*
+** EXPANSIONS
+*/
+int				ret_size(int ret);
+int				get_var_len(const char *arg, int pos, t_env *env, int ret);
+int				arg_alloc_len(const char *arg, t_env *env, int ret);
+char			*get_var_value(const char *arg, int pos, t_env *env, int ret);
 
 /*
 ** SIGNAL
