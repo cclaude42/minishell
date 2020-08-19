@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/13 18:10:09 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/19 13:21:51 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ int				ignore_sep(char *line, int i);
 /*
 ** ENV
 */
+int				check_line(t_mini *mini, t_token *token);
 char			*env_to_str(t_env *lst);
 int				env_init(t_mini *mini, char **env_array);
 char			*get_env_value(char *arg, t_env *env);
@@ -176,6 +177,7 @@ t_token			*next_run(t_token *token, int skip);
 ** TYPE TOOLS
 */
 int				is_type(t_token *token, int type);
+int				is_types(t_token *token, char *types);
 int				has_type(t_token *token, int type);
 int				has_pipe(t_token *token);
 t_token			*next_type(t_token *token, int type, int skip);
