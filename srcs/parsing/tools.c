@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:17:26 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/18 14:19:58 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/13 18:24:30 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,34 @@ int		is_last_valid_arg(t_token *token)
 	}
 	else
 		return (0);
+}
+
+int		check_line(t_mini *mini, t_token *token)
+{
+	while (token)
+	{
+		if (is_types(token, "TAI")
+		&& (!token->next || is_types(token->next, "TAIPE")))
+		{
+			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
+			if (token->next)
+				ft_putstr_fd(token->next->str, STDERR);
+			else
+				ft_putstr_fd("newline", STDERR);
+			ft_putendl_fd("'", STDERR);
+			mini->ret = 258;
+			return (0);
+		}
+		if (is_types(token, "PE")
+		&& (!token->prev || is_types(token->prev, "TAIPE")))
+		{
+			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
+			ft_putstr_fd(token->str, STDERR);
+			ft_putendl_fd("'", STDERR);
+			mini->ret = 258;
+			return (0);
+		}
+		token = token->next;
+	}
+	return (1);
 }
