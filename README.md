@@ -2,20 +2,21 @@
 
 * 16 bytes leaks ??
 * invalid read/write in expansion (classic case like $HOME)
-* protect malloc in parsings function + norme
-* norm ft_abs and type.c (bug ??)
+* echo "\$TEST"
+* echo    $TEST lol $TEST
+* echo $TEST $TEST ✅
+* export = ✅
+* ctrl-D in command type "wc" ✅
 
 ## COMMANDS THAT WORK DIFFERENT TO BASH
-* mkdir test_dir ; cd test_dir ; rm -rf ../test_dir ; cd . ; pwd ; cd . ; pwd ; cd .. ; pwd
-* echo    $TEST lol $TEST
+
+* protect malloc in parsings function + norme
+* norm ft_abs and type.c (bug ??)
+* mkdir test_dir ; cd test_dir ; rm -rf ../test_dir ; cd . ; pwd ; cd . ; pwd ; cd .. ; pwd ----??NO CRASH, IS A REAL PROB??
 * echo $TEST$TEST=lol$TEST""lol
-* echo "\$TEST"
-* echo $TEST $TEST
-* export =
-* export TEST ; export | sort (missing the invalid exports, like =, that aren't in env. try "export =" and then "export", see the diff)
+* export TEST ; export | sort (missing the invalid exports, like =, that aren't in env. try "export =" and then "export", see the diff) -------------Not an export prob
 * ;; test
-* ctrl-D in command type "wc"
-* > ls
+* > ls ✅
 
 ## MAYBE TO DO
 
