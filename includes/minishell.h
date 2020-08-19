@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/19 13:21:51 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/19 15:25:40 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ t_token			*get_tokens(char *line);
 void			squish_args(t_mini *mini);
 int				is_last_valid_arg(t_token *token);
 int				open_quotes(char *line, int index);
+void			type_arg(t_token *token, int separator);
 int				is_sep(char *line, int i);
 int				ignore_sep(char *line, int i);
 

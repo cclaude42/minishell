@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 14:18:03 by cclaude           #+#    #+#             */
-/*   Updated: 2020/06/18 14:20:03 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/19 15:17:56 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,19 @@ void	squish_args(t_mini *mini)
 	while (token)
 	{
 		prev = prev_sep(token, NOSKIP);
-		if (is_type(token, ARG) &&
-		(is_type(prev, TRUNC) || is_type(prev, APPEND) || is_type(prev, INPUT)))
+		if (is_type(token, ARG) && is_types(prev, "TAI"))
 		{
 			while (is_last_valid_arg(prev) == 0)
 				prev = prev->prev;
-			if (token->prev)
-				token->prev->next = token->next;
+			token->prev->next = token->next;
 			if (token->next)
 				token->next->prev = token->prev;
 			token->prev = prev;
-			token->next = (prev) ? prev->next : NULL;
-			if (prev && prev->next)
-				prev->next->prev = token;
-			if (prev)
-				prev->next = token;
+			token->next = (prev) ? prev->next : mini->start;
+			prev = (prev) ? prev : token;
+			prev->next->prev = token;
+			prev->next = (mini->start->prev) ? prev->next : token;
+			mini->start = (mini->start->prev) ? mini->start->prev : mini->start;
 		}
 		token = token->next;
 	}

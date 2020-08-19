@@ -6,11 +6,25 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/13 17:41:22 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/19 15:25:17 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_args(t_token *start)
+{
+	int		i = 0;
+	char	*s[8] = {"(EMPTY)", "(CMD)", "(ARG)", "(APPEND)",
+					"(TRUNC)", "(REDIR)", "(PIPE)", "(END)"};
+
+	while (start->next)
+	{
+		printf("#%d %-8s [%s]\n", i++, s[start->type], start->str);
+		start = start->next;
+	}
+	printf("#%d %-8s [%s]\n", i++, s[start->type], start->str);
+}
 
 int		space_alloc(char *line)
 {
@@ -79,6 +93,7 @@ void	quote_loop(char **line)
 void	parse(t_mini *mini)
 {
 	char	*line;
+	t_token	*token;
 
 	signal(SIGINT, &sig_int);
 	signal(SIGQUIT, &sig_quit);
@@ -95,4 +110,12 @@ void	parse(t_mini *mini)
 	mini->start = get_tokens(line);
 	ft_memdel(line);
 	squish_args(mini);
+	token = mini->start;
+	while (token)
+	{
+		if (is_type(token, ARG))
+			type_arg(token, 0);
+		token = token->next;
+	}
+	print_args(mini->start);
 }
