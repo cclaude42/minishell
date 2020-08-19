@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:42:31 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/13 15:31:32 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/18 21:12:57 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ char	**cmd_tab(t_token *start)
 		token = token->next;
 		i++;
 	}
-	tab = malloc(sizeof(char *) * i);
+	if (!(tab = malloc(sizeof(char *) * i)))
+		return (NULL);
 	token = start->next;
 	tab[0] = start->str;
 	i = 1;
 	while (token && token->type < TRUNC)
 	{
-		tab[i] = token->str;
+		tab[i++] = token->str;
 		token = token->next;
-		i++;
 	}
 	tab[i] = NULL;
 	return (tab);
@@ -61,7 +61,7 @@ void	exec_cmd(t_mini *mini, t_token *token)
 		mini->ret = exec_builtin(cmd, mini);
 	else if (cmd)
 		mini->ret = exec_bin(cmd, mini->env, mini);
-	ft_memdel(cmd);
+	free_tab(cmd);
 	close(mini->pipin);
 	close(mini->pipout);
 	mini->pipin = -1;

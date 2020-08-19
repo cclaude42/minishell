@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 16:53:10 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/05 16:48:18 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/18 20:26:51 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,30 +107,28 @@ char	*get_line(char *stock)
 
 int		get_next_line(int fd, char **line)
 {
-	int			read_size;
+	int			read_len;
 	char		buf[BUFFER_SIZE + 1];
 	static char	*stock = NULL;
 
 	if (line == NULL || fd < 0 || BUFFER_SIZE < 1 || (read(fd, buf, 0)) < 0)
 		return (-1);
-	read_size = 1;
-	while (!(newline_check(stock, read_size)))
+	read_len = 1;
+	while (!(newline_check(stock, read_len)))
 	{
-		if ((read_size = read(fd, buf, BUFFER_SIZE)) == -1)
+		if ((read_len = read(fd, buf, BUFFER_SIZE)) == -1)
 			return (-1);
-		buf[read_size] = '\0';
-		(read_size == 0 || buf[read_size - 1] != '\n') ? ft_printf("  \b\b") : 0 ;
+		buf[read_len] = '\0';
+		(read_len == 0 || buf[read_len - 1] != '\n') ? ft_printf("  \b\b") : 0;
 		if ((stock = buf_join(stock, buf)) == NULL)
 			return (-1);
 	}
-	if (newline_check(stock, read_size) == 2 && (*line = stock))
+	if (newline_check(stock, read_len) == 2 && (*line = stock))
 		return (-2);
 	if ((*line = get_line(stock)) == NULL)
 		return (-1);
-	if ((stock = stock_trim(stock)) == NULL)
+	if ((stock = stock_trim(stock)))
 		return (-1);
-	if (read_size != 0)
-		return (1);
 	ft_memdel(stock);
-	return (0);
+	return (read_len != 0 ? 1 : 0);
 }
