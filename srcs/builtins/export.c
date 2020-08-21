@@ -35,7 +35,7 @@ int			env_add(const char *value, t_env *env)
 	t_env	*new;
 	t_env	*tmp;
 
-	if (!(new = malloc(sizeof(t_env*))))
+	if (!(new = malloc(sizeof(t_env))))
 		return (-1);
 	new->value = ft_strdup(value);
 	while (env && env->next && env->next->next)
@@ -43,6 +43,8 @@ int			env_add(const char *value, t_env *env)
 	tmp = env->next;
 	env->next = new;
 	new->next = tmp;
+	ft_memdel(new);
+	ft_memdel(tmp);
 	return (SUCCESS);
 }
 
