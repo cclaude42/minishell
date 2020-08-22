@@ -38,11 +38,8 @@ void	free_env(t_env *env)
 		ft_memdel(tmp->value);
 		ft_memdel(tmp);
 	}
-	if (env)
-	{
-		ft_memdel(env->value);
-		ft_memdel(env);
-	}
+	ft_memdel(env->value);
+	ft_memdel(env);
 }
 
 void	free_tab(char **tab)

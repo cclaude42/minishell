@@ -86,5 +86,6 @@ int		main(int ac, char **av, char **env)
 			minishell(&mini);
 		free_token(mini.start);
 	}
+	free_env(mini.env);
 	return (mini.ret);
 }

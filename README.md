@@ -1,6 +1,6 @@
 # TO DO
 
-* 16 bytes leaks ?? leaks in sort env, export, env_init l 67
+* 16 bytes leaks ?? leaks in sort env, export, env_init ✅
 * invalid read/write in expansion (classic case like $HOME)
 * echo "\$TEST"
 * echo    $TEST lol $TEST
