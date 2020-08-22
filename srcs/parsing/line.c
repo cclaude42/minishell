@@ -3,33 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/19 17:26:12 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/22 15:02:53 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_args(t_token *start)
+char	*space_alloc(char *line)
 {
-	int		i = 0;
-	char	*s[8] = {"(EMPTY)", "(CMD)", "(ARG)", "(APPEND)",
-					"(TRUNC)", "(REDIR)", "(PIPE)", "(END)"};
-
-	while (start->next)
-	{
-		printf("#%d %-8s [%s]\n", i++, s[start->type], start->str);
-		start = start->next;
-	}
-	printf("#%d %-8s [%s]\n", i++, s[start->type], start->str);
-}
-
-int		space_alloc(char *line)
-{
-	int	count;
-	int	i;
+	char	*new;
+	int		count;
+	int		i;
 
 	count = 0;
 	i = 0;
@@ -39,7 +26,9 @@ int		space_alloc(char *line)
 			count++;
 		i++;
 	}
-	return (i + 2 * count + 1);
+	if (!(new = malloc(sizeof(char) * (i + 2 * count + 1))))
+		return (NULL);
+	return (new);
 }
 
 char	*space_line(char *line)
@@ -50,19 +39,19 @@ char	*space_line(char *line)
 
 	i = 0;
 	j = 0;
-	new = malloc(sizeof(char) * space_alloc(line));
-	while (line[i])
+	new = space_alloc(line);
+	while (new && line[i])
 	{
-		if (open_quotes(line, i) == 0 && is_sep(line, i))
+		if (quotes(line, i) != 2 && line[i] == '$' && i && line[i - 1] != '\\')
+			new[j++] = (char)(-line[i++]);
+		else if (quotes(line, i) == 0 && is_sep(line, i))
 		{
 			new[j++] = ' ';
 			new[j++] = line[i++];
-			if (open_quotes(line, i) == 0 && line[i] == '>')
+			if (quotes(line, i) == 0 && line[i] == '>')
 				new[j++] = line[i++];
 			new[j++] = ' ';
 		}
-		else if (open_quotes(line, i) != 2 && line[i] == '$')
-			new[j++] = (char)(-line[i++]);
 		else
 			new[j++] = line[i++];
 	}
@@ -76,7 +65,7 @@ void	quote_loop(char **line)
 	char	*more;
 	char	*tmp;
 
-	while (open_quotes(*line, 2147483647))
+	while (quotes(*line, 2147483647))
 	{
 		ft_putstr_fd("\033[0;36m> \033[0m", STDERR);
 		get_next_line(0, &more);
@@ -98,15 +87,14 @@ void	parse(t_mini *mini)
 	signal(SIGINT, &sig_int);
 	signal(SIGQUIT, &sig_quit);
 	ft_putstr_fd("\033[0;36mminishell > \033[0m", STDERR);
-	if (get_next_line(0, &line) == -2)
-	{
-		mini->exit = 1;
+	if (get_next_line(0, &line) == -2 && (mini->exit = 1))
 		ft_putendl_fd("exit", STDERR);
-	}
 	if (g_sig.sigint == 1)
 		mini->ret = g_sig.exit_status;
 	quote_loop(&line);
 	line = space_line(line);
+	if (line && line[0] == '$')
+		line[0] = (char)(-line[0]);
 	mini->start = get_tokens(line);
 	ft_memdel(line);
 	squish_args(mini);
@@ -117,5 +105,4 @@ void	parse(t_mini *mini)
 			type_arg(token, 0);
 		token = token->next;
 	}
-	// print_args(mini->start);
 }

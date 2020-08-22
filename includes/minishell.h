@@ -133,7 +133,7 @@ void			parse(t_mini *mini);
 t_token			*get_tokens(char *line);
 void			squish_args(t_mini *mini);
 int				is_last_valid_arg(t_token *token);
-int				open_quotes(char *line, int index);
+int				quotes(char *line, int index);
 void			type_arg(t_token *token, int separator);
 int				is_sep(char *line, int i);
 int				ignore_sep(char *line, int i);

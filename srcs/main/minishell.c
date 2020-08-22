@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/13 17:41:50 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/22 15:16:39 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	minishell(t_mini *mini)
 	int		status;
 
 	token = next_run(mini->start, NOSKIP);
-	while (mini->exit == 0 && is_type(token, CMD))
+	token = (is_types(mini->start, "TAI")) ? mini->start->next : token;
+	while (mini->exit == 0 && token)
 	{
 		mini->charge = 1;
 		mini->parent = 1;

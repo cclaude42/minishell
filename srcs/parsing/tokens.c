@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 14:18:03 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/19 15:17:56 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/22 14:22:42 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,9 @@ t_token	*next_token(char *line, int *i)
 
 	j = 0;
 	c = ' ';
-	token = malloc(sizeof(t_token));
-	token->str = malloc(sizeof(char) * next_alloc(line, i));
+	if (!(token = malloc(sizeof(t_token)))
+	|| !(token->str = malloc(sizeof(char) * next_alloc(line, i))))
+		return (NULL);
 	while (line[*i] && (line[*i] != ' ' || c != ' '))
 	{
 		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))

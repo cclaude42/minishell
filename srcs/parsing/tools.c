@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:17:26 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/13 18:24:30 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/22 14:39:35 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		is_sep(char *line, int i)
 {
 	if (i > 0 && line[i - 1] == '\\' && ft_strchr("<>|;", line[i]))
 		return (0);
-	else if (ft_strchr("<>|;", line[i]) && open_quotes(line, i) == 0)
+	else if (ft_strchr("<>|;", line[i]) && quotes(line, i) == 0)
 		return (1);
 	else
 		return (0);
@@ -36,7 +36,7 @@ int		ignore_sep(char *line, int i)
 	return (0);
 }
 
-int		open_quotes(char *line, int index)
+int		quotes(char *line, int index)
 {
 	int	i;
 	int	open;
@@ -83,10 +83,8 @@ int		check_line(t_mini *mini, t_token *token)
 		&& (!token->next || is_types(token->next, "TAIPE")))
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
-			if (token->next)
-				ft_putstr_fd(token->next->str, STDERR);
-			else
-				ft_putstr_fd("newline", STDERR);
+			token->next ? ft_putstr_fd(token->next->str, STDERR) : 0;
+			token->next ? 0 : ft_putstr_fd("newline", STDERR);
 			ft_putendl_fd("'", STDERR);
 			mini->ret = 258;
 			return (0);
