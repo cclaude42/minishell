@@ -14,11 +14,11 @@ ENV = env get_env sort_env shlvl
 
 EXEC = bin builtin exec
 
-MAIN = minishell redir expansions signal
+MAIN = minishell redir signal
 
-PARSING = line tokens tools
+PARSING = line tokens expansions
 
-TOOLS = fd free token type expansions_tools
+TOOLS = fd free token type expansions parsing
 
 SRC = $(addsuffix .c, $(addprefix srcs/builtins/, $(BUILTINS))) \
 	  $(addsuffix .c, $(addprefix srcs/env/, $(ENV))) \

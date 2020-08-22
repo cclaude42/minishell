@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/19 15:25:40 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/22 15:30:40 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ typedef struct	s_expansions
 void			redir(t_mini *mini, t_token *token, int type);
 void			input(t_mini *mini, t_token *token);
 int				minipipe(t_mini *mini);
-char			*expansions(char *arg, t_env *env, int ret);
-
 /*
 ** EXEC
 */
@@ -139,6 +137,15 @@ int				is_sep(char *line, int i);
 int				ignore_sep(char *line, int i);
 
 /*
+** EXPANSIONS
+*/
+int				ret_size(int ret);
+int				get_var_len(const char *arg, int pos, t_env *env, int ret);
+int				arg_alloc_len(const char *arg, t_env *env, int ret);
+char			*get_var_value(const char *arg, int pos, t_env *env, int ret);
+char			*expansions(char *arg, t_env *env, int ret);
+
+/*
 ** ENV
 */
 int				check_line(t_mini *mini, t_token *token);
@@ -152,6 +159,13 @@ int				is_valid_env(const char *env);
 void			print_sorted_env(t_env *env);
 void			increment_shell_level(t_env *env);
 size_t			size_env(t_env *lst);
+
+/*
+** SIGNAL
+*/
+void			sig_int(int code);
+void			sig_quit(int code);
+void			sig_init(void);
 
 /*
 ** FD TOOLS
@@ -182,21 +196,6 @@ int				is_types(t_token *token, char *types);
 int				has_type(t_token *token, int type);
 int				has_pipe(t_token *token);
 t_token			*next_type(t_token *token, int type, int skip);
-
-/*
-** EXPANSIONS
-*/
-int				ret_size(int ret);
-int				get_var_len(const char *arg, int pos, t_env *env, int ret);
-int				arg_alloc_len(const char *arg, t_env *env, int ret);
-char			*get_var_value(const char *arg, int pos, t_env *env, int ret);
-
-/*
-** SIGNAL
-*/
-void			sig_int(int code);
-void			sig_quit(int code);
-void			sig_init(void);
 
 extern t_sig g_sig;
 #endif
