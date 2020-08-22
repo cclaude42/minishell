@@ -1,6 +1,6 @@
 # TO DO
 
-* SEGFAULT IN EXPANSIONS since recent fixed, don't know why
+* SEGFAULT IN EXPANSIONS (export test=lol ; echo $test)
 * invalid read/write in expansion (classic case like $HOME)
 * echo    $TEST lol $TEST
 * echo $TEST$TEST=lol$TEST""lol
