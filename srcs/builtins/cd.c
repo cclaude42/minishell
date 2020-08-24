@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 19:46:37 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/24 19:14:24 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/24 19:27:21 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char		*get_env_path(t_env *env, const char *var, size_t len)
 		if (ft_strncmp(env->value, var, len) == 0)
 		{
 			s_alloc = ft_strlen(env->value) - len;
-			if (!(oldpwd = malloc(sizeof(char) * s_alloc)))
+			if (!(oldpwd = malloc(sizeof(char) * s_alloc + 1)))
 				return (NULL);
 			i = 0;
 			j = 0;
