@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 19:46:37 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/05 16:27:56 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/24 19:14:24 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static int		update_oldpwd(t_env *env)
 		return (ERROR);
 	if (is_in_env(env, oldpwd) == 0)
 		env_add(oldpwd, env);
+	ft_memdel(oldpwd);
 	return (SUCCESS);
 }
 
