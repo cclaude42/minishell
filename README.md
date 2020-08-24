@@ -1,12 +1,13 @@
 # TO DO
 
-* SEGFAULT IN EXPANSIONS (export test=lol ; echo $test)
-* invalid read/write in expansion (classic case like $HOME)
 * echo    $TEST lol $TEST
 * echo $TEST$TEST=lol$TEST""lol
 * export TEST ; export | grep TEST
+* 2 bytes leaks
 
 ## DONE
+* SEGFAULT IN EXPANSIONS (export test=lol ; echo $test) ✅
+* invalid read/write in expansion (classic case like $HOME) ✅
 * 16 bytes leaks ?? leaks in sort env, export, env_init ✅
 * echo $TEST $TEST ✅
 * export = ✅
