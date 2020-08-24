@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 16:06:28 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/18 21:25:58 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/24 20:36:11 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,14 @@ static void		insert_var(t_expansions *ex, char *arg, t_env *env, int ret)
 char			*expansions(char *arg, t_env *env, int ret)
 {
 	t_expansions	ex;
+	int				new_arg_len;
 
-	if (!(ex.new_arg = malloc(sizeof(char) * arg_alloc_len(arg, env, ret) + 1)))
+	new_arg_len = arg_alloc_len(arg, env, ret);
+	if (!(ex.new_arg = malloc(sizeof(char) * new_arg_len + 1)))
 		return (NULL);
 	ex.i = 0;
 	ex.j = 0;
-	while (ex.i < arg_alloc_len(arg, env, ret) && arg[ex.j])
+	while (ex.i < new_arg_len && arg[ex.j])
 	{
 		while (arg[ex.j] == EXPANSION)
 		{
@@ -63,6 +65,6 @@ char			*expansions(char *arg, t_env *env, int ret)
 		}
 		ex.new_arg[ex.i++] = arg[ex.j++];
 	}
-	ex.new_arg[ex.i] = 0;
+	ex.new_arg[ex.i] = '\0';
 	return (ex.new_arg);
 }

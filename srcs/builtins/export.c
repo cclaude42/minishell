@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 18:15:54 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/19 17:30:56 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/24 20:41:37 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int			env_add(const char *value, t_env *env)
 	tmp = env->next;
 	env->next = new;
 	new->next = tmp;
-	ft_memdel(new);
 	ft_memdel(tmp);
 	return (SUCCESS);
 }

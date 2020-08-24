@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 20:14:17 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/22 15:28:09 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/24 20:36:20 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int		arg_alloc_len(const char *arg, t_env *env, int ret)
 	int		i;
 	int		size;
 
-	i = 0;
+	i = -1;
 	size = 0;
-	while (arg[i++])
+	while (arg[++i])
 	{
 		if (arg[i] == EXPANSION)
 		{
@@ -65,7 +65,7 @@ int		arg_alloc_len(const char *arg, t_env *env, int ret)
 				size += get_var_len(arg, i, env, ret);
 			if (ft_isdigit(arg[i]) == 0)
 			{
-				while (is_env_char(arg[i]))
+				while (arg[i + 1] && is_env_char(arg[i]))
 					i++;
 			}
 			else
