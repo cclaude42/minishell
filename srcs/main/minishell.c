@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/22 15:16:39 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/24 21:41:00 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int		main(int ac, char **av, char **env)
 	mini.ret = 0;
 	reset_fds(&mini);
 	env_init(&mini, env);
+	secret_env_init(&mini, env);
 	increment_shell_level(mini.env);
 	while (mini.exit == 0)
 	{
@@ -88,5 +89,6 @@ int		main(int ac, char **av, char **env)
 		free_token(mini.start);
 	}
 	free_env(mini.env);
+	free_env(mini.secret_env);
 	return (mini.ret);
 }

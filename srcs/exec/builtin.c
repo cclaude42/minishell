@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 19:33:30 by macrespo          #+#    #+#             */
-/*   Updated: 2020/06/23 14:09:19 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/24 21:41:43 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		exec_builtin(char **args, t_mini *mini)
 	if (ft_strcmp(args[0], "env") == 0)
 		ft_env(mini->env);
 	if (ft_strcmp(args[0], "export") == 0)
-		ft_export(args, mini->env);
+		ft_export(args, mini->env, mini->secret_env);
 	if (ft_strcmp(args[0], "unset") == 0)
 		ft_unset(args, mini);
 	return (result);

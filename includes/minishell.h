@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/22 15:30:40 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/24 21:43:10 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct	s_mini
 {
 	t_token			*start;
 	t_env			*env;
+	t_env			*secret_env;
 	int				in;
 	int				out;
 	int				fdin;
@@ -101,6 +102,8 @@ typedef struct	s_expansions
 void			redir(t_mini *mini, t_token *token, int type);
 void			input(t_mini *mini, t_token *token);
 int				minipipe(t_mini *mini);
+char			*expansions(char *arg, t_env *env, int ret);
+
 /*
 ** EXEC
 */
@@ -115,12 +118,11 @@ int				is_builtin(char	*command);
 int				ft_echo(char **args);
 int				ft_cd(char **args, t_env *env);
 int				ft_pwd(void);
-int				ft_export(char **args, t_env *env);
+int				ft_export(char **args, t_env *env, t_env *secret);
 int				ft_env(t_env *env);
 int				env_add(const char *value, t_env *env);
 char			*get_env_name(char *dest, const char *src);
 int				is_in_env(t_env *env, char *args);
-int				ft_export(char **args, t_env *env);
 int				ft_unset(char **args, t_mini *mini);
 void			mini_exit(t_mini *mini, char **cmd);
 
@@ -137,20 +139,12 @@ int				is_sep(char *line, int i);
 int				ignore_sep(char *line, int i);
 
 /*
-** EXPANSIONS
-*/
-int				ret_size(int ret);
-int				get_var_len(const char *arg, int pos, t_env *env, int ret);
-int				arg_alloc_len(const char *arg, t_env *env, int ret);
-char			*get_var_value(const char *arg, int pos, t_env *env, int ret);
-char			*expansions(char *arg, t_env *env, int ret);
-
-/*
 ** ENV
 */
 int				check_line(t_mini *mini, t_token *token);
 char			*env_to_str(t_env *lst);
 int				env_init(t_mini *mini, char **env_array);
+int				secret_env_init(t_mini *mini, char **env_array);
 char			*get_env_value(char *arg, t_env *env);
 char			*env_value(char *env);
 int				env_value_len(const char *env);
@@ -159,13 +153,6 @@ int				is_valid_env(const char *env);
 void			print_sorted_env(t_env *env);
 void			increment_shell_level(t_env *env);
 size_t			size_env(t_env *lst);
-
-/*
-** SIGNAL
-*/
-void			sig_int(int code);
-void			sig_quit(int code);
-void			sig_init(void);
 
 /*
 ** FD TOOLS
@@ -196,6 +183,21 @@ int				is_types(t_token *token, char *types);
 int				has_type(t_token *token, int type);
 int				has_pipe(t_token *token);
 t_token			*next_type(t_token *token, int type, int skip);
+
+/*
+** EXPANSIONS
+*/
+int				ret_size(int ret);
+int				get_var_len(const char *arg, int pos, t_env *env, int ret);
+int				arg_alloc_len(const char *arg, t_env *env, int ret);
+char			*get_var_value(const char *arg, int pos, t_env *env, int ret);
+
+/*
+** SIGNAL
+*/
+void			sig_int(int code);
+void			sig_quit(int code);
+void			sig_init(void);
 
 extern t_sig g_sig;
 #endif
