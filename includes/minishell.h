@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/24 21:43:10 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/25 14:54:54 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ size_t			size_env(t_env *lst);
 */
 void			reset_std(t_mini *mini);
 void			close_fds(t_mini *mini);
+void			ft_close(int fd);
 void			reset_fds(t_mini *mini);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:37:17 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/12 17:14:59 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/25 14:55:12 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,23 @@ int			error_message(char *path)
 		ret = IS_DIRECTORY;
 	if (folder)
 		closedir(folder);
-	close(fd);
+	ft_close(fd);
 	return (ret);
 }
 
 int			magic_box(char *path, char **args, t_env *env, t_mini *mini)
 {
 	char	**env_array;
+	char	*ptr;
 	int		ret;
 
 	ret = SUCCESS;
 	g_sig.pid = fork();
 	if (g_sig.pid == 0)
 	{
-		env_array = ft_split(env_to_str(env), '\n');
+		ptr = env_to_str(env);
+		env_array = ft_split(ptr, '\n');
+		ft_memdel(ptr);
 		if (ft_strchr(path, '/') != NULL)
 			execve(path, args, env_array);
 		ret = error_message(path);

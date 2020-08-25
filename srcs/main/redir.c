@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:47:34 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/11 17:35:40 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/25 14:55:44 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	redir(t_mini *mini, t_token *token, int type)
 {
-	close(mini->fdout);
+	ft_close(mini->fdout);
 	if (type == TRUNC)
 		mini->fdout = open(token->str, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
 	else
@@ -31,7 +31,7 @@ void	redir(t_mini *mini, t_token *token, int type)
 
 void	input(t_mini *mini, t_token *token)
 {
-	close(mini->fdin);
+	ft_close(mini->fdin);
 	mini->fdin = open(token->str, O_RDONLY, S_IRWXU);
 	if (mini->fdin == -1)
 	{
@@ -52,7 +52,7 @@ int		minipipe(t_mini *mini)
 	pid = fork();
 	if (pid == 0)
 	{
-		close(pipefd[1]);
+		ft_close(pipefd[1]);
 		dup2(pipefd[0], STDIN);
 		mini->pipin = pipefd[0];
 		mini->pid = -1;
@@ -61,7 +61,7 @@ int		minipipe(t_mini *mini)
 	}
 	else
 	{
-		close(pipefd[0]);
+		ft_close(pipefd[0]);
 		dup2(pipefd[1], STDOUT);
 		mini->pipout = pipefd[1];
 		mini->pid = pid;

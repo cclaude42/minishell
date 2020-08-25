@@ -6,11 +6,17 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:49:46 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/11 16:52:04 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/25 14:54:27 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_close(int fd)
+{
+	if (fd > 0)
+		close(fd);
+}
 
 void	reset_std(t_mini *mini)
 {
@@ -20,10 +26,10 @@ void	reset_std(t_mini *mini)
 
 void	close_fds(t_mini *mini)
 {
-	close(mini->fdin);
-	close(mini->fdout);
-	close(mini->pipin);
-	close(mini->pipout);
+	ft_close(mini->fdin);
+	ft_close(mini->fdout);
+	ft_close(mini->pipin);
+	ft_close(mini->pipout);
 }
 
 void	reset_fds(t_mini *mini)

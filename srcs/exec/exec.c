@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:42:31 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/22 15:09:26 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/25 14:55:20 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	exec_cmd(t_mini *mini, t_token *token)
 	else if (cmd)
 		mini->ret = exec_bin(cmd, mini->env, mini);
 	free_tab(cmd);
-	close(mini->pipin);
-	close(mini->pipout);
+	ft_close(mini->pipin);
+	ft_close(mini->pipout);
 	mini->pipin = -1;
 	mini->pipout = -1;
 	mini->charge = 0;

@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 18:15:54 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/24 21:44:07 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/25 15:10:58 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,6 @@ int			ft_export(char **args, t_env *env, t_env *secret)
 	else
 	{
 		error_ret = is_valid_env(args[1]);
-		if (error_ret == -2)
-			error_ret = 2;
 		if (args[1][0] == '=')
 			error_ret = -3;
 		if (error_ret <= 0)

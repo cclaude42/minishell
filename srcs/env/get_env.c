@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 17:40:30 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/06 16:36:58 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/25 15:11:15 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		is_valid_env(const char *env)
 		i++;
 	}
 	if (env[i] != '=')
-		return (-2);
+		return (2);
 	return (1);
 }
 

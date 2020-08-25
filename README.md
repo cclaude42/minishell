@@ -1,8 +1,5 @@
 # TO DO
-
-* Warning: invalid file descriptor -1 in syscall close()
-* echo $TEST$TEST=lol$TEST""lol
-* 2 bytes leaks
+Nothing ??
 
 ## DONE
 * echo    $TEST lol $TEST ✅
@@ -17,6 +14,7 @@
 * norm ft_abs and type.c (bug ??) ✅
 * echo "\$TEST" ✅
 * > ls ✅
+* Warning: invalid file descriptor -1 in syscall close() ✅
 
 ## MAYBE TO DO
 
@@ -24,3 +22,6 @@
 * some leaks / invalid read/write with others features (pipe / redir / builtins etc...)
 * mkdir test_dir ; cd test_dir ; rm -rf ../test_dir ; cd . ; pwd ; cd . ; pwd ; cd .. ; pwd (Error messages?)
 * ;; test
+* 2 bytes "still reachable"
+* ~10,000 bytes "still reachable" when trying bad command
+* echo $TEST$TEST=lol$TEST""lol
