@@ -1,10 +1,11 @@
 # TO DO
 
-* echo    $TEST lol $TEST
+* Warning: invalid file descriptor -1 in syscall close()
 * echo $TEST$TEST=lol$TEST""lol
 * 2 bytes leaks
 
 ## DONE
+* echo    $TEST lol $TEST ✅
 * export TEST ; export | grep TEST ✅
 * SEGFAULT IN EXPANSIONS (export test=lol ; echo $test) ✅
 * invalid read/write in expansion (classic case like $HOME) ✅
