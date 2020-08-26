@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:51:22 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/24 21:41:00 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/26 21:25:16 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	redir_and_exec(t_mini *mini, t_token *token)
 		pipe = minipipe(mini);
 	if (next && is_type(next, END) == 0 && pipe != 1)
 		redir_and_exec(mini, next->next);
-	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev) && pipe != 1)
+	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)
+		&& pipe != 1 && mini->no_exec == 0)
 		exec_cmd(mini, token);
 }
 
@@ -55,13 +56,13 @@ void	minishell(t_mini *mini)
 		reset_fds(mini);
 		waitpid(-1, &status, 0);
 		status = WEXITSTATUS(status);
-		if (mini->last == 0)
-			mini->ret = status;
+		mini->ret = (mini->last == 0) ? status : mini->ret;
 		if (mini->parent == 0)
 		{
 			free_token(mini->start);
 			exit(mini->ret);
 		}
+		mini->no_exec = 0;
 		token = next_run(token, SKIP);
 	}
 }
@@ -76,6 +77,7 @@ int		main(int ac, char **av, char **env)
 	mini.out = dup(STDOUT);
 	mini.exit = 0;
 	mini.ret = 0;
+	mini.no_exec = 0;
 	reset_fds(&mini);
 	env_init(&mini, env);
 	secret_env_init(&mini, env);

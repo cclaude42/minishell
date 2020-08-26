@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:53 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/25 14:54:54 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/26 21:19:01 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct	s_mini
 	int				last;
 	int				ret;
 	int				exit;
+	int				no_exec;
 }				t_mini;
 
 typedef struct	s_sig
