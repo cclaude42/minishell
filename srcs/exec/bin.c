@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:37:17 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/25 14:55:12 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/27 16:12:13 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,10 @@ int			exec_bin(char **args, t_env *env, t_mini *mini)
 
 	i = 0;
 	ret = UNKNOWN_COMMAND;
-	while (env->value && ft_strncmp(env->value, "PATH=", 5) != 0)
+	while (env && env->value && ft_strncmp(env->value, "PATH=", 5) != 0)
 		env = env->next;
-	if (env->next == NULL)
-		return (ERROR);
+	if (env == NULL || env->next == NULL)
+		return (magic_box(args[0], args, env, mini));
 	bin = ft_split(env->value, ':');
 	if (!args[0] && !bin[0])
 		return (ERROR);
