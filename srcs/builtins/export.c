@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 18:15:54 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/25 15:10:58 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/27 17:22:54 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ int			env_add(const char *value, t_env *env)
 	t_env	*new;
 	t_env	*tmp;
 
+	if (env && env->value == NULL)
+	{
+		env->value = ft_strdup(value);
+		return (SUCCESS);
+	}
 	if (!(new = malloc(sizeof(t_env))))
 		return (-1);
 	new->value = ft_strdup(value);

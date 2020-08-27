@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 16:01:42 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/24 21:38:14 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/27 17:43:04 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int				env_init(t_mini *mini, char **env_array)
 	env->next = NULL;
 	mini->env = env;
 	i = 1;
-	while (env_array[i])
+	while (env_array && env_array[0] && env_array[i])
 	{
 		if (!(new = malloc(sizeof(t_env))))
 			return (1);
@@ -95,7 +95,7 @@ int				secret_env_init(t_mini *mini, char **env_array)
 	env->next = NULL;
 	mini->secret_env = env;
 	i = 1;
-	while (env_array[i])
+	while (env_array && env_array[0] && env_array[i])
 	{
 		if (!(new = malloc(sizeof(t_env))))
 			return (1);

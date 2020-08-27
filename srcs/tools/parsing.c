@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools.c                                            :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 15:17:26 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/22 14:39:35 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/27 17:33:33 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int		check_line(t_mini *mini, t_token *token)
 			return (0);
 		}
 		if (is_types(token, "PE")
-		&& (!token->prev || is_types(token->prev, "TAIPE")))
+		&& (!token->prev || !token->next || is_types(token->prev, "TAIPE")))
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
 			ft_putstr_fd(token->str, STDERR);

@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 17:40:30 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/25 15:11:15 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/27 16:57:57 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*get_env_value(char *arg, t_env *env)
 	char	*env_val;
 
 	env_val = ft_strdup("");
-	while (env)
+	while (env && env->value)
 	{
 		get_env_name(env_name, env->value);
 		if (ft_strcmp(arg, env_name) == 0)

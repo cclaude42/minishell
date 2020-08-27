@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 16:14:13 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/11 16:44:42 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/27 16:55:26 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void				increment_shell_level(t_env *env)
 	char	*shell_level_value;
 
 	shell_level_value = get_env_value("SHLVL", env);
+	if (ft_strcmp(shell_level_value, "") == 0)
+		return ;
 	shell_level = get_lvl(shell_level_value) + 1;
 	ft_memdel(shell_level_value);
 	while (env && env->next)

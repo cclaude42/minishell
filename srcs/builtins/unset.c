@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/19 15:39:20 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/05 16:27:56 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/27 17:58:19 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,15 @@ static size_t	env_size(char *env)
 	return (i);
 }
 
-static void		free_node(t_env *env)
+static void		free_node(t_mini *mini, t_env *env)
 {
+	if (mini->env == env && env->next == NULL)
+	{
+		ft_memdel(mini->env->value);
+		mini->env->value = NULL;
+		mini->env->next = NULL;
+		return ;
+	}
 	ft_memdel(env->value);
 	ft_memdel(env);
 }
@@ -38,8 +45,8 @@ int				ft_unset(char **a, t_mini *mini)
 		return (SUCCESS);
 	if (ft_strncmp(a[1], env->value, env_size(env->value)) == 0)
 	{
-		mini->env = env->next;
-		free_node(env);
+		mini->env = (env->next) ? env->next : mini->env;
+		free_node(mini, env);
 		return (SUCCESS);
 	}
 	while (env && env->next)
@@ -47,7 +54,7 @@ int				ft_unset(char **a, t_mini *mini)
 		if (ft_strncmp(a[1], env->next->value, env_size(env->next->value)) == 0)
 		{
 			tmp = env->next->next;
-			free_node(env->next);
+			free_node(mini, env->next);
 			env->next = tmp;
 			return (SUCCESS);
 		}
