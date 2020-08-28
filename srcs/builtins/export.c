@@ -103,7 +103,7 @@ int			ft_export(char **args, t_env *env, t_env *secret)
 			error_ret = -3;
 		if (error_ret <= 0)
 			return (print_error(error_ret, args[1]));
-		new_env = is_in_env(env, args[1]);
+		new_env = error_ret == 2 ? 1 : is_in_env(env, args[1]);
 		if (new_env == 0)
 		{
 			if (error_ret == 1)
