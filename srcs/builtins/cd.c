@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 19:46:37 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/24 19:27:21 by macrespo         ###   ########.fr       */
+/*   Updated: 2020/08/31 13:27:15 by macrespo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,17 @@ static int		go_to_path(int option, t_env *env)
 		update_oldpwd(env);
 		env_path = get_env_path(env, "HOME", 4);
 		if (!env_path)
-		{
 			ft_putendl_fd("minishell : cd: HOME not set", STDERR);
+		if (!env_path)
 			return (ERROR);
-		}
 	}
 	else if (option == 1)
 	{
 		env_path = get_env_path(env, "OLDPWD", 6);
+		if (!env_path)
+			ft_putendl_fd("minishell : cd: OLDPWD not set", STDERR);
+		if (!env_path)
+			return (ERROR);
 		update_oldpwd(env);
 	}
 	ret = chdir(env_path);
@@ -107,10 +110,10 @@ int				ft_cd(char **args, t_env *env)
 	{
 		update_oldpwd(env);
 		cd_ret = chdir(args[1]);
+		if (cd_ret < 0)
+			cd_ret *= -1;
+		if (cd_ret != 0)
+			print_error(args);
 	}
-	if (cd_ret < 0)
-		cd_ret *= -1;
-	if (cd_ret != 0)
-		print_error(args);
 	return (cd_ret);
 }
