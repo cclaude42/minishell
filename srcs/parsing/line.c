@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/22 15:02:53 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/31 14:14:33 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	quote_loop(char **line)
 
 	while (quotes(*line, 2147483647))
 	{
-		ft_putstr_fd("\033[0;36m> \033[0m", STDERR);
+		ft_putstr_fd("\033[0;36m\033[1m▸ \033[0m", STDERR);
 		get_next_line(0, &more);
 		tmp = *line;
 		*line = ft_strjoin(*line, "\n");
@@ -86,7 +86,8 @@ void	parse(t_mini *mini)
 
 	signal(SIGINT, &sig_int);
 	signal(SIGQUIT, &sig_quit);
-	ft_putstr_fd("\033[0;36mminishell > \033[0m", STDERR);
+	mini->ret ? ft_putstr_fd("🤬 ", STDERR) : ft_putstr_fd("😎 ", STDERR);
+	ft_putstr_fd("\033[0;36m\033[1mminishell ▸ \033[0m", STDERR);
 	if (get_next_line(0, &line) == -2 && (mini->exit = 1))
 		ft_putendl_fd("exit", STDERR);
 	if (g_sig.sigint == 1)

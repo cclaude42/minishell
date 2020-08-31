@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 18:26:14 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/13 15:31:06 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/31 14:24:46 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	mini_exit(t_mini *mini, char **cmd)
 {
 	mini->exit = 1;
-	ft_putendl_fd("exit", STDERR);
+	ft_putstr_fd("exit ", STDERR);
+	cmd[1] ? ft_putendl_fd("❤️", STDERR) : ft_putendl_fd("💚", STDERR);
 	if (cmd[1] && cmd[2])
 	{
 		mini->ret = 1;

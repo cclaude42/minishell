@@ -6,7 +6,7 @@
 /*   By: macrespo <macrespo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 16:04:10 by macrespo          #+#    #+#             */
-/*   Updated: 2020/08/13 15:26:22 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/31 14:14:47 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	sig_int(int code)
 	{
 		ft_putstr_fd("\b\b  ", STDERR);
 		ft_putstr_fd("\n", STDERR);
-		ft_putstr_fd("\033[0;36mminishell > \033[0m", STDERR);
+		ft_putstr_fd("\033[0;36m\033[1m🤬 minishell ▸ \033[0m", STDERR);
 		g_sig.exit_status = 1;
 	}
 	else
