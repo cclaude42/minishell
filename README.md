@@ -8,6 +8,18 @@ Mandatory part : 100/100
 
 Bonus : 0/15
 
+/bin/ls
+echo "<  Hello World !  >" > file.txt
+cat file.txt
+ls -la | grep ll
+echo $HOME ; fffff
+echo $?
+exit
+
+<p align="center">
+  <img src="https://imgur.com/a/ro4WvYF" width="60%" />
+</p>
+
 ### How to use it
 
 Using ``make`` will create the ``minishell`` executable.
