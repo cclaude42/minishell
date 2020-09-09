@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 19:41:37 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/31 14:14:33 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/09/09 22:00:28 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,17 @@ char	*space_line(char *line)
 	return (new);
 }
 
-void	quote_loop(char **line)
+int		quote_check(t_mini *mini, char **line)
 {
-	char	*more;
-	char	*tmp;
-
-	while (quotes(*line, 2147483647))
+	if (quotes(*line, 2147483647))
 	{
-		ft_putstr_fd("\033[0;36m\033[1m▸ \033[0m", STDERR);
-		get_next_line(0, &more);
-		tmp = *line;
-		*line = ft_strjoin(*line, "\n");
-		ft_memdel(tmp);
-		tmp = *line;
-		*line = ft_strjoin(*line, more);
-		ft_memdel(tmp);
-		ft_memdel(more);
+		ft_putendl_fd("minishell: syntax error with open quotes", STDERR);
+		ft_memdel(*line);
+		mini->ret = 2;
+		mini->start = NULL;
+		return (1);
 	}
+	return (0);
 }
 
 void	parse(t_mini *mini)
@@ -90,9 +84,9 @@ void	parse(t_mini *mini)
 	ft_putstr_fd("\033[0;36m\033[1mminishell ▸ \033[0m", STDERR);
 	if (get_next_line(0, &line) == -2 && (mini->exit = 1))
 		ft_putendl_fd("exit", STDERR);
-	if (g_sig.sigint == 1)
-		mini->ret = g_sig.exit_status;
-	quote_loop(&line);
+	mini->ret = (g_sig.sigint == 1) ? g_sig.exit_status : mini->ret;
+	if (quote_check(mini, &line))
+		return ;
 	line = space_line(line);
 	if (line && line[0] == '$')
 		line[0] = (char)(-line[0]);
