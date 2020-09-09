@@ -31,3 +31,13 @@ You can separate commands with ``;``, as well as use redirections ``>`` ``>>`` `
 Environment variables are handled, like ``$HOME``, including the return code ``$?``.
 
 Finally, you can use ``Ctrl-C`` to interrupt and ``Ctrl-\`` to quit a program, as well as ``Ctrl-D`` to throw an EOF, same as in bash.
+
+A few of the functions are "built-in", meaning we don't call the executable, we re-coded them directly. It's the case for ``echo``, ``pwd``, ``cd``, ``env``, ``export``, ``unset`` and ``exit``.
+
+### Credit
+
+This two-person project was done with [macrespo](https://github.com/macrespo42).
+
+I was responsible for the parsing, argument checking, execution, redirection and piping.
+
+Macrespo took care of the environment variables, built-in functions, and signal handling.
