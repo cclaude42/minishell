@@ -17,7 +17,7 @@ echo $?
 exit
 
 <p align="center">
-  <img src="https://imgur.com/a/ro4WvYF" width="60%" />
+  <img src="https://i.imgur.com/En13A7p.png" width="60%" />
 </p>
 
 ### How to use it
