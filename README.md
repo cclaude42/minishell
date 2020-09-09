@@ -2,23 +2,15 @@
 
 42 project, recoding our own little bash. A program capable of parsing a prompt and launching executables with arguments, along with a few built-in functions.
 
+<p align="center">
+  <img src="https://i.imgur.com/En13A7p.png" width="100%" />
+</p>
+
 ## Final grade : 100/115
 
 Mandatory part : 100/100
 
 Bonus : 0/15
-
-/bin/ls
-echo "<  Hello World !  >" > file.txt
-cat file.txt
-ls -la | grep ll
-echo $HOME ; fffff
-echo $?
-exit
-
-<p align="center">
-  <img src="https://i.imgur.com/En13A7p.png" width="60%" />
-</p>
 
 ### How to use it
 
